@@ -1,689 +1,583 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Krushna Bharat Jagdale | DevOps Engineer</title>
+  <title>Krushna Bharat Jagdale — DevOps Engineer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    :root{
+      --bg:#0B1226;
+      --bg-panel:#101B38;
+      --ink:#F5F3EE;
+      --muted:#8892AB;
+      --amber:#FFB020;
+      --coral:#FF6B4A;
+      --line:rgba(245,243,238,0.12);
+      --font-display:'Archivo Black', 'Archivo', sans-serif;
+      --font-body:'Archivo', -apple-system, sans-serif;
+      --font-mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
     }
 
-    html{
-      scroll-behavior:smooth;
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
 
     body{
-      font-family:'Inter',sans-serif;
-      background:#0b1020;
-      color:#f8fafc;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:var(--font-body);
       line-height:1.6;
       -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
 
-    a{
-      text-decoration:none;
-      color:inherit;
+    a{color:inherit;text-decoration:none;}
+
+    .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+    .nav{
+      position:fixed;top:0;right:0;z-index:90;
+      padding:26px 28px;display:flex;gap:22px;align-items:center;
     }
 
-    img{
-      display:block;
-      max-width:100%;
+    .nav a{
+      font-family:var(--font-mono);
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:0.08em;
+      color:var(--muted);
     }
 
-    .container{
-      width:100%;
-      max-width:1120px;
-      margin:auto;
-      padding:0 20px;
-    }
+    .nav a:hover{color:var(--amber);}
 
-    /* ===== NAVBAR ===== */
-    header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      background:rgba(11,16,32,.88);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
+    @media (max-width:760px){.nav{display:none;}}
 
-    nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      padding:16px 0;
-    }
-
-    .logo{
-      font-size:1rem;
-      font-weight:800;
-      color:#f59e0b;
-      letter-spacing:.08em;
-      white-space:nowrap;
-    }
-
-    nav ul{
-      display:flex;
-      gap:22px;
-      list-style:none;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    nav a{
-      color:#cbd5e1;
-      font-size:.95rem;
-      font-weight:500;
-      transition:.2s ease;
-    }
-
-    nav a:hover{
-      color:#f59e0b;
-    }
-
-    /* ===== HERO ===== */
-    .hero{
+    section{
       min-height:100vh;
       display:flex;
       align-items:center;
-      background:
-        radial-gradient(circle at top right, rgba(245,158,11,.20), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(59,130,246,.15), transparent 28%);
+      position:relative;
+      padding:100px 0;
     }
 
-    .eyebrow{
-      color:#f59e0b;
-      font-size:.85rem;
-      font-weight:700;
-      letter-spacing:.18em;
+    section + section{border-top:1px solid var(--line);}
+
+    .hero{background:var(--bg);overflow:hidden;}
+
+    .hero-name{
+      font-family:var(--font-display);
+      font-size:clamp(48px,9vw,108px);
+      line-height:0.96;
       text-transform:uppercase;
-      margin-bottom:14px;
     }
 
-    .hero h1{
-      font-size:clamp(2.8rem,8vw,5.8rem);
-      line-height:1;
-      font-weight:800;
-      margin-bottom:12px;
-    }
-
-    .hero h2{
-      font-size:clamp(1.35rem,3.5vw,2.2rem);
-      color:#94a3b8;
-      margin-bottom:22px;
-      font-weight:700;
-    }
-
-    .hero p{
-      max-width:760px;
-      color:#d1d5db;
-      font-size:1.02rem;
-      margin-bottom:28px;
-    }
-
-    .hero-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-bottom:28px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 22px;
-      border-radius:14px;
-      font-weight:700;
-      transition:.2s ease;
-    }
-
-    .btn-primary{
-      background:#f59e0b;
-      color:#111827;
-      box-shadow:0 12px 28px rgba(245,158,11,.22);
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-2px);
-    }
-
-    .btn-outline{
-      border:1px solid rgba(255,255,255,.15);
-      color:#e2e8f0;
-    }
-
-    .btn-outline:hover{
-      border-color:#f59e0b;
-      color:#f59e0b;
+    .hero-role{
+      font-family:var(--font-display);
+      font-size:clamp(48px,9vw,108px);
+      line-height:0.96;
+      text-transform:uppercase;
+      color:transparent;
+      -webkit-text-stroke:1.5px var(--ink);
     }
 
     .hero-meta{
+      margin-top:34px;
       display:flex;
-      gap:18px;
+      gap:26px;
       flex-wrap:wrap;
-      color:#94a3b8;
-      font-size:.92rem;
+      font-family:var(--font-mono);
+      font-size:13px;
+      color:var(--muted);
     }
 
-    /* ===== SECTIONS ===== */
-    section{
-      padding:88px 0;
+    .sec-label{
+      font-family:var(--font-mono);
+      font-size:12px;
+      letter-spacing:0.15em;
+      color:var(--amber);
+      margin-bottom:18px;
+      display:block;
     }
 
-    .section-title{
-      font-size:2rem;
-      font-weight:800;
-      margin-bottom:10px;
+    .sec-big{
+      font-family:var(--font-display);
+      font-size:clamp(32px,5.5vw,60px);
+      line-height:1.04;
+      text-transform:uppercase;
+      margin-bottom:8px;
     }
 
-    .section-subtitle{
-      color:#94a3b8;
-      margin-bottom:34px;
+    /* ===== UPDATED TECH STACK ONLY ===== */
+
+    .skills-section{background:var(--bg-panel);}
+
+    .skills-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+      margin-top:28px;
     }
 
-    .card{
-      background:#111827;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      padding:28px;
-      transition:.25s ease;
+    .skill-group{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
 
-    .card:hover{
-      transform:translateY(-4px);
-      border-color:rgba(245,158,11,.25);
+    .skill-title{
+      font-family:var(--font-mono);
+      font-size:12px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--amber);
     }
 
-    /* ===== TECH STACK ===== */
-    .tech-stack{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-    }
-
-    .tech-group{
-      background:#111827;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:20px;
-      padding:22px;
-    }
-
-    .tech-group h3{
-      color:#f59e0b;
-      font-size:1rem;
-      margin-bottom:16px;
-      font-weight:700;
-    }
-
-    .tech-items{
+    .skill-row{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
     }
 
-    .tech-item{
+    .skill-pill{
       display:flex;
       align-items:center;
       gap:8px;
-      padding:8px 12px;
-      background:#0b1020;
-      border:1px solid rgba(255,255,255,.08);
+      padding:9px 14px;
+      border:1px solid var(--line);
       border-radius:999px;
-      font-size:.88rem;
-      color:#e2e8f0;
+      background:rgba(255,255,255,0.03);
+      font-family:var(--font-mono);
+      font-size:13px;
+      color:var(--ink);
       white-space:nowrap;
     }
 
-    /* Small responsive logos */
-    .tech-item img{
+    .skill-pill img{
       width:18px;
       height:18px;
       object-fit:contain;
       flex-shrink:0;
     }
 
-    /* ===== EXPERIENCE ===== */
-    .timeline{
-      display:flex;
-      flex-direction:column;
-      gap:22px;
+    @media (max-width:760px){
+      .skill-row{gap:8px;}
+
+      .skill-pill{
+        padding:8px 12px;
+        font-size:12px;
+      }
+
+      .skill-pill img{
+        width:16px;
+        height:16px;
+      }
+    }
+
+    /* ===== EXISTING SECTIONS ===== */
+
+    .exp-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:32px;
+      margin-bottom:20px;
     }
 
     .exp-top{
       display:flex;
       justify-content:space-between;
       align-items:flex-start;
-      gap:12px;
+      gap:16px;
       flex-wrap:wrap;
-      margin-bottom:8px;
+      margin-bottom:6px;
     }
 
     .exp-role{
-      font-size:1.15rem;
-      font-weight:800;
+      font-family:var(--font-display);
+      font-size:22px;
+      text-transform:uppercase;
     }
 
     .exp-tag{
-      padding:6px 12px;
-      border-radius:999px;
-      font-size:.78rem;
+      font-family:var(--font-mono);
+      font-size:11px;
       font-weight:700;
+      padding:5px 12px;
+      border-radius:20px;
     }
 
     .tag-live{
-      background:rgba(245,158,11,.12);
-      color:#f59e0b;
-      border:1px solid rgba(245,158,11,.3);
+      background:rgba(255,176,32,0.15);
+      color:var(--amber);
+      border:1px solid rgba(255,176,32,0.4);
     }
 
     .tag-done{
-      background:rgba(255,255,255,.06);
-      color:#cbd5e1;
-      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,0.06);
+      color:var(--muted);
+      border:1px solid var(--line);
     }
 
-    .exp-org{
-      color:#cbd5e1;
-      font-weight:600;
-      margin-bottom:4px;
-    }
+    .exp-org{color:var(--muted);margin-bottom:2px;}
 
     .exp-meta{
-      color:#94a3b8;
-      font-size:.92rem;
-      margin-bottom:14px;
+      font-family:var(--font-mono);
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:16px;
     }
 
     .exp-list{
-      padding-left:18px;
-      color:#dbe3f3;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:9px;
     }
 
     .exp-list li{
-      margin-bottom:8px;
+      position:relative;
+      padding-left:20px;
+      color:#D8DCE8;
     }
 
-    /* ===== PROJECTS ===== */
-    .projects{
+    .exp-list li::before{
+      content:'—';
+      position:absolute;
+      left:0;
+      color:var(--amber);
+    }
+
+    .proj-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      grid-template-columns:1fr 1fr;
       gap:20px;
-    }
-
-    .project h3{
-      margin-bottom:12px;
-      font-size:1.08rem;
-    }
-
-    .project ul{
-      padding-left:18px;
-      color:#dbe3f3;
-    }
-
-    .project li{
-      margin-bottom:8px;
-    }
-
-    /* ===== EDUCATION ===== */
-    .edu h3{
-      font-size:1.08rem;
-      margin-bottom:8px;
-    }
-
-    .edu p{
-      color:#cbd5e1;
-    }
-
-    .edu .year{
-      color:#f59e0b;
-      font-weight:700;
       margin-top:10px;
     }
 
-    /* ===== CONTACT ===== */
-    .contact-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:18px;
-    }
-
-    .contact-box{
-      background:#111827;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;
-      padding:22px;
-    }
-
-    .contact-box span{
-      display:block;
-      color:#94a3b8;
-      font-size:.8rem;
-      margin-bottom:6px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .contact-box a:hover{
-      color:#f59e0b;
-    }
-
-    /* ===== FOOTER ===== */
-    footer{
-      text-align:center;
-      padding:28px 0;
-      border-top:1px solid rgba(255,255,255,.08);
-      color:#94a3b8;
-      font-size:.9rem;
-    }
-
-    /* ===== MOBILE ===== */
     @media (max-width:760px){
-      nav{
-        flex-direction:column;
-        align-items:flex-start;
-      }
+      .proj-grid{grid-template-columns:1fr;}
+    }
 
-      nav ul{
-        width:100%;
-        gap:16px;
-        justify-content:flex-start;
-      }
+    .proj-card{
+      background:var(--bg-panel);
+      border-radius:16px;
+      padding:28px;
+      border-top:3px solid var(--coral);
+    }
 
-      .hero{
-        padding-top:40px;
-      }
+    .proj-card:nth-child(2){border-top-color:var(--amber);}
 
-      .hero-meta{
-        flex-direction:column;
-        gap:8px;
-      }
+    .proj-name{
+      font-family:var(--font-display);
+      font-size:21px;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
 
-      .section-title{
-        font-size:1.7rem;
-      }
+    .proj-list{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
 
-      .tech-stack{
-        grid-template-columns:1fr;
-      }
+    .proj-list li{
+      position:relative;
+      padding-left:18px;
+      color:#C7CCDB;
+    }
 
-      .tech-group{
-        padding:18px;
-      }
+    .proj-list li::before{
+      content:'—';
+      position:absolute;
+      left:0;
+      color:var(--coral);
+    }
 
-      .tech-item{
-        font-size:.82rem;
-        padding:7px 10px;
-      }
+    .edu-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:20px;
+      flex-wrap:wrap;
+      border-bottom:1px solid var(--line);
+      padding-bottom:26px;
+      margin-top:20px;
+    }
 
-      /* Even smaller logos on mobile */
-      .tech-item img{
-        width:16px;
-        height:16px;
-      }
+    .edu-degree{
+      font-family:var(--font-display);
+      font-size:clamp(20px,2.6vw,28px);
+      text-transform:uppercase;
+      max-width:640px;
+    }
+
+    .edu-school{color:var(--muted);margin-top:8px;}
+
+    .edu-year{
+      font-family:var(--font-mono);
+      color:var(--amber);
+      white-space:nowrap;
+    }
+
+    .contact-section{background:var(--bg-panel);}
+
+    .contact-big{
+      font-family:var(--font-display);
+      font-size:clamp(32px,6.5vw,76px);
+      text-transform:uppercase;
+      margin-bottom:34px;
+    }
+
+    .contact-link{
+      color:var(--amber);
+      border-bottom:4px solid transparent;
+    }
+
+    .contact-link:hover{border-color:var(--amber);}
+
+    .contact-details{
+      display:flex;
+      flex-wrap:wrap;
+      gap:34px;
+      margin-top:38px;
+      font-family:var(--font-mono);
+    }
+
+    .contact-details div{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .cd-label{
+      color:var(--muted);
+      font-size:11px;
+      letter-spacing:0.1em;
+    }
+
+    .cd-value{color:var(--ink);}
+
+    footer{
+      padding:34px 0;
+      text-align:center;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-family:var(--font-mono);
+      font-size:11.5px;
     }
   </style>
-
 </head>
+
 <body>
 
-  <header>
-    <div class="container">
-      <nav>
-        <div class="logo">KRUSHNA.DEVOPS</div>
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Tech Stack</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <nav class="nav">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#experience">EXPERIENCE</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#education">EDUCATION</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
 
   <section class="hero" id="home">
-    <div class="container">
-      <div class="eyebrow">DevOps Engineer · Mumbai, India</div>
-      <h1>Krushna Bharat Jagdale</h1>
-      <h2>DevOps Engineer</h2>
+    <div class="wrap">
+      <div class="hero-name">KRUSHNA</div>
+      <div class="hero-role">DEVOPS ENGINEER</div>
 
-```
-  <p>
-    DevOps Engineer with 1.5+ years of experience in CI/CD automation,
-    Kubernetes, OpenShift, AWS, Docker, Jenkins, monitoring, and production support
-    for cloud-native banking applications.
-  </p>
-
-  <div class="hero-actions">
-    <a href="#contact" class="btn btn-primary">Contact Me</a>
-    <a href="https://github.com/krushjagdale1" target="_blank" class="btn btn-outline">GitHub</a>
-    <a href="https://www.linkedin.com/" target="_blank" class="btn btn-outline">LinkedIn</a>
-  </div>
-
-  <div class="hero-meta">
-    <span>📧 krushnaj635@gmail.com</span>
-    <span>📱 +91 90225 07897</span>
-    <span>📍 Mumbai, Maharashtra, India</span>
-  </div>
-</div>
-```
-
+      <div class="hero-meta">
+        <span>📧 krushnaj635@gmail.com</span>
+        <span>📱 +91 90225 07897</span>
+        <span>📍 Mumbai, India</span>
+      </div>
+    </div>
   </section>
 
   <section id="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-subtitle">Automation-first DevOps Engineer focused on reliable deployments, cloud infrastructure, and observability.</p>
-
-```
-  <div class="card">
-    Experienced in Kubernetes, OpenShift, Helm, Jenkins, GitHub Actions,
-    Prometheus, Grafana, ELK Stack, Linux, and AWS services including EC2, IAM, and S3.
-  </div>
-</div>
-```
-
+    <div class="wrap">
+      <span class="sec-label">ABOUT</span>
+      <h2 class="sec-big">Professional Summary</h2>
+      <p>
+        DevOps Engineer with 1.5+ years of experience in deployment automation,
+        infrastructure management, production support, and improving platform
+        reliability for cloud-native applications.
+      </p>
+    </div>
   </section>
 
-  <section id="skills">
-    <div class="container">
-      <h2 class="section-title">Tech Stack</h2>
-      <p class="section-subtitle">Tools & technologies I use in day-to-day DevOps workflows.</p>
+  <section class="skills-section" id="skills">
+    <div class="wrap">
+      <span class="sec-label">SKILLS</span>
+      <h2 class="sec-big">Tech Stack</h2>
 
-```
-  <div class="tech-stack">
+      <div class="skills-wrap">
 
-    <div class="tech-group">
-      <h3>CI/CD</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins">Jenkins</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">GitHub Actions</div>
-        <div class="tech-item"><img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/argo/icon/color/argo-icon-color.svg" alt="Argo CD">Argo CD</div>
+        <div class="skill-group">
+          <div class="skill-title">CI/CD</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg">Jenkins</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg">GitHub Actions</div>
+            <div class="skill-pill"><img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/argo/icon/color/argo-icon-color.svg">Argo CD</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-title">Containers & Orchestration</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg">Docker</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg">Kubernetes</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redhat/redhat-original.svg">OpenShift</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg">Helm</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-title">Cloud</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg">AWS</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg">EC2</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg">S3</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg">IAM</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-title">Monitoring & Logging</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg">Prometheus</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg">Grafana</div>
+            <div class="skill-pill"><img src="https://www.vectorlogo.zone/logos/elastic/elastic-icon.svg">ELK Stack</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-title">Operating System</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg">Linux</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg">Bash</div>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-title">DevSecOps</div>
+          <div class="skill-row">
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg">SonarQube</div>
+            <div class="skill-pill"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">Git</div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="tech-group">
-      <h3>Containers</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">Docker</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes">Kubernetes</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redhat/redhat-original.svg" alt="OpenShift">OpenShift</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" alt="Helm">Helm</div>
-      </div>
-    </div>
-
-    <div class="tech-group">
-      <h3>Cloud</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">AWS</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="EC2">EC2</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="S3">S3</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="IAM">IAM</div>
-      </div>
-    </div>
-
-    <div class="tech-group">
-      <h3>Monitoring</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus">Prometheus</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana">Grafana</div>
-        <div class="tech-item"><img src="https://www.vectorlogo.zone/logos/elastic/elastic-icon.svg" alt="ELK">ELK</div>
-      </div>
-    </div>
-
-    <div class="tech-group">
-      <h3>Operating System</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">Linux</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash">Bash</div>
-      </div>
-    </div>
-
-    <div class="tech-group">
-      <h3>DevSecOps</h3>
-      <div class="tech-items">
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg" alt="SonarQube">SonarQube</div>
-        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">Git</div>
-      </div>
-    </div>
-
-  </div>
-</div>
-```
-
   </section>
 
   <section id="experience">
-    <div class="container">
-      <h2 class="section-title">Experience</h2>
+    <div class="wrap">
+      <span class="sec-label">EXPERIENCE</span>
+      <h2 class="sec-big">Professional Experience</h2>
 
-```
-  <div class="timeline">
-
-    <div class="card">
-      <div class="exp-top">
-        <div class="exp-role">DevOps Engineer</div>
-        <span class="exp-tag tag-live">● CURRENT</span>
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">DevOps Engineer</div>
+          <span class="exp-tag tag-live">● CURRENT</span>
+        </div>
+        <div class="exp-org">Scalezee Technologies Pvt. Ltd</div>
+        <div class="exp-meta">JUL 2025 → PRESENT</div>
+        <ul class="exp-list">
+          <li>Managed application deployments across Development, UAT, and Production environments.</li>
+          <li>Automated CI/CD pipelines using Jenkins and GitHub Actions.</li>
+          <li>Managed containerized applications on Kubernetes and OpenShift using Helm.</li>
+          <li>Monitored infrastructure and applications using Prometheus, Grafana, and ELK Stack.</li>
+          <li>Collaborated with Development and QA teams to troubleshoot production issues and improve deployment reliability.</li>
+        </ul>
       </div>
-      <div class="exp-org">Scalezee Technologies Pvt. Ltd</div>
-      <div class="exp-meta">Jul 2025 – Present | Client: Bank of Baroda (CBDC)</div>
-      <ul class="exp-list">
-        <li>Managed deployments across Development, UAT, and Production environments.</li>
-        <li>Automated CI/CD pipelines using Jenkins and GitHub Actions.</li>
-        <li>Managed Kubernetes and OpenShift workloads using Helm.</li>
-        <li>Configured Prometheus, Grafana, and ELK for monitoring and logging.</li>
-      </ul>
-    </div>
 
-    <div class="card">
-      <div class="exp-top">
-        <div class="exp-role">DevOps Engineer Intern</div>
-        <span class="exp-tag tag-done">✓ COMPLETE</span>
+      <div class="exp-card">
+        <div class="exp-top">
+          <div class="exp-role">DevOps Engineer Intern</div>
+          <span class="exp-tag tag-done">✓ COMPLETE</span>
+        </div>
+        <div class="exp-org">Nimap Infotech LLP · Mumbai, India</div>
+        <div class="exp-meta">FEB 2025 → JUL 2025</div>
+        <ul class="exp-list">
+          <li>Assisted in application deployments and CI/CD automation.</li>
+          <li>Supported Linux-based Docker, Kubernetes, and AWS infrastructure.</li>
+          <li>Worked with development teams to resolve deployment issues.</li>
+        </ul>
       </div>
-      <div class="exp-org">Nimap Infotech LLP · Mumbai, India</div>
-      <div class="exp-meta">Feb 2025 – Jul 2025</div>
-      <ul class="exp-list">
-        <li>Assisted with application deployments and CI/CD automation.</li>
-        <li>Supported Linux, Docker, Kubernetes, and AWS infrastructure.</li>
-        <li>Worked with developers to troubleshoot deployment issues.</li>
-      </ul>
     </div>
-
-  </div>
-</div>
-```
-
   </section>
 
   <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
+    <div class="wrap">
+      <span class="sec-label">PROJECTS</span>
+      <h2 class="sec-big">Featured Projects</h2>
 
-```
-  <div class="projects">
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-name">Bank of Baroda — CBDC Platform</div>
+          <ul class="proj-list">
+            <li>Managed Kubernetes and OpenShift deployments using Helm.</li>
+            <li>Performed Kubernetes cluster upgrades and health validation.</li>
+            <li>Automated deployments with Jenkins and GitHub Actions.</li>
+            <li>Configured monitoring using Prometheus, Grafana, and ELK.</li>
+          </ul>
+        </div>
 
-    <div class="card project">
-      <h3>Bank of Baroda — CBDC Platform</h3>
-      <ul>
-        <li>Kubernetes and OpenShift deployment management.</li>
-        <li>Cluster upgrades and health validation.</li>
-        <li>Jenkins and GitHub Actions automation.</li>
-      </ul>
+        <div class="proj-card">
+          <div class="proj-name">Muthoot Finance</div>
+          <ul class="proj-list">
+            <li>Developed CI/CD pipelines using GitHub Actions and Harness CD.</li>
+            <li>Built and deployed multi-container Docker applications.</li>
+            <li>Managed AWS services and integrated SonarQube for code quality.</li>
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <div class="card project">
-      <h3>Muthoot Finance</h3>
-      <ul>
-        <li>GitHub Actions and Harness CD pipelines.</li>
-        <li>Docker Compose multi-container deployment.</li>
-        <li>AWS EC2, IAM, and S3 management.</li>
-      </ul>
-    </div>
-
-  </div>
-</div>
-```
-
   </section>
 
   <section id="education">
-    <div class="container">
-      <h2 class="section-title">Education</h2>
+    <div class="wrap">
+      <span class="sec-label">EDUCATION</span>
+      <h2 class="sec-big">Education</h2>
 
-```
-  <div class="card edu">
-    <h3>Bachelor of Technology (B.Tech) — Mechanical Engineering</h3>
-    <p>Marathwada Institute of Technology, Chhatrapati Sambhajinagar</p>
-    <div class="year">2019 – 2024</div>
-  </div>
-</div>
-```
-
+      <div class="edu-row">
+        <div>
+          <div class="edu-degree">Bachelor of Technology — Mechanical Engineering</div>
+          <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhajinagar</div>
+        </div>
+        <div class="edu-year">2019 – 2024</div>
+      </div>
+    </div>
   </section>
 
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title">Contact</h2>
+  <section class="contact-section" id="contact">
+    <div class="wrap">
+      <span class="sec-label">CONTACT</span>
+      <h2 class="contact-big">LET'S BUILD RELIABLE SYSTEMS TOGETHER</h2>
 
-```
-  <div class="contact-grid">
+      <a class="contact-link" href="mailto:krushnaj635@gmail.com">krushnaj635@gmail.com</a>
 
-    <div class="contact-box">
-      <span>Email</span>
-      <a href="mailto:krushnaj635@gmail.com">krushnaj635@gmail.com</a>
+      <div class="contact-details">
+        <div>
+          <span class="cd-label">PHONE</span>
+          <a class="cd-value" href="tel:+919022507897">+91 90225 07897</a>
+        </div>
+
+        <div>
+          <span class="cd-label">LOCATION</span>
+          <span class="cd-value">Mumbai, Maharashtra, India</span>
+        </div>
+
+        <div>
+          <span class="cd-label">GITHUB</span>
+          <a class="cd-value" href="https://github.com/krushjagdale1" target="_blank">github.com/krushjagdale1</a>
+        </div>
+      </div>
     </div>
-
-    <div class="contact-box">
-      <span>Phone</span>
-      <a href="tel:+919022507897">+91 90225 07897</a>
-    </div>
-
-    <div class="contact-box">
-      <span>Location</span>
-      Mumbai, Maharashtra, India
-    </div>
-
-    <div class="contact-box">
-      <span>GitHub</span>
-      <a href="https://github.com/krushjagdale1" target="_blank">github.com/krushjagdale1</a>
-    </div>
-
-  </div>
-</div>
-```
-
   </section>
 
   <footer>
@@ -692,4 +586,3 @@
 
 </body>
 </html>
-
