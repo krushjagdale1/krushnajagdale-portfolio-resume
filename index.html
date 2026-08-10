@@ -68,6 +68,24 @@
     background:var(--bg);
     overflow:hidden;
   }
+  .hero-inner{
+    width:100%; max-width:1040px; margin:0 auto; padding:0 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:48px;
+  }
+  .hero-photo-panel{
+    flex:0 0 300px; width:300px; height:380px; border-radius:20px;
+    overflow:hidden; position:relative; border:1px solid var(--line);
+    box-shadow:0 0 0 6px rgba(255,176,32,0.06);
+  }
+  .hero-photo-panel img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .hero-text{flex:1 1 auto; min-width:0;}
+  @media (max-width:820px){
+    .hero-inner{flex-direction:column-reverse; text-align:center;}
+    .hero-photo-panel{width:220px; height:280px; flex:0 0 280px;}
+    .hero-meta{justify-content:center;}
+  }
   .hero-blob{
     position:absolute; border-radius:50%;
     filter:blur(90px); opacity:0.35; pointer-events:none;
@@ -81,15 +99,15 @@
   }
   .hero-name{
     font-family:var(--font-display);
-    font-size:clamp(48px, 9vw, 108px);
-    line-height:0.96;
+    font-size:clamp(34px, 5.4vw, 68px);
+    line-height:1.02;
     letter-spacing:-0.01em;
     text-transform:uppercase;
   }
   .hero-role{
     font-family:var(--font-display);
-    font-size:clamp(48px, 9vw, 108px);
-    line-height:0.96;
+    font-size:clamp(34px, 5.4vw, 68px);
+    line-height:1.02;
     letter-spacing:-0.01em;
     text-transform:uppercase;
     color:transparent;
@@ -139,24 +157,45 @@
   .about-quote .word{transform:translateY(24px); transition-duration:.5s;}
 
   .skills-section{background:var(--bg-panel);}
-  .marquee{
-    width:100%; overflow:hidden; margin:14px 0;
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+
+  .skills-groups{
+    display:flex; flex-direction:column; gap:34px; margin-top:36px;
   }
-  .marquee-track{
-    display:flex; width:max-content; gap:14px;
-    animation:scrollLeft 32s linear infinite;
+  .skill-group-label{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em;
+    color:var(--coral); margin-bottom:16px; text-transform:uppercase;
   }
-  .marquee.reverse .marquee-track{animation:scrollRight 36s linear infinite;}
-  @keyframes scrollLeft{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-  @keyframes scrollRight{0%{transform:translateX(-50%);}100%{transform:translateX(0);}}
-  .m-chip{
-    font-family:var(--font-mono); font-size:15px; font-weight:600;
-    white-space:nowrap; padding:12px 22px; border:1px solid var(--line);
-    border-radius:40px; color:var(--ink); background:rgba(255,255,255,0.02);
+  .skill-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+    gap:14px;
   }
-  .m-chip.on{color:var(--bg); background:var(--amber); border-color:var(--amber);}
+  .skill-card{
+    display:flex; align-items:center; gap:12px;
+    border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px;
+    background:rgba(255,255,255,0.02);
+    opacity:0; transform:translateY(24px);
+    transition:opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1), border-color .2s ease, background .2s ease;
+  }
+  .skill-card.in-view{opacity:1; transform:translateY(0);}
+  .skill-card:hover{border-color:var(--amber); background:rgba(255,176,32,0.06);}
+  .skill-icon{
+    width:32px; height:32px; flex:0 0 32px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .brand-logo{width:22px; height:22px; display:block;}
+  .brand-badge{
+    width:32px; height:32px; border-radius:8px;
+    align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-weight:700; font-size:10px;
+    letter-spacing:0.02em; position:absolute; inset:0;
+  }
+  .skill-name{
+    font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink);
+    line-height:1.2;
+  }
 
   .exp-card{
     border:1px solid var(--line); border-radius:16px;
@@ -166,6 +205,11 @@
   }
   .exp-card.in-view{opacity:1; transform:translateY(0) scale(1);}
   .exp-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:6px;}
+  .exp-title-row{display:flex; align-items:center; gap:14px;}
+  .exp-logo{
+    width:42px; height:42px; object-fit:contain; border-radius:9px;
+    background:rgba(255,255,255,0.94); padding:6px; flex:0 0 42px;
+  }
   .exp-role{font-family:var(--font-display); font-size:22px; text-transform:uppercase;}
   .exp-tag{
     font-family:var(--font-mono); font-size:11px; font-weight:700; padding:5px 12px;
@@ -189,19 +233,30 @@
   }
   .proj-card:nth-child(2){border-top-color:var(--amber);}
   .proj-card.in-view{opacity:1; transform:translateY(0);}
-  .proj-num{font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-bottom:14px;}
+  .proj-logo-row{display:flex; align-items:center; gap:12px; margin-bottom:14px;}
+  .proj-logo{
+    width:40px; height:40px; object-fit:contain; border-radius:8px;
+    background:rgba(255,255,255,0.92); padding:6px;
+  }
+  .proj-num{font-family:var(--font-mono); font-size:12px; color:var(--muted); margin:0;}
   .proj-name{font-family:var(--font-display); font-size:21px; text-transform:uppercase; margin-bottom:16px; line-height:1.15;}
   .proj-list{list-style:none; display:flex; flex-direction:column; gap:8px;}
   .proj-list li{position:relative; padding-left:18px; font-size:14.5px; color:#C7CCDB;}
   .proj-list li::before{content:'—'; position:absolute; left:0; color:var(--coral);}
 
   .edu-row{
-    display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
     border-bottom:1px solid var(--line); padding-bottom:26px; margin-top:20px;
   }
+  .edu-photo{
+    width:180px; height:120px; object-fit:cover; border-radius:12px;
+    border:1px solid var(--line); flex:0 0 180px;
+  }
+  .edu-info{flex:1 1 320px;}
   .edu-degree{font-family:var(--font-display); font-size:clamp(20px,2.6vw,28px); text-transform:uppercase; line-height:1.2; max-width:640px;}
   .edu-school{color:var(--muted); margin-top:8px; font-size:15px;}
   .edu-year{font-family:var(--font-mono); font-size:14px; color:var(--amber); white-space:nowrap;}
+  @media (max-width:600px){.edu-photo{width:100%; height:160px; flex:1 1 100%;}}
 
   .contact-section{background:var(--bg-panel);}
   .contact-big{
@@ -246,14 +301,19 @@
 <section class="hero" id="hero">
   <div class="hero-blob blob-1"></div>
   <div class="hero-blob blob-2"></div>
-  <div class="wrap">
-    <div class="hero-eyebrow">DEVOPS ENGINEER · MUMBAI, INDIA</div>
-    <h1 class="hero-name kinetic" id="kName">Krushna Bharat Jagdale</h1>
-    <h2 class="hero-role kinetic" id="kRole">DevOps Engineer</h2>
-    <div class="hero-meta">
-      <span>krushnaj635@gmail.com</span>
-      <span>9022507897</span>
-      <span>Mumbai, India</span>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">DEVOPS ENGINEER · MUMBAI, INDIA</div>
+      <h1 class="hero-name kinetic" id="kName">Krushna Bharat Jagdale</h1>
+      <h2 class="hero-role kinetic" id="kRole">DevOps Engineer</h2>
+      <div class="hero-meta">
+        <span>krushnaj635@gmail.com</span>
+        <span>9022507897</span>
+        <span>Mumbai, India</span>
+      </div>
+    </div>
+    <div class="hero-photo-panel">
+      <img src="PUT_YOUR_PHOTO_BASE64_OR_URL_HERE" alt="Krushna Bharat Jagdale">
     </div>
   </div>
   <div class="scroll-cue"><div class="scroll-cue-line"></div>SCROLL</div>
@@ -270,168 +330,26 @@
 <section class="skills-section" id="skills">
   <div class="wrap" style="width:100%;">
     <span class="sec-label">// 02 — STACK</span>
-    <div class="sec-big" style="margin-bottom:30px;">Tech Stack</div>
-  </div>
-  <div class="marquee">
-    <div class="marquee-track" id="track1">
-      <span class="m-chip on">Jenkins</span><span class="m-chip">GitHub Actions</span><span class="m-chip">Harness CD</span><span class="m-chip">Argo CD</span><span class="m-chip">Git</span><span class="m-chip">GitLab CI</span><span class="m-chip on">Docker</span><span class="m-chip">Kubernetes</span><span class="m-chip">OpenShift</span><span class="m-chip">Helm</span>
-    </div>
-  </div>
-  <div class="marquee reverse">
-    <div class="marquee-track" id="track2">
-      <span class="m-chip">AWS EC2</span><span class="m-chip on">Prometheus</span><span class="m-chip">Grafana</span><span class="m-chip">ELK Stack</span><span class="m-chip">Terraform</span><span class="m-chip">Linux</span><span class="m-chip on">Bash</span><span class="m-chip">SonarQube</span><span class="m-chip">IAM</span><span class="m-chip">Secrets Mgmt</span>
-    </div>
-  </div>
-</section>
+    <div class="sec-big">Tech Stack</div>
 
-<section id="experience">
-  <div class="wrap" style="width:100%;">
-    <span class="sec-label">// 03 — DEPLOY LOG</span>
-    <div class="sec-big" style="margin-bottom:30px;">Experience</div>
+    <div class="skills-groups" id="skillsGroups">
 
-    <div class="exp-card">
-      <div class="exp-top">
-        <div class="exp-role">DevOps Engineer</div>
-        <span class="exp-tag tag-live">● CURRENT</span>
-      </div>
-      <div class="exp-org">Scalezee Technologies Pvt. Ltd</div>
-      <div class="exp-meta">JUL 2025 → PRESENT</div>
-      <ul class="exp-list">
-        <li>Managed application deployments across Development, UAT, and Production environments.</li>
-        <li>Automated CI/CD pipelines using Jenkins and GitHub Actions.</li>
-        <li>Managed containerized applications on Kubernetes and OpenShift using Helm.</li>
-        <li>Monitored infrastructure and applications using Prometheus, Grafana, and ELK Stack.</li>
-        <li>Collaborated with Development and QA teams to troubleshoot production issues and improve deployment reliability.</li>
-      </ul>
-    </div>
-
-    <div class="exp-card">
-      <div class="exp-top">
-        <div class="exp-role">DevOps Engineer Intern</div>
-        <span class="exp-tag tag-done">✓ COMPLETE</span>
-      </div>
-      <div class="exp-org">Nimap Infotech LLP · Mumbai, India</div>
-      <div class="exp-meta">FEB 2025 → JUL 2025</div>
-      <ul class="exp-list">
-        <li>Assisted in application deployments and CI/CD automation.</li>
-        <li>Supported Linux-based Docker, Kubernetes, and AWS infrastructure.</li>
-        <li>Worked with development teams to resolve deployment issues.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="wrap" style="width:100%;">
-    <span class="sec-label">// 04 — SHIPPED</span>
-    <div class="sec-big">Projects</div>
-    <div class="proj-grid">
-      <div class="proj-card">
-        <div class="proj-num">01 / BANKING</div>
-        <div class="proj-name">Bank of Baroda — CBDC Platform</div>
-        <ul class="proj-list">
-          <li>Managed Kubernetes and OpenShift deployments using Helm.</li>
-          <li>Performed cluster upgrades and health validation for platform stability.</li>
-          <li>Automated deployments with Jenkins and GitHub Actions.</li>
-          <li>Configured monitoring using Prometheus, Grafana, and ELK.</li>
-          <li>Managed MariaDB replication, backup, and disaster recovery.</li>
-        </ul>
-      </div>
-      <div class="proj-card">
-        <div class="proj-num">02 / FINANCE</div>
-        <div class="proj-name">Muthoot Finance</div>
-        <ul class="proj-list">
-          <li>Developed CI/CD pipelines using GitHub Actions and Harness CD.</li>
-          <li>Built and deployed multi-container Docker applications with Docker Compose.</li>
-          <li>Managed AWS services (EC2, IAM, S3).</li>
-          <li>Integrated SonarQube for code quality analysis.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="education">
-  <div class="wrap" style="width:100%;">
-    <span class="sec-label">// 05 — BOOTSTRAP</span>
-    <div class="sec-big">Education</div>
-    <div class="edu-row">
       <div>
-        <div class="edu-degree">Bachelor of Technology (B.Tech) — Mechanical Engineering</div>
-        <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhajinagar</div>
+        <div class="skill-group-label">CI / CD</div>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/jenkins.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#D24939;color:#ffffff; display:none;">JK</span></div><span class="skill-name">Jenkins</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/githubactions.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#2088FF;color:#ffffff; display:none;">GA</span></div><span class="skill-name">GitHub Actions</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/harness.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#0055FF;color:#ffffff; display:none;">HN</span></div><span class="skill-name">Harness CD</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/argo.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#EF7B4D;color:#ffffff; display:none;">AR</span></div><span class="skill-name">Argo CD</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/git.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#F05032;color:#ffffff; display:none;">GT</span></div><span class="skill-name">Git</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/gitlab.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#FC6D26;color:#ffffff; display:none;">GL</span></div><span class="skill-name">GitLab CI</span></div>
+        </div>
       </div>
-      <div class="edu-year">2019 — 2024</div>
-    </div>
-  </div>
-</section>
 
-<section class="contact-section" id="contact">
-  <div class="wrap">
-    <span class="sec-label">// 06 — CONNECT</span>
-    <div class="contact-big">Contact</div>
-    <a class="contact-link" href="mailto:krushnaj635@gmail.com" style="font-family:var(--font-mono); font-size:clamp(18px,2.4vw,24px);">krushnaj635@gmail.com →</a>
-    <div class="contact-details">
-      <div><span class="cd-label">NAME</span><span class="cd-value">Krushna Bharat Jagdale</span></div>
-      <div><span class="cd-label">PHONE</span><a class="cd-value" href="tel:+919022507897">+91 90225 07897</a></div>
-      <div><span class="cd-label">LOCATION</span><span class="cd-value">Mumbai, India</span></div>
-      <div><span class="cd-label">ROLE</span><span class="cd-value">DevOps Engineer</span></div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap"><div class="footer-text">© 2026 Krushna Bharat Jagdale · Mumbai, India</div></div>
-</footer>
-
-<script>
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function splitWords(el){
-    const text = el.textContent;
-    el.innerHTML = text.split(' ').map((w,i)=>`<span class="word" style="transition-delay:${i*0.04}s">${w}&nbsp;</span>`).join('');
-  }
-  document.querySelectorAll('.kinetic').forEach(splitWords);
-
-  const revealTargets = document.querySelectorAll('.kinetic, .exp-card, .proj-card');
-  if(reduced){
-    revealTargets.forEach(el=>el.classList.add('in-view'));
-  } else {
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    }, {threshold:0.2});
-    revealTargets.forEach(el=>io.observe(el));
-    requestAnimationFrame(()=>{
-      document.getElementById('kName').classList.add('in-view');
-      setTimeout(()=>document.getElementById('kRole').classList.add('in-view'), 250);
-    });
-  }
-
-  const bar = document.getElementById('progressBar');
-  function updateProgress(){
-    const h = document.documentElement;
-    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
-    bar.style.width = scrolled + '%';
-  }
-  window.addEventListener('scroll', updateProgress, {passive:true});
-  updateProgress();
-
-  const navLinks = document.querySelectorAll('.nav a');
-  const sections = document.querySelectorAll('section[id]');
-  const navIo = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(l=>l.classList.toggle('is-active', l.getAttribute('href') === '#'+id));
-      }
-    });
-  }, {rootMargin:'-45% 0px -50% 0px'});
-  sections.forEach(s=>navIo.observe(s));
-</script>
-
-</body>
-</html>
+      <div>
+        <div class="skill-group-label">CONTAINERS &amp; ORCHESTRATION</div>
+        <div class="skill-grid">
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/docker.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#2496ED;color:#ffffff; display:none;">DK</span></div><span class="skill-name">Docker</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/kubernetes.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#326CE5;color:#ffffff; display:none;">K8</span></div><span class="skill-name">Kubernetes</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/redhatopenshift.svg" alt="" style="filter:invert(1) brightness(1.6);" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><span class="brand-badge" style="background:#EE0000;color:#ffffff; display:none;">OS</span></div><span class="skill-name">OpenShift</span></div>
+          <div class="skill-card"><div class="skill-icon"><img class="brand-logo" src="https://cdn.jsdelivr.net/npm/simple-icons@13/icons/helm.svg" alt="" style="filter:invert(1)
