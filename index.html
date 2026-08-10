@@ -1,64 +1,695 @@
-<section id="skills" class="tech-section">
-  <div class="container">
-    <h2 class="section-title">Tech Stack</h2>
-    <p class="section-subtitle">Tools & technologies I use in day-to-day DevOps workflows.</p>
+<!DOCTYPE html>
 
-    <div class="tech-grid">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krushna Bharat Jagdale | DevOps Engineer</title>
 
-      <div class="tech-block">
-        <h3>CI/CD</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="">Jenkins</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="">GitHub Actions</span>
-          <span><img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/argo/icon/color/argo-icon-color.svg" alt="">Argo CD</span>
-        </div>
-      </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-      <div class="tech-block">
-        <h3>Containers</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="">Docker</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="">Kubernetes</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redhat/redhat-original.svg" alt="">OpenShift</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" alt="">Helm</span>
-        </div>
-      </div>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-      <div class="tech-block">
-        <h3>Cloud</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="">AWS</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="">EC2</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="">S3</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="">IAM</span>
-        </div>
-      </div>
+    html{
+      scroll-behavior:smooth;
+    }
 
-      <div class="tech-block">
-        <h3>Monitoring</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="">Prometheus</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="">Grafana</span>
-          <span><img src="https://www.vectorlogo.zone/logos/elastic/elastic-icon.svg" alt="">ELK</span>
-        </div>
-      </div>
+    body{
+      font-family:'Inter',sans-serif;
+      background:#0b1020;
+      color:#f8fafc;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+    }
 
-      <div class="tech-block">
-        <h3>Operating System</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="">Linux</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="">Bash</span>
-        </div>
-      </div>
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
 
-      <div class="tech-block">
-        <h3>DevSecOps</h3>
-        <div class="tech-items">
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg" alt="">SonarQube</span>
-          <span><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="">Git</span>
-        </div>
-      </div>
+    img{
+      display:block;
+      max-width:100%;
+    }
 
+    .container{
+      width:100%;
+      max-width:1120px;
+      margin:auto;
+      padding:0 20px;
+    }
+
+    /* ===== NAVBAR ===== */
+    header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(11,16,32,.88);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:16px 0;
+    }
+
+    .logo{
+      font-size:1rem;
+      font-weight:800;
+      color:#f59e0b;
+      letter-spacing:.08em;
+      white-space:nowrap;
+    }
+
+    nav ul{
+      display:flex;
+      gap:22px;
+      list-style:none;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    nav a{
+      color:#cbd5e1;
+      font-size:.95rem;
+      font-weight:500;
+      transition:.2s ease;
+    }
+
+    nav a:hover{
+      color:#f59e0b;
+    }
+
+    /* ===== HERO ===== */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      background:
+        radial-gradient(circle at top right, rgba(245,158,11,.20), transparent 32%),
+        radial-gradient(circle at bottom left, rgba(59,130,246,.15), transparent 28%);
+    }
+
+    .eyebrow{
+      color:#f59e0b;
+      font-size:.85rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .hero h1{
+      font-size:clamp(2.8rem,8vw,5.8rem);
+      line-height:1;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+
+    .hero h2{
+      font-size:clamp(1.35rem,3.5vw,2.2rem);
+      color:#94a3b8;
+      margin-bottom:22px;
+      font-weight:700;
+    }
+
+    .hero p{
+      max-width:760px;
+      color:#d1d5db;
+      font-size:1.02rem;
+      margin-bottom:28px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:28px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 22px;
+      border-radius:14px;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .btn-primary{
+      background:#f59e0b;
+      color:#111827;
+      box-shadow:0 12px 28px rgba(245,158,11,.22);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-outline{
+      border:1px solid rgba(255,255,255,.15);
+      color:#e2e8f0;
+    }
+
+    .btn-outline:hover{
+      border-color:#f59e0b;
+      color:#f59e0b;
+    }
+
+    .hero-meta{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      color:#94a3b8;
+      font-size:.92rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    section{
+      padding:88px 0;
+    }
+
+    .section-title{
+      font-size:2rem;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    .section-subtitle{
+      color:#94a3b8;
+      margin-bottom:34px;
+    }
+
+    .card{
+      background:#111827;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      padding:28px;
+      transition:.25s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:rgba(245,158,11,.25);
+    }
+
+    /* ===== TECH STACK ===== */
+    .tech-stack{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+    }
+
+    .tech-group{
+      background:#111827;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      padding:22px;
+    }
+
+    .tech-group h3{
+      color:#f59e0b;
+      font-size:1rem;
+      margin-bottom:16px;
+      font-weight:700;
+    }
+
+    .tech-items{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .tech-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      background:#0b1020;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:999px;
+      font-size:.88rem;
+      color:#e2e8f0;
+      white-space:nowrap;
+    }
+
+    /* Small responsive logos */
+    .tech-item img{
+      width:18px;
+      height:18px;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    /* ===== EXPERIENCE ===== */
+    .timeline{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .exp-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+
+    .exp-role{
+      font-size:1.15rem;
+      font-weight:800;
+    }
+
+    .exp-tag{
+      padding:6px 12px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:700;
+    }
+
+    .tag-live{
+      background:rgba(245,158,11,.12);
+      color:#f59e0b;
+      border:1px solid rgba(245,158,11,.3);
+    }
+
+    .tag-done{
+      background:rgba(255,255,255,.06);
+      color:#cbd5e1;
+      border:1px solid rgba(255,255,255,.1);
+    }
+
+    .exp-org{
+      color:#cbd5e1;
+      font-weight:600;
+      margin-bottom:4px;
+    }
+
+    .exp-meta{
+      color:#94a3b8;
+      font-size:.92rem;
+      margin-bottom:14px;
+    }
+
+    .exp-list{
+      padding-left:18px;
+      color:#dbe3f3;
+    }
+
+    .exp-list li{
+      margin-bottom:8px;
+    }
+
+    /* ===== PROJECTS ===== */
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .project h3{
+      margin-bottom:12px;
+      font-size:1.08rem;
+    }
+
+    .project ul{
+      padding-left:18px;
+      color:#dbe3f3;
+    }
+
+    .project li{
+      margin-bottom:8px;
+    }
+
+    /* ===== EDUCATION ===== */
+    .edu h3{
+      font-size:1.08rem;
+      margin-bottom:8px;
+    }
+
+    .edu p{
+      color:#cbd5e1;
+    }
+
+    .edu .year{
+      color:#f59e0b;
+      font-weight:700;
+      margin-top:10px;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+
+    .contact-box{
+      background:#111827;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:22px;
+    }
+
+    .contact-box span{
+      display:block;
+      color:#94a3b8;
+      font-size:.8rem;
+      margin-bottom:6px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .contact-box a:hover{
+      color:#f59e0b;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      text-align:center;
+      padding:28px 0;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:#94a3b8;
+      font-size:.9rem;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width:760px){
+      nav{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      nav ul{
+        width:100%;
+        gap:16px;
+        justify-content:flex-start;
+      }
+
+      .hero{
+        padding-top:40px;
+      }
+
+      .hero-meta{
+        flex-direction:column;
+        gap:8px;
+      }
+
+      .section-title{
+        font-size:1.7rem;
+      }
+
+      .tech-stack{
+        grid-template-columns:1fr;
+      }
+
+      .tech-group{
+        padding:18px;
+      }
+
+      .tech-item{
+        font-size:.82rem;
+        padding:7px 10px;
+      }
+
+      /* Even smaller logos on mobile */
+      .tech-item img{
+        width:16px;
+        height:16px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">KRUSHNA.DEVOPS</div>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Tech Stack</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="eyebrow">DevOps Engineer · Mumbai, India</div>
+      <h1>Krushna Bharat Jagdale</h1>
+      <h2>DevOps Engineer</h2>
+
+```
+  <p>
+    DevOps Engineer with 1.5+ years of experience in CI/CD automation,
+    Kubernetes, OpenShift, AWS, Docker, Jenkins, monitoring, and production support
+    for cloud-native banking applications.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contact" class="btn btn-primary">Contact Me</a>
+    <a href="https://github.com/krushjagdale1" target="_blank" class="btn btn-outline">GitHub</a>
+    <a href="https://www.linkedin.com/" target="_blank" class="btn btn-outline">LinkedIn</a>
   </div>
-</section>
+
+  <div class="hero-meta">
+    <span>📧 krushnaj635@gmail.com</span>
+    <span>📱 +91 90225 07897</span>
+    <span>📍 Mumbai, Maharashtra, India</span>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">Automation-first DevOps Engineer focused on reliable deployments, cloud infrastructure, and observability.</p>
+
+```
+  <div class="card">
+    Experienced in Kubernetes, OpenShift, Helm, Jenkins, GitHub Actions,
+    Prometheus, Grafana, ELK Stack, Linux, and AWS services including EC2, IAM, and S3.
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Tech Stack</h2>
+      <p class="section-subtitle">Tools & technologies I use in day-to-day DevOps workflows.</p>
+
+```
+  <div class="tech-stack">
+
+    <div class="tech-group">
+      <h3>CI/CD</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins">Jenkins</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">GitHub Actions</div>
+        <div class="tech-item"><img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/argo/icon/color/argo-icon-color.svg" alt="Argo CD">Argo CD</div>
+      </div>
+    </div>
+
+    <div class="tech-group">
+      <h3>Containers</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">Docker</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes">Kubernetes</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redhat/redhat-original.svg" alt="OpenShift">OpenShift</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" alt="Helm">Helm</div>
+      </div>
+    </div>
+
+    <div class="tech-group">
+      <h3>Cloud</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS">AWS</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="EC2">EC2</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="S3">S3</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="IAM">IAM</div>
+      </div>
+    </div>
+
+    <div class="tech-group">
+      <h3>Monitoring</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" alt="Prometheus">Prometheus</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana">Grafana</div>
+        <div class="tech-item"><img src="https://www.vectorlogo.zone/logos/elastic/elastic-icon.svg" alt="ELK">ELK</div>
+      </div>
+    </div>
+
+    <div class="tech-group">
+      <h3>Operating System</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">Linux</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash">Bash</div>
+      </div>
+    </div>
+
+    <div class="tech-group">
+      <h3>DevSecOps</h3>
+      <div class="tech-items">
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sonarqube/sonarqube-original.svg" alt="SonarQube">SonarQube</div>
+        <div class="tech-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">Git</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+
+```
+  <div class="timeline">
+
+    <div class="card">
+      <div class="exp-top">
+        <div class="exp-role">DevOps Engineer</div>
+        <span class="exp-tag tag-live">● CURRENT</span>
+      </div>
+      <div class="exp-org">Scalezee Technologies Pvt. Ltd</div>
+      <div class="exp-meta">Jul 2025 – Present | Client: Bank of Baroda (CBDC)</div>
+      <ul class="exp-list">
+        <li>Managed deployments across Development, UAT, and Production environments.</li>
+        <li>Automated CI/CD pipelines using Jenkins and GitHub Actions.</li>
+        <li>Managed Kubernetes and OpenShift workloads using Helm.</li>
+        <li>Configured Prometheus, Grafana, and ELK for monitoring and logging.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="exp-top">
+        <div class="exp-role">DevOps Engineer Intern</div>
+        <span class="exp-tag tag-done">✓ COMPLETE</span>
+      </div>
+      <div class="exp-org">Nimap Infotech LLP · Mumbai, India</div>
+      <div class="exp-meta">Feb 2025 – Jul 2025</div>
+      <ul class="exp-list">
+        <li>Assisted with application deployments and CI/CD automation.</li>
+        <li>Supported Linux, Docker, Kubernetes, and AWS infrastructure.</li>
+        <li>Worked with developers to troubleshoot deployment issues.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+
+```
+  <div class="projects">
+
+    <div class="card project">
+      <h3>Bank of Baroda — CBDC Platform</h3>
+      <ul>
+        <li>Kubernetes and OpenShift deployment management.</li>
+        <li>Cluster upgrades and health validation.</li>
+        <li>Jenkins and GitHub Actions automation.</li>
+      </ul>
+    </div>
+
+    <div class="card project">
+      <h3>Muthoot Finance</h3>
+      <ul>
+        <li>GitHub Actions and Harness CD pipelines.</li>
+        <li>Docker Compose multi-container deployment.</li>
+        <li>AWS EC2, IAM, and S3 management.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+
+```
+  <div class="card edu">
+    <h3>Bachelor of Technology (B.Tech) — Mechanical Engineering</h3>
+    <p>Marathwada Institute of Technology, Chhatrapati Sambhajinagar</p>
+    <div class="year">2019 – 2024</div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+
+```
+  <div class="contact-grid">
+
+    <div class="contact-box">
+      <span>Email</span>
+      <a href="mailto:krushnaj635@gmail.com">krushnaj635@gmail.com</a>
+    </div>
+
+    <div class="contact-box">
+      <span>Phone</span>
+      <a href="tel:+919022507897">+91 90225 07897</a>
+    </div>
+
+    <div class="contact-box">
+      <span>Location</span>
+      Mumbai, Maharashtra, India
+    </div>
+
+    <div class="contact-box">
+      <span>GitHub</span>
+      <a href="https://github.com/krushjagdale1" target="_blank">github.com/krushjagdale1</a>
+    </div>
+
+  </div>
+</div>
+```
+
+  </section>
+
+  <footer>
+    © 2026 Krushna Bharat Jagdale • DevOps Engineer
+  </footer>
+
+</body>
+</html>
+
