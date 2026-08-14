@@ -7,8 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Simplex Noise for Authentic Ambient Swirl Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 
 <style>
   :root{
@@ -84,7 +82,7 @@
     color:var(--muted); text-transform:uppercase;
   }
 
-  /* ---------------- AMBIENT SWIRL CANVAS ---------------- */
+  /* ---------------- BACKGROUND CANVAS ---------------- */
   #bg-canvas{
     position:fixed; top:0; left:0; width:100vw; height:100vh;
     pointer-events:none; z-index:-1;
@@ -420,11 +418,11 @@
     <div class="loader-bar-bg">
       <div class="loader-bar-fill" id="loaderFill"></div>
     </div>
-    <div class="loader-sub">INITIALIZING SWIRL MATRIX</div>
+    <div class="loader-sub">INITIALIZING DEVOPS MATRIX</div>
   </div>
 </div>
 
-<!-- SWIRL CANVAS BACKGROUND -->
+<!-- BACKGROUND CANVAS -->
 <canvas id="bg-canvas"></canvas>
 
 <div class="progress" id="progressBar"></div>
@@ -436,7 +434,6 @@
   <a href="#projects" data-s="projects">PROJECTS</a>
   <a href="#education" data-s="education">EDUCATION</a>
   <a href="#contact" data-s="contact">CONTACT</a>
-  <!-- NAV GOOGLE DRIVE RESUME LINK -->
   <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="nav-resume-link">📄 RESUME</a>
 </nav>
 
@@ -454,7 +451,7 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- RESUME BUTTON WITH GOOGLE DRIVE LINK -->
+      <!-- RESUME BUTTON -->
       <div class="resume-btn-wrap">
         <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="resume-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -462,7 +459,7 @@
         </a>
       </div>
 
-      <!-- ANIMATED DEVOPS INFINITY LOOP SECTION -->
+      <!-- ANIMATED DEVOPS INFINITY LOOP -->
       <div class="infinity-container">
         <svg class="infinity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -797,13 +794,11 @@
   const navLinks = document.querySelectorAll('.nav a[data-s]');
 
   window.addEventListener('scroll', () => {
-    // Scroll progress bar width
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
     if(progressBar) progressBar.style.width = scrolled + '%';
 
-    // Highlight active menu link based on visible section
     let current = '';
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 180;
@@ -820,7 +815,7 @@
     });
   });
 
-  // 3. INTERSECTION OBSERVER FOR CARDS ANIMATION (FADE-IN UP)
+  // 3. INTERSECTION OBSERVER FOR CARDS ANIMATION
   const animatedElements = document.querySelectorAll('.skill-card, .exp-card, .proj-card');
   const observerOptions = {
     threshold: 0.15,
@@ -838,12 +833,24 @@
 
   animatedElements.forEach(el => observer.observe(el));
 
-  // 4. AMBIENT SWIRL CANVAS BACKGROUND (SIMPLEX NOISE)
+  // 4. INTERACTIVE PLEXUS NETWORK CANVAS BACKGROUND
   const canvas = document.getElementById('bg-canvas');
-  if (canvas && typeof SimplexNoise !== 'undefined') {
+  if (canvas) {
     const ctx = canvas.getContext('2d');
-    const simplex = new SimplexNoise();
-    let width, height, t = 0;
+    let width, height;
+    let particles = [];
+    const particleCount = 70;
+    let mouse = { x: null, y: null, radius: 160 };
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -852,29 +859,72 @@
     window.addEventListener('resize', resize);
     resize();
 
-    function draw() {
-      ctx.fillStyle = 'rgba(7, 11, 20, 0.2)';
-      ctx.fillRect(0, 0, width, height);
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 1.2;
+        this.vy = (Math.random() - 0.5) * 1.2;
+        this.radius = Math.random() * 2 + 1;
+        this.color = Math.random() > 0.5 ? '#00F2FE' : '#00F5A0';
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
 
-      const step = 45;
-      t += 0.0015;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
 
-      for (let x = 0; x < width; x += step) {
-        for (let y = 0; y < height; y += step) {
-          const angle = simplex.noise3D(x * 0.001, y * 0.001, t) * Math.PI * 2;
-          const length = 12;
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
 
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + Math.cos(angle) * length, y + Math.sin(angle) * length);
-          ctx.strokeStyle = `rgba(0, 242, 254, ${Math.abs(Math.sin(angle)) * 0.12})`;
-          ctx.lineWidth = 1.2;
-          ctx.stroke();
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 242, 254, ${1 - dist / 130 * 0.4})`;
+            ctx.lineWidth = 0.7;
+            ctx.stroke();
+          }
+        }
+
+        if (mouse.x && mouse.y) {
+          const mdx = particles[i].x - mouse.x;
+          const mdy = particles[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < mouse.radius) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(127, 0, 255, ${1 - mdist / mouse.radius * 0.6})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
         }
       }
-      requestAnimationFrame(draw);
+      requestAnimationFrame(animate);
     }
-    draw();
+    animate();
   }
 </script>
 </body>
