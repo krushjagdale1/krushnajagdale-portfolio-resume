@@ -85,6 +85,9 @@
   .ambient-bg{
     position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden;
   }
+  #bg-canvas{
+    position:fixed; inset:0; pointer-events:none; z-index:-1;
+  }
   .aurora-blob{
     position:absolute; border-radius:50%; filter:blur(110px); opacity:0.35;
     animation:floatAurora 20s ease-in-out infinite alternate;
@@ -176,7 +179,6 @@
     color: var(--gold);
   }
 
-  /* DEVOPS ENGINEER TEXT IN SOLID WHITE */
   .hero-role{
     font-family:var(--font-display);
     font-size:clamp(32px, 5vw, 64px);
@@ -210,7 +212,6 @@
     margin-bottom:8px;
   }
 
-  /* SUMMARY TEXT */
   .summary-text{
     font-size:clamp(16px, 1.9vw, 19px);
     color:#E2E8F0;
@@ -220,7 +221,6 @@
     font-weight:400;
   }
 
-  /* SKILLS SECTION */
   .skills-section{width:100%;}
   .skills-groups{display:flex; flex-direction:column; gap:34px; margin-top:36px;}
   .skill-group-label{
@@ -357,7 +357,8 @@
   </div>
 </div>
 
-<!-- DYNAMIC BACKGROUND -->
+<!-- DYNAMIC ANIMATED BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
 <div class="ambient-bg">
   <div class="aurora-blob aurora-1"></div>
   <div class="aurora-blob aurora-2"></div>
@@ -445,7 +446,6 @@
         <div class="skill-group-label">CI/CD & Cloud</div>
         <div class="skill-grid">
           <div class="skill-card">
-            <!-- Updated reliable AWS Logo SVG source -->
             <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS"></div>
             <span class="skill-name">AWS (EC2, S3, IAM)</span>
           </div>
@@ -561,7 +561,7 @@
 <section id="projects">
   <div class="wrap">
     <span class="sec-label">04 // PORTFOLIO</span>
-    <h2 class="sec-big kinetic">Projects</h2>
+    <h2 class="sec-big kinetic">Key Projects</h2>
 
     <div class="proj-grid">
       <!-- Bank of Baroda CBDC -->
@@ -632,6 +632,7 @@
 <section class="contact-section" id="contact">
   <div class="wrap">
     <span class="sec-label">06 // CONNECT</span>
+    <h2 class="contact-big kinetic">Let's build reliable systems together.</h2>
     <p><a href="mailto:krushnaj635@gmail.com" class="contact-link">krushnaj635@gmail.com</a></p>
 
     <div class="contact-details">
@@ -678,13 +679,80 @@
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
         initScrollAnimations();
+        initBackgroundCanvas();
       }, 400);
     }
   };
 
   window.addEventListener('DOMContentLoaded', updateLoader);
 
-  // 2. KINETIC TEXT SPLITTER
+  // 2. BACKGROUND PARTICLE NETWORK ANIMATION
+  function initBackgroundCanvas() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 1.6 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 242, 254, 0.45)';
+        ctx.fill();
+      }
+    }
+
+    const particleCount = Math.min(Math.floor(window.innerWidth / 16), 55);
+    particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 242, 254, ${0.12 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+
+  // 3. KINETIC TEXT SPLITTER
   document.querySelectorAll('.kinetic').forEach(el => {
     const words = el.innerText.trim().split(/\s+/);
     el.innerHTML = words.map((word, i) => 
@@ -692,7 +760,7 @@
     ).join(' ');
   });
 
-  // 3. INTERSECTION OBSERVER
+  // 4. INTERSECTION OBSERVER
   function initScrollAnimations() {
     const observerOptions = { threshold: 0.12 };
     const observer = new IntersectionObserver((entries) => {
@@ -708,7 +776,7 @@
     });
   }
 
-  // 4. SCROLL PROGRESS & NAV HIGHLIGHTING
+  // 5. SCROLL PROGRESS & NAV HIGHLIGHTING
   window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
