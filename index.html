@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Simplex Noise for Authentic Ambient Swirl Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
 <style>
   :root{
     --bg:#070B14;
@@ -81,32 +84,10 @@
     color:var(--muted); text-transform:uppercase;
   }
 
-  /* ---------------- DYNAMIC BACKGROUND & CANVASES ---------------- */
+  /* ---------------- AMBIENT SWIRL CANVAS ---------------- */
   #bg-canvas{
-    position:fixed; inset:0; pointer-events:none; z-index:-1;
-  }
-  .ambient-bg{
-    position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden;
-  }
-  .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(140px); opacity:0.12;
-    animation:floatAurora 22s ease-in-out infinite alternate;
-  }
-  .aurora-1{
-    width:700px; height:700px;
-    background:radial-gradient(circle, var(--cyan) 0%, rgba(0,242,254,0) 70%);
-    top:-15%; left:-10%; animation-duration:24s;
-  }
-  .aurora-2{
-    width:800px; height:800px;
-    background:radial-gradient(circle, var(--violet) 0%, rgba(127,0,255,0) 70%);
-    bottom:-15%; right:-10%; animation-duration:28s; animation-delay:-5s;
-  }
-
-  @keyframes floatAurora{
-    0%{transform:translate(0px, 0px) scale(1) rotate(0deg);}
-    50%{transform:translate(60px, -40px) scale(1.1) rotate(180deg);}
-    100%{transform:translate(-40px, 60px) scale(0.95) rotate(360deg);}
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    pointer-events:none; z-index:-1;
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -120,7 +101,7 @@
   .nav{
     position:fixed; top:0; right:0; z-index:90;
     padding:22px 28px; display:flex; gap:22px; align-items:center;
-    background:rgba(7, 11, 20, 0.8); backdrop-filter:blur(14px);
+    background:rgba(7, 11, 20, 0.85); backdrop-filter:blur(14px);
     border-bottom-left-radius:16px; border:1px solid var(--line); border-top:none; border-right:none;
   }
   .nav a{
@@ -214,7 +195,7 @@
     transform: translateY(-2px);
   }
 
-  /* ---------------- DEVOPS INFINITY LOOP SECTION ---------------- */
+  /* DEVOPS INFINITY LOOP SECTION */
   .infinity-container{
     margin-top:28px;
     padding:20px;
@@ -445,10 +426,6 @@
 
 <!-- SWIRL CANVAS BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
-<div class="ambient-bg">
-  <div class="aurora-blob aurora-1"></div>
-  <div class="aurora-blob aurora-2"></div>
-</div>
 
 <div class="progress" id="progressBar"></div>
 
@@ -814,42 +791,106 @@
   };
   updateLoader();
 
-  // 2. ELEGANT SUBTLE DYNAMIC SWIRL WAVE CANVAS ANIMATION
+  // 2. AUTHENTIC AMBIENT SWIRL CANVAS ANIMATION (Codrops / AmbientCanvasBackgrounds Style)
+  const particleCount = 700;
+  const particlePropsLength = 9;
+  const particleProps = new Float32Array(particleCount * particlePropsLength);
+
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-  let width, height;
-  let step = 0;
+  let simplex = typeof SimplexNoise !== 'undefined' ? new SimplexNoise() : null;
 
-  function resizeCanvas() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+  let center = [0, 0];
+  let tick = 0;
+
+  function initCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    center[0] = canvas.width * 0.5;
+    center[1] = canvas.height * 0.5;
   }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
 
-  function drawSubtleSwirl() {
-    ctx.clearRect(0, 0, width, height);
-    ctx.lineWidth = 1.2;
-
-    const lines = 10; 
-    for (let i = 0; i < lines; i++) {
-      ctx.beginPath();
-      const opacity = 0.05 + (i % 3) * 0.03;
-      ctx.strokeStyle = i % 2 === 0 ? `rgba(0, 242, 254, ${opacity})` : `rgba(127, 0, 255, ${opacity})`;
-
-      for (let x = 0; x < width; x += 15) {
-        const y = height / 2 
-                  + Math.sin(x * 0.003 + step + i * 0.5) * 110 
-                  + Math.cos(x * 0.002 - step * 0.4) * 70;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
+  function initParticles() {
+    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
+      initParticle(i);
     }
-    step += 0.006;
-    requestAnimationFrame(drawSubtleSwirl);
   }
-  drawSubtleSwirl();
+
+  function initParticle(i) {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height;
+    let vx = 0;
+    let vy = 0;
+    let life = 0;
+    let maxLife = 100 + Math.random() * 150;
+    let speed = 0.8 + Math.random() * 1.5;
+    let radius = 1 + Math.random() * 2;
+    let hue = 180 + Math.random() * 100; // Cyan to Purple palette
+
+    particleProps.set([x, y, vx, vy, life, maxLife, speed, radius, hue], i);
+  }
+
+  function drawParticle(x, y, x2, y2, life, maxLife, radius, hue) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineWidth = radius;
+    let alpha = Math.sin((life / maxLife) * Math.PI);
+    ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha * 0.45})`;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+  }
+
+  function updateParticles() {
+    tick++;
+    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
+      let x = particleProps[i];
+      let y = particleProps[i + 1];
+
+      // Simplex noise curl vector force
+      let n = simplex ? simplex.noise3D(x * 0.0015, y * 0.0015, tick * 0.0012) : Math.sin(x*0.002 + tick*0.01);
+      let angle = n * Math.PI * 4;
+
+      let vx = Math.cos(angle) * particleProps[i + 6];
+      let vy = Math.sin(angle) * particleProps[i + 6];
+
+      let x2 = x + vx;
+      let y2 = y + vy;
+
+      let life = particleProps[i + 4] + 1;
+      let maxLife = particleProps[i + 5];
+
+      drawParticle(x, y, x2, y2, life, maxLife, particleProps[i + 7], particleProps[i + 8]);
+
+      particleProps[i] = x2;
+      particleProps[i + 1] = y2;
+      particleProps[i + 4] = life;
+
+      if (life > maxLife || x2 < 0 || x2 > canvas.width || y2 < 0 || y2 > canvas.height) {
+        initParticle(i);
+      }
+    }
+  }
+
+  function renderSwirl() {
+    // Fade trail effect for silky swirl flow
+    ctx.fillStyle = 'rgba(7, 11, 20, 0.08)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    updateParticles();
+    requestAnimationFrame(renderSwirl);
+  }
+
+  window.addEventListener('resize', () => {
+    initCanvas();
+  });
+
+  initCanvas();
+  initParticles();
+  renderSwirl();
 
   // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
