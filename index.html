@@ -801,25 +801,11 @@
       currentCenterX += (targetX - currentCenterX) * 0.045;
       currentCenterY += (targetY - currentCenterY) * 0.045;
 
-      // Swirl Center Radial Aura
-      const auraGlow = ctx.createRadialGradient(
-        currentCenterX, currentCenterY, 0,
-        currentCenterX, currentCenterY, 220
-      );
-      auraGlow.addColorStop(0, 'rgba(0, 242, 254, 0.14)');
-      auraGlow.addColorStop(0.4, 'rgba(127, 0, 255, 0.06)');
-      auraGlow.addColorStop(1, 'rgba(7, 11, 20, 0)');
-      
-      ctx.fillStyle = auraGlow;
-      ctx.beginPath();
-      ctx.arc(currentCenterX, currentCenterY, 220, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Render swirl particles
-      particles.forEach(p => {
-        p.update(currentCenterX, currentCenterY);
-        p.draw();
-      });
+      // Update and draw swirl particles
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update(currentCenterX, currentCenterY);
+        particles[i].draw();
+      }
 
       requestAnimationFrame(renderSwirl);
     }
@@ -827,57 +813,34 @@
     renderSwirl();
   }
 
-  // 3. KINETIC TEXT SPLITTER
-  document.querySelectorAll('.kinetic').forEach(el => {
-    const words = el.innerText.trim().split(/\s+/);
-    el.innerHTML = words.map((word, i) => 
-      `<span class="word" style="transition-delay: ${i * 0.05}s">${word}</span>`
-    ).join(' ');
-  });
-
-  // 4. SCROLL INTERSECTION OBSERVER
+  // 3. SCROLL REVEAL & NAVIGATION OBSERVER
   function initScrollAnimations() {
-    const observerOptions = { threshold: 0.12 };
+    // Top Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const progressBar = document.getElementById('progressBar');
+      if (progressBar) progressBar.style.width = scrolled + '%';
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = {
+      threshold: 0.15
+    };
+
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
         }
       });
     }, observerOptions);
 
-    document.querySelectorAll('.kinetic, .skill-card, .exp-card, .proj-card').forEach(el => {
+    document.querySelectorAll('.kinetic, .skill-card, .exp-card, .proj-card').forEach((el) => {
       observer.observe(el);
     });
   }
-
-  // 5. NAV HIGHLIGHT & SCROLL PROGRESS
-  window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    const progressBar = document.getElementById('progressBar');
-    if (progressBar) progressBar.style.width = scrolled + '%';
-
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav a');
-    let current = '';
-
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      if (window.pageYOffset >= sectionTop - 220) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(a => {
-      a.classList.remove('is-active');
-      if (a.getAttribute('href') === `#${current}`) {
-        a.classList.add('is-active');
-      }
-    });
-  });
 </script>
-
 </body>
 </html>
