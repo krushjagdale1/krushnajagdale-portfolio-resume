@@ -7,15 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- 1. Vanta & Three.js Libraries -->
-<script src="three.r134.min.js"></script>
-<script src="vanta.dots.min.js"></script>
+<!-- Simplex Noise for Authentic Ambient Swirl Effect -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
 
 <style>
   :root{
     --bg:#070B14;
-    --bg-panel:rgba(15, 23, 42, 0.75);
+    --bg-panel:rgba(15, 23, 42, 0.72);
     --ink:#F8FAFC;
     --muted:#94A3B8;
     --cyan:#00F2FE;
@@ -50,20 +48,10 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- LIGHT & SUBTLE VANTA BG CONTAINER ---------------- */
-  #vanta-bg{
-    position:fixed;
-    top:0; left:0;
-    width:100vw; height:100vh;
-    z-index:-1;
-    pointer-events:none;
-    opacity: 0.4; /* Thoda aur light karne ke liye */
-  }
-
   /* ---------------- PRELOADER ---------------- */
   #preloader{
     position:fixed; inset:0; z-index:9999;
-    background:#070B14;
+    background:#050811;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     transition:transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
   }
@@ -72,113 +60,34 @@
     opacity:0;
     pointer-events:none;
   }
-  .loader-box{
-    text-align:center;
-    max-width:400px;
-    width:90%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  .walker-container {
-    width: 220px;
-    height: 180px;
-    position: relative;
-    margin-bottom: 15px;
-    overflow: hidden;
-  }
-
-  .walking-boy-svg {
-    width: 130px;
-    height: 160px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    animation: walkAcross 3.5s linear infinite;
-    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.5));
-  }
-
-  @keyframes walkAcross {
-    0% { transform: translateX(-40px); }
-    100% { transform: translateX(130px); }
-  }
-
-  .boy-body-group {
-    animation: bodyBounce 0.6s ease-in-out infinite alternate;
-  }
-  @keyframes bodyBounce {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-7px); }
-  }
-
-  .leg-left {
-    transform-origin: 45px 95px;
-    animation: legSwingLeft 0.6s ease-in-out infinite alternate;
-  }
-  .leg-right {
-    transform-origin: 60px 95px;
-    animation: legSwingRight 0.6s ease-in-out infinite alternate;
-  }
-  @keyframes legSwingLeft {
-    0% { transform: rotate(-30deg); }
-    100% { transform: rotate(30deg); }
-  }
-  @keyframes legSwingRight {
-    0% { transform: rotate(30deg); }
-    100% { transform: rotate(-30deg); }
-  }
-
-  .arm-left {
-    transform-origin: 35px 65px;
-    animation: armSwingLeft 0.6s ease-in-out infinite alternate;
-  }
-  .arm-right {
-    transform-origin: 65px 65px;
-    animation: armSwingRight 0.6s ease-in-out infinite alternate;
-  }
-  @keyframes armSwingLeft {
-    0% { transform: rotate(25deg); }
-    100% { transform: rotate(-25deg); }
-  }
-  @keyframes armSwingRight {
-    0% { transform: rotate(-25deg); }
-    100% { transform: rotate(25deg); }
-  }
-
-  .walk-shadow {
-    animation: shadowPulse 0.6s ease-in-out infinite alternate;
-  }
-  @keyframes shadowPulse {
-    0% { transform: scaleX(1); opacity: 0.6; }
-    100% { transform: scaleX(0.7); opacity: 0.3; }
-  }
-
-  .loader-greeting{
-    font-family:var(--font-mono);
-    font-size:12px;
-    color:var(--cyan);
-    letter-spacing:0.12em;
-    margin-bottom:10px;
-    font-weight:700;
-  }
+  .loader-box{text-align:center; max-width:320px; width:90%;}
   .loader-num{
     font-family:var(--font-display);
-    font-size:clamp(45px, 8vw, 65px);
+    font-size:clamp(60px, 12vw, 110px);
     line-height:1;
     background:linear-gradient(135deg, var(--cyan), var(--mint));
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    margin-bottom:12px;
+    margin-bottom:10px;
   }
   .loader-bar-bg{
     width:100%; height:4px; background:rgba(255,255,255,0.1);
-    border-radius:10px; overflow:hidden; position:relative;
+    border-radius:10px; overflow:hidden; position:relative; margin-bottom:16px;
   }
   .loader-bar-fill{
     position:absolute; top:0; left:0; height:100%; width:0%;
     background:linear-gradient(90deg, var(--cyan), var(--violet), var(--mint));
     transition:width 0.1s linear;
+  }
+  .loader-sub{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em;
+    color:var(--muted); text-transform:uppercase;
+  }
+
+  /* ---------------- AMBIENT SWIRL CANVAS ---------------- */
+  #bg-canvas{
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    pointer-events:none; z-index:-1;
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -256,6 +165,7 @@
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
   }
 
+  /* RESUME BUTTON STYLES */
   .resume-btn-wrap {
     margin-top: 18px;
     display: flex;
@@ -285,6 +195,7 @@
     transform: translateY(-2px);
   }
 
+  /* DEVOPS INFINITY LOOP SECTION */
   .infinity-container{
     margin-top:28px;
     padding:20px;
@@ -356,6 +267,7 @@
     filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.9));
   }
 
+  /* SECTION LABELS & CONTENT */
   .sec-label{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.15em;
     color:var(--mint); margin-bottom:18px; display:block;
@@ -504,61 +416,16 @@
 <!-- PRELOADER -->
 <div id="preloader">
   <div class="loader-box">
-    <div class="walker-container">
-      <svg class="walking-boy-svg" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-        <ellipse class="walk-shadow" cx="52" cy="112" rx="22" ry="4" fill="rgba(0, 242, 254, 0.4)" />
-        
-        <g class="leg-left">
-          <rect x="42" y="90" width="8" height="20" rx="4" fill="#1E293B" />
-          <path d="M 40 108 L 49 108 L 49 113 L 38 113 Z" fill="#00F2FE" />
-        </g>
-        
-        <g class="leg-right">
-          <rect x="54" y="90" width="8" height="20" rx="4" fill="#334155" />
-          <path d="M 52 108 L 61 108 L 61 113 L 50 113 Z" fill="#00F5A0" />
-        </g>
-
-        <g class="boy-body-group">
-          <rect x="36" y="55" width="32" height="38" rx="8" fill="#7F00FF" />
-          <path d="M 46 55 L 58 55 L 56 68 L 48 68 Z" fill="#5B21B6" />
-          <line x1="48" y1="62" x2="48" y2="72" stroke="#00F2FE" stroke-width="2" stroke-linecap="round" />
-          <line x1="54" y1="62" x2="54" y2="72" stroke="#00F2FE" stroke-width="2" stroke-linecap="round" />
-
-          <circle cx="52" cy="38" r="18" fill="#FFD1A4" />
-          <path d="M 34 36 C 34 20, 70 20, 70 36 C 62 25, 42 25, 34 36 Z" fill="#1E293B" />
-          <path d="M 64 30 C 68 25, 72 38, 68 40 Z" fill="#1E293B" />
-          
-          <circle cx="58" cy="36" r="2.5" fill="#070B14" />
-          <rect x="50" y="30" width="14" height="11" rx="3" stroke="#00F2FE" stroke-width="2" fill="none" />
-          <line x1="46" y1="35" x2="50" y2="35" stroke="#00F2FE" stroke-width="2" />
-
-          <path d="M 55 43 Q 59 47 62 43" stroke="#070B14" stroke-width="2" stroke-linecap="round" fill="none" />
-
-          <g class="arm-left">
-            <rect x="30" y="58" width="7" height="22" rx="3.5" fill="#6D28D9" />
-            <circle cx="33.5" cy="81" r="3.5" fill="#FFD1A4" />
-          </g>
-
-          <g class="arm-right">
-            <rect x="65" y="58" width="7" height="20" rx="3.5" fill="#7C3AED" />
-            <rect x="62" y="70" width="16" height="11" rx="2" fill="#0F172A" stroke="#00F2FE" stroke-width="1.5" />
-            <circle cx="70" cy="75.5" r="1.5" fill="#00F5A0" />
-            <circle cx="68.5" cy="78" r="3.5" fill="#FFD1A4" />
-          </g>
-        </g>
-      </svg>
-    </div>
-
-    <div class="loader-greeting">👋 WALKING INTO DEVOPS WORKSPACE...</div>
     <div class="loader-num" id="loaderNum">0%</div>
     <div class="loader-bar-bg">
       <div class="loader-bar-fill" id="loaderFill"></div>
     </div>
+    <div class="loader-sub">INITIALIZING SWIRL MATRIX</div>
   </div>
 </div>
 
-<!-- VANTA BACKGROUND TARGET ELEMENT -->
-<div id="vanta-bg"></div>
+<!-- SWIRL CANVAS BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
 
 <div class="progress" id="progressBar"></div>
 
@@ -569,6 +436,7 @@
   <a href="#projects" data-s="projects">PROJECTS</a>
   <a href="#education" data-s="education">EDUCATION</a>
   <a href="#contact" data-s="contact">CONTACT</a>
+  <!-- NAV GOOGLE DRIVE RESUME LINK -->
   <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="nav-resume-link">📄 RESUME</a>
 </nav>
 
@@ -586,6 +454,7 @@
         <span>Mumbai, India</span>
       </div>
 
+      <!-- RESUME BUTTON WITH GOOGLE DRIVE LINK -->
       <div class="resume-btn-wrap">
         <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="resume-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -593,6 +462,7 @@
         </a>
       </div>
 
+      <!-- ANIMATED DEVOPS INFINITY LOOP SECTION -->
       <div class="infinity-container">
         <svg class="infinity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -641,7 +511,7 @@
   </div>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT / SUMMARY SECTION -->
 <section id="about">
   <div class="wrap">
     <span class="sec-label">01 // SUMMARY</span>
@@ -897,47 +767,130 @@
 </footer>
 
 <script>
-  // 1. PRELOADER LOGIC
+  // 1. PRELOADER COUNTER
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 5) + 2;
+    count += Math.floor(Math.random() * 5) + 1;
     if (count > 100) count = 100;
     
     loaderNum.innerText = count + '%';
     loaderFill.style.width = count + '%';
 
     if (count < 100) {
-      setTimeout(updateLoader, 40);
+      setTimeout(updateLoader, 30);
     } else {
       setTimeout(() => {
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
-      }, 500);
+      }, 300);
     }
   };
   updateLoader();
 
-  // 2. AAPKA VANTA DOTS SCRIPT (Subtle / Minimal Tuning)
-  VANTA.DOTS({
-    el: "#vanta-bg",
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    color: 0x00f2fe,
-    color2: 0x00f5a0,
-    backgroundColor: 0x070b14,
-    size: 1.20,       /* Dots ko subtle aur chhota kar diya hai */
-    spacing: 75.00,   /* Dots ke beech ki jagah badha di hai taaki screen heavy na lage */
-    showLines: false  /* Extra lines disable rakhi hain */
+  // 2. AUTHENTIC AMBIENT SWIRL CANVAS ANIMATION (Codrops / AmbientCanvasBackgrounds Style)
+  const particleCount = 700;
+  const particlePropsLength = 9;
+  const particleProps = new Float32Array(particleCount * particlePropsLength);
+
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let simplex = typeof SimplexNoise !== 'undefined' ? new SimplexNoise() : null;
+
+  let center = [0, 0];
+  let tick = 0;
+
+  function initCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    center[0] = canvas.width * 0.5;
+    center[1] = canvas.height * 0.5;
+  }
+
+  function initParticles() {
+    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
+      initParticle(i);
+    }
+  }
+
+  function initParticle(i) {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height;
+    let vx = 0;
+    let vy = 0;
+    let life = 0;
+    let maxLife = 100 + Math.random() * 150;
+    let speed = 0.8 + Math.random() * 1.5;
+    let radius = 1 + Math.random() * 2;
+    let hue = 180 + Math.random() * 100; // Cyan to Purple palette
+
+    particleProps.set([x, y, vx, vy, life, maxLife, speed, radius, hue], i);
+  }
+
+  function drawParticle(x, y, x2, y2, life, maxLife, radius, hue) {
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineWidth = radius;
+    let alpha = Math.sin((life / maxLife) * Math.PI);
+    ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha * 0.45})`;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+  }
+
+  function updateParticles() {
+    tick++;
+    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
+      let x = particleProps[i];
+      let y = particleProps[i + 1];
+
+      // Simplex noise curl vector force
+      let n = simplex ? simplex.noise3D(x * 0.0015, y * 0.0015, tick * 0.0012) : Math.sin(x*0.002 + tick*0.01);
+      let angle = n * Math.PI * 4;
+
+      let vx = Math.cos(angle) * particleProps[i + 6];
+      let vy = Math.sin(angle) * particleProps[i + 6];
+
+      let x2 = x + vx;
+      let y2 = y + vy;
+
+      let life = particleProps[i + 4] + 1;
+      let maxLife = particleProps[i + 5];
+
+      drawParticle(x, y, x2, y2, life, maxLife, particleProps[i + 7], particleProps[i + 8]);
+
+      particleProps[i] = x2;
+      particleProps[i + 1] = y2;
+      particleProps[i + 4] = life;
+
+      if (life > maxLife || x2 < 0 || x2 > canvas.width || y2 < 0 || y2 > canvas.height) {
+        initParticle(i);
+      }
+    }
+  }
+
+  function renderSwirl() {
+    // Fade trail effect for silky swirl flow
+    ctx.fillStyle = 'rgba(7, 11, 20, 0.08)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    updateParticles();
+    requestAnimationFrame(renderSwirl);
+  }
+
+  window.addEventListener('resize', () => {
+    initCanvas();
   });
+
+  initCanvas();
+  initParticles();
+  renderSwirl();
 
   // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
@@ -947,7 +900,7 @@
     document.getElementById('progressBar').style.width = scrolled + '%';
   });
 
-  // 4. SCROLL ANIMATIONS
+  // 4. INTERSECTION OBSERVER FOR CARDS ANIMATION
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting) {
