@@ -8,9 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- 3D Animation Libraries (CDN ya local paths replace kar sakte ho) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
+<!-- 1. Vanta & Three.js Libraries -->
+<script src="three.r134.min.js"></script>
+<script src="vanta.dots.min.js"></script>
 
 <style>
   :root{
@@ -50,14 +50,14 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- SUBTLE VANTA 3D BACKGROUND CONTAINER ---------------- */
+  /* ---------------- LIGHT & SUBTLE VANTA BG CONTAINER ---------------- */
   #vanta-bg{
     position:fixed;
     top:0; left:0;
     width:100vw; height:100vh;
     z-index:-1;
     pointer-events:none;
-    opacity: 0.5;
+    opacity: 0.4; /* Thoda aur light karne ke liye */
   }
 
   /* ---------------- PRELOADER ---------------- */
@@ -557,7 +557,7 @@
   </div>
 </div>
 
-<!-- SUBTLE VANTA 3D DOTS BACKGROUND ELEMENT -->
+<!-- VANTA BACKGROUND TARGET ELEMENT -->
 <div id="vanta-bg"></div>
 
 <div class="progress" id="progressBar"></div>
@@ -921,7 +921,7 @@
   };
   updateLoader();
 
-  // 2. VANTA DOTS CONFIGURATION (TONED DOWN & CLEAN)
+  // 2. AAPKA VANTA DOTS SCRIPT (Subtle / Minimal Tuning)
   VANTA.DOTS({
     el: "#vanta-bg",
     mouseControls: true,
@@ -934,9 +934,9 @@
     color: 0x00f2fe,
     color2: 0x00f5a0,
     backgroundColor: 0x070b14,
-    size: 1.50,        /* Very minimal dot size */
-    spacing: 65.00,    /* High spacing = clean background */
-    showLines: false   /* Hides interconnecting mesh lines */
+    size: 1.20,       /* Dots ko subtle aur chhota kar diya hai */
+    spacing: 75.00,   /* Dots ke beech ki jagah badha di hai taaki screen heavy na lage */
+    showLines: false  /* Extra lines disable rakhi hain */
   });
 
   // 3. SCROLL PROGRESS BAR
