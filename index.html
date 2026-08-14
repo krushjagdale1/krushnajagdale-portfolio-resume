@@ -183,10 +183,6 @@
     color: #FFFFFF;
   }
 
-  .kinetic{
-    opacity:1;
-  }
-
   .hero-meta{
     margin-top:20px; display:flex; gap:22px; flex-wrap:wrap;
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
@@ -253,14 +249,16 @@
     font-family:var(--font-display);
     font-size:32px;
     letter-spacing:1px;
+    filter: drop-shadow(0px 2px 6px rgba(0,0,0,0.8));
   }
 
   .stage-text{
     font-family:var(--font-mono);
-    font-size:11px;
+    font-size:12px;
     font-weight:800;
     letter-spacing:0.12em;
     text-transform:uppercase;
+    filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.9));
   }
 
   /* SECTION LABELS & CONTENT */
@@ -477,7 +475,6 @@
           </defs>
 
           <!-- Infinity Loop Main Path -->
-          <!-- Path coordinates trace figure 8: center -> left loop -> center -> right loop -> back to center -->
           <path id="infinity-path" class="loop-path-base" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100 Z" />
 
           <!-- Colored CI & CD Segment Paths -->
@@ -492,16 +489,16 @@
           <text x="345" y="112" class="center-label" fill="#00F5A0" text-anchor="middle">CD</text>
 
           <!-- Stage Labels along CI Loop -->
-          <text x="210" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">PLAN</text>
-          <text x="105" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">CODE</text>
-          <text x="80" y="162" class="stage-text" fill="#E2E8F0" text-anchor="middle">BUILD</text>
+          <text x="210" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">PLAN</text>
+          <text x="105" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">CODE</text>
+          <text x="80" y="162" class="stage-text" fill="#FFFFFF" text-anchor="middle">BUILD</text>
           <text x="185" y="168" class="stage-text" fill="#00F2FE" text-anchor="middle">TEST</text>
 
-          <!-- Stage Labels along CD Loop -->
-          <text x="250" y="125" class="stage-text" fill="#00F5A0" text-anchor="middle">RELEASE</text>
-          <text x="315" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">DEPLOY</text>
-          <text x="425" y="105" class="stage-text" fill="#E2E8F0" text-anchor="middle">OPERATE</text>
-          <text x="345" y="168" class="stage-text" fill="#00F5A0" text-anchor="middle">MEASURE</text>
+          <!-- Stage Labels along CD Loop (RELEASE & MEASURE High Visibility Updated) -->
+          <text x="250" y="125" class="stage-text" fill="#FFD700" text-anchor="middle">RELEASE</text>
+          <text x="315" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">DEPLOY</text>
+          <text x="425" y="105" class="stage-text" fill="#FFFFFF" text-anchor="middle">OPERATE</text>
+          <text x="345" y="168" class="stage-text" fill="#FFD700" text-anchor="middle">MEASURE</text>
         </svg>
       </div>
 
