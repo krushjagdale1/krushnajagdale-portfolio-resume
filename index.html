@@ -150,6 +150,7 @@
     overflow:hidden; position:relative; border:1px solid rgba(255,255,255,0.15);
     box-shadow:0 20px 50px rgba(0,0,0,0.6);
     background:var(--bg-panel); backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:center;
   }
   .hero-photo-panel img{width:100%; height:100%; object-fit:cover; display:block;}
   .hero-text{flex:1 1 auto; min-width:0;}
@@ -242,6 +243,7 @@
     width:52px; height:52px; border-radius:12px; background:#FFFFFF;
     display:flex; align-items:center; justify-content:center; padding:6px;
     box-shadow:0 4px 12px rgba(0,0,0,0.3); flex-shrink:0; overflow:hidden;
+    font-family:var(--font-mono); font-size:10px; color:#333; text-align:center;
   }
   .card-logo-wrap img{
     max-width:100%; max-height:100%; object-fit:contain;
@@ -297,6 +299,7 @@
   .edu-logo-wrap{
     width:110px; height:80px; border-radius:12px; overflow:hidden;
     border:1px solid var(--line); flex-shrink:0; background:#fff;
+    display:flex; align-items:center; justify-content:center;
   }
   .edu-logo-wrap img{width:100%; height:100%; object-fit:cover;}
   .edu-info{flex:1 1 300px;}
@@ -376,8 +379,8 @@
       </div>
     </div>
     <div class="hero-photo-panel">
-      <!-- User Profile Photo: krush-image.jpeg -->
-      <img src="krush-image.jpeg" alt="Krushna Bharat Jagdale">
+      <!-- Profile Photo path relative to current directory -->
+      <img src="./krush-image.jpeg" alt="Krushna Bharat Jagdale" onerror="this.onerror=null; this.src='./krush-image.jpg';">
     </div>
   </div>
 </section>
@@ -448,7 +451,7 @@
     <div class="exp-card">
       <div class="exp-header">
         <div class="card-logo-wrap">
-          <img src="scalezee-logo.png" alt="Scalezee Technologies Logo">
+          <img src="./scalezee-logo.png" alt="Scalezee Technologies" onerror="this.onerror=null; this.src='./scalezee-logo.jpeg';">
         </div>
         <div class="exp-top">
           <div>
@@ -472,7 +475,7 @@
     <div class="exp-card">
       <div class="exp-header">
         <div class="card-logo-wrap">
-          <img src="nimapinfotech_logo.jpg" alt="Nimap Infotech Logo">
+          <img src="./nimapinfotech_logo.jpg" alt="Nimap Infotech" onerror="this.onerror=null; this.src='./nimapinfotech_logo.png';">
         </div>
         <div class="exp-top">
           <div>
@@ -506,7 +509,7 @@
       <div class="proj-card">
         <div class="proj-header">
           <div class="card-logo-wrap">
-            <img src="BOB.png" alt="Bank of Baroda Logo">
+            <img src="./BOB.png" alt="Bank of Baroda" onerror="this.onerror=null; this.src='./bob.png';">
           </div>
           <div>
             <div class="proj-num">BANKING DOMAIN</div>
@@ -527,7 +530,7 @@
       <div class="proj-card">
         <div class="proj-header">
           <div class="card-logo-wrap">
-            <img src="muthooth.jpg" alt="Muthoot Finance Logo">
+            <img src="./muthooth.jpg" alt="Muthoot Finance" onerror="this.onerror=null; this.src='./muthoot.jpg';">
           </div>
           <div>
             <div class="proj-num">FINANCIAL CLOUD</div>
@@ -554,7 +557,7 @@
 
     <div class="edu-card">
       <div class="edu-logo-wrap">
-        <img src="mitcollage.jpg" alt="Marathwada Institute of Technology">
+        <img src="./mitcollage.jpg" alt="Marathwada Institute of Technology" onerror="this.onerror=null; this.src='./mitcollage.png';">
       </div>
       <div class="edu-info">
         <h3 class="edu-degree">B.Tech – Mechanical Engineering</h3>
