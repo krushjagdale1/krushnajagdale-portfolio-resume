@@ -89,7 +89,7 @@
     position:fixed; inset:0; pointer-events:none; z-index:-1;
   }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(110px); opacity:0.35;
+    position:absolute; border-radius:50%; filter:blur(110px); opacity:0.3;
     animation:floatAurora 20s ease-in-out infinite alternate;
   }
   .aurora-1{
@@ -679,19 +679,28 @@
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
         initScrollAnimations();
-        initBackgroundCanvas();
+        initDevOpsCanvas();
       }, 400);
     }
   };
 
   window.addEventListener('DOMContentLoaded', updateLoader);
 
-  // 2. BACKGROUND PARTICLE NETWORK ANIMATION
-  function initBackgroundCanvas() {
+  // 2. UNIQUE DEVOPS INFRASTRUCTURE & CODE PULSE CANVAS
+  function initDevOpsCanvas() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let particles = [];
+
+    let mouse = { x: null, y: null, maxDist: 180 };
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -700,56 +709,134 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    class Particle {
+    // Floating DevOps Tech Keywords
+    const devopsTokens = [
+      'pod:running', '200 OK', 'kubectl', 'build:success', 
+      'helm', 'k8s', 'pipeline', 'aws:ec2', 'deploy', 
+      '01010', 'prometheus', 'docker:up'
+    ];
+
+    class CodeParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.text = devopsTokens[Math.floor(Math.random() * devopsTokens.length)];
+        this.vy = -(Math.random() * 0.4 + 0.15);
+        this.opacity = Math.random() * 0.35 + 0.1;
+        this.fontSize = Math.floor(Math.random() * 3) + 10;
+      }
+      update() {
+        this.y += this.vy;
+        if (this.y < -20) this.reset();
+      }
+      draw() {
+        ctx.font = `${this.fontSize}px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = `rgba(0, 242, 254, ${this.opacity})`;
+        ctx.fillText(this.text, this.x, this.y);
+      }
+    }
+
+    // Infrastructure Pulse Nodes
+    class InfraNode {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 1.6 + 1;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.radius = Math.random() * 2 + 1.5;
+        this.pulseRadius = this.radius;
+        this.pulseAlpha = 0.8;
       }
       update() {
         this.x += this.vx;
         this.y += this.vy;
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+        // Health-check Pulse Ring
+        this.pulseRadius += 0.35;
+        this.pulseAlpha -= 0.008;
+        if (this.pulseAlpha <= 0) {
+          this.pulseRadius = this.radius;
+          this.pulseAlpha = 0.8;
+        }
       }
       draw() {
+        // Pulse ring
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.pulseRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(0, 245, 160, ${this.pulseAlpha * 0.4})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+
+        // Solid Node core
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 242, 254, 0.45)';
+        ctx.fillStyle = '#00F2FE';
         ctx.fill();
       }
     }
 
-    const particleCount = Math.min(Math.floor(window.innerWidth / 16), 55);
-    particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
+    const codeTokensCount = Math.min(Math.floor(window.innerWidth / 90), 16);
+    const nodesCount = Math.min(Math.floor(window.innerWidth / 35), 35);
 
-    function animateParticles() {
+    const tokens = Array.from({ length: codeTokensCount }, () => new CodeParticle());
+    const nodes = Array.from({ length: nodesCount }, () => new InfraNode());
+
+    function renderAnimation() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+
+      // 1. Draw DevOps floating words
+      tokens.forEach(t => {
+        t.update();
+        t.draw();
+      });
+
+      // 2. Draw Infrastructure Nodes & Connection Beams
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].update();
+        nodes[i].draw();
+
+        // Connect nodes to each other
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+
+          if (dist < 130) {
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${0.12 * (1 - dist / 120)})`;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(127, 0, 255, ${0.15 * (1 - dist / 130)})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
+
+        // 3. Mouse Laser Beam Connections
+        if (mouse.x !== null && mouse.y !== null) {
+          const mdx = nodes[i].x - mouse.x;
+          const mdy = nodes[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+
+          if (mdist < mouse.maxDist) {
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(0, 242, 254, ${0.45 * (1 - mdist / mouse.maxDist)})`;
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+          }
+        }
       }
-      requestAnimationFrame(animateParticles);
+
+      requestAnimationFrame(renderAnimation);
     }
-    animateParticles();
+
+    renderAnimation();
   }
 
   // 3. KINETIC TEXT SPLITTER
