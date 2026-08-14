@@ -7,13 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Simplex Noise for Authentic Ambient Swirl Effect -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
+<!-- Three.js & Vanta DOTS 3D Animation CDN Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js"></script>
 
 <style>
   :root{
     --bg:#070B14;
-    --bg-panel:rgba(15, 23, 42, 0.72);
+    --bg-panel:rgba(15, 23, 42, 0.75);
     --ink:#F8FAFC;
     --muted:#94A3B8;
     --cyan:#00F2FE;
@@ -48,10 +50,19 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- PRELOADER ---------------- */
+  /* ---------------- VANTA 3D BACKGROUND ---------------- */
+  #vanta-bg{
+    position:fixed;
+    top:0; left:0;
+    width:100vw; height:100vh;
+    z-index:-1;
+    pointer-events:none;
+  }
+
+  /* ---------------- CARTOON BOY PRELOADER ---------------- */
   #preloader{
     position:fixed; inset:0; z-index:9999;
-    background:#050811;
+    background:#070B14;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     transition:transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
   }
@@ -60,19 +71,45 @@
     opacity:0;
     pointer-events:none;
   }
-  .loader-box{text-align:center; max-width:320px; width:90%;}
+  .loader-box{
+    text-align:center;
+    max-width:360px;
+    width:90%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .cartoon-boy-img{
+    width:180px;
+    height:auto;
+    margin-bottom:15px;
+    filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.4));
+    animation: floatBoy 3s ease-in-out infinite;
+  }
+  @keyframes floatBoy {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .loader-greeting{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--cyan);
+    letter-spacing:0.12em;
+    margin-bottom:8px;
+    font-weight:700;
+  }
   .loader-num{
     font-family:var(--font-display);
-    font-size:clamp(60px, 12vw, 110px);
+    font-size:clamp(45px, 8vw, 70px);
     line-height:1;
     background:linear-gradient(135deg, var(--cyan), var(--mint));
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    margin-bottom:10px;
+    margin-bottom:12px;
   }
   .loader-bar-bg{
     width:100%; height:4px; background:rgba(255,255,255,0.1);
-    border-radius:10px; overflow:hidden; position:relative; margin-bottom:16px;
+    border-radius:10px; overflow:hidden; position:relative; margin-bottom:12px;
   }
   .loader-bar-fill{
     position:absolute; top:0; left:0; height:100%; width:0%;
@@ -80,14 +117,8 @@
     transition:width 0.1s linear;
   }
   .loader-sub{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em;
     color:var(--muted); text-transform:uppercase;
-  }
-
-  /* ---------------- AMBIENT SWIRL CANVAS ---------------- */
-  #bg-canvas{
-    position:fixed; top:0; left:0; width:100vw; height:100vh;
-    pointer-events:none; z-index:-1;
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -413,19 +444,22 @@
 </head>
 <body class="loading">
 
-<!-- PRELOADER -->
+<!-- CARTOON BOY PRELOADER (WEBSITE OPEN HARTE HI) -->
 <div id="preloader">
   <div class="loader-box">
+    <!-- Cartoon Coder Animation Image -->
+    <img src="https://illustrations.popsy.co/cyan/programmer.svg" alt="DevOps Coder Boy" class="cartoon-boy-img">
+    <div class="loader-greeting">👋 HI! INITIALIZING DEVOPS ENVIRONMENT...</div>
     <div class="loader-num" id="loaderNum">0%</div>
     <div class="loader-bar-bg">
       <div class="loader-bar-fill" id="loaderFill"></div>
     </div>
-    <div class="loader-sub">INITIALIZING SWIRL MATRIX</div>
+    <div class="loader-sub">LOADING VANTA 3D MATRIX</div>
   </div>
 </div>
 
-<!-- SWIRL CANVAS BACKGROUND -->
-<canvas id="bg-canvas"></canvas>
+<!-- VANTA 3D DOTS BACKGROUND -->
+<div id="vanta-bg"></div>
 
 <div class="progress" id="progressBar"></div>
 
@@ -767,130 +801,47 @@
 </footer>
 
 <script>
-  // 1. PRELOADER COUNTER
+  // 1. CARTOON BOY PRELOADER SCRIPT
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 5) + 1;
+    count += Math.floor(Math.random() * 6) + 2;
     if (count > 100) count = 100;
     
     loaderNum.innerText = count + '%';
     loaderFill.style.width = count + '%';
 
     if (count < 100) {
-      setTimeout(updateLoader, 30);
+      setTimeout(updateLoader, 35);
     } else {
       setTimeout(() => {
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
-      }, 300);
+      }, 400);
     }
   };
   updateLoader();
 
-  // 2. AUTHENTIC AMBIENT SWIRL CANVAS ANIMATION (Codrops / AmbientCanvasBackgrounds Style)
-  const particleCount = 700;
-  const particlePropsLength = 9;
-  const particleProps = new Float32Array(particleCount * particlePropsLength);
-
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  let simplex = typeof SimplexNoise !== 'undefined' ? new SimplexNoise() : null;
-
-  let center = [0, 0];
-  let tick = 0;
-
-  function initCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    center[0] = canvas.width * 0.5;
-    center[1] = canvas.height * 0.5;
-  }
-
-  function initParticles() {
-    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
-      initParticle(i);
-    }
-  }
-
-  function initParticle(i) {
-    let x = Math.random() * canvas.width;
-    let y = Math.random() * canvas.height;
-    let vx = 0;
-    let vy = 0;
-    let life = 0;
-    let maxLife = 100 + Math.random() * 150;
-    let speed = 0.8 + Math.random() * 1.5;
-    let radius = 1 + Math.random() * 2;
-    let hue = 180 + Math.random() * 100; // Cyan to Purple palette
-
-    particleProps.set([x, y, vx, vy, life, maxLife, speed, radius, hue], i);
-  }
-
-  function drawParticle(x, y, x2, y2, life, maxLife, radius, hue) {
-    ctx.save();
-    ctx.lineCap = 'round';
-    ctx.lineWidth = radius;
-    let alpha = Math.sin((life / maxLife) * Math.PI);
-    ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha * 0.45})`;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.restore();
-  }
-
-  function updateParticles() {
-    tick++;
-    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
-      let x = particleProps[i];
-      let y = particleProps[i + 1];
-
-      // Simplex noise curl vector force
-      let n = simplex ? simplex.noise3D(x * 0.0015, y * 0.0015, tick * 0.0012) : Math.sin(x*0.002 + tick*0.01);
-      let angle = n * Math.PI * 4;
-
-      let vx = Math.cos(angle) * particleProps[i + 6];
-      let vy = Math.sin(angle) * particleProps[i + 6];
-
-      let x2 = x + vx;
-      let y2 = y + vy;
-
-      let life = particleProps[i + 4] + 1;
-      let maxLife = particleProps[i + 5];
-
-      drawParticle(x, y, x2, y2, life, maxLife, particleProps[i + 7], particleProps[i + 8]);
-
-      particleProps[i] = x2;
-      particleProps[i + 1] = y2;
-      particleProps[i + 4] = life;
-
-      if (life > maxLife || x2 < 0 || x2 > canvas.width || y2 < 0 || y2 > canvas.height) {
-        initParticle(i);
-      }
-    }
-  }
-
-  function renderSwirl() {
-    // Fade trail effect for silky swirl flow
-    ctx.fillStyle = 'rgba(7, 11, 20, 0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    updateParticles();
-    requestAnimationFrame(renderSwirl);
-  }
-
-  window.addEventListener('resize', () => {
-    initCanvas();
+  // 2. VANTA DOTS 3D ANIMATION INITIALIZATION
+  VANTA.DOTS({
+    el: "#vanta-bg",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 200.00,
+    minWidth: 200.00,
+    scale: 1.00,
+    scaleMobile: 1.00,
+    color: 0x00f2fe,        /* Neon Cyan Dots */
+    color2: 0x00f5a0,       /* Neon Mint Accent */
+    backgroundColor: 0x070b14, /* Dark Cyber Slate */
+    size: 3.20,
+    spacing: 35.00,
+    showLines: true
   });
-
-  initCanvas();
-  initParticles();
-  renderSwirl();
 
   // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
@@ -900,7 +851,7 @@
     document.getElementById('progressBar').style.width = scrolled + '%';
   });
 
-  // 4. INTERSECTION OBSERVER FOR CARDS ANIMATION
+  // 4. INTERSECTION OBSERVER FOR CARDS
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting) {
