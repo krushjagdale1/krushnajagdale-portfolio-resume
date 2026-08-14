@@ -183,133 +183,87 @@
     color: #FFFFFF;
   }
 
-  .word{
-    display:inline-block; opacity:0; 
-    transform:translateY(60px) rotate(2deg); 
-    transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
-    margin-right:0.25em;
+  .kinetic{
+    opacity:1;
   }
-  .kinetic.in-view .word{opacity:1; transform:translateY(0) rotate(0deg);}
 
   .hero-meta{
-    margin-top:28px; display:flex; gap:22px; flex-wrap:wrap;
+    margin-top:20px; display:flex; gap:22px; flex-wrap:wrap;
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
   }
 
-  /* ---------------- JENKINS CI/CD PIPELINE STRIP ---------------- */
-  .pipeline-strip{
-    margin-top:32px;
-    padding:18px 22px;
+  /* ---------------- DEVOPS INFINITY LOOP SECTION ---------------- */
+  .infinity-container{
+    margin-top:28px;
+    padding:20px;
     background:rgba(15, 23, 42, 0.75);
     border:1px solid rgba(0, 242, 254, 0.25);
-    border-radius:16px;
+    border-radius:20px;
     backdrop-filter:blur(12px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
-  }
-  .pipeline-header{
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:var(--cyan);
-    letter-spacing:0.12em;
-    margin-bottom:16px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-transform:uppercase;
-  }
-  .pulse-dot{
-    width:8px; height:8px;
-    background:var(--mint);
-    border-radius:50%;
-    box-shadow:0 0 10px var(--mint);
-    animation:pulseGlow 1.2s infinite alternate;
-  }
-  @keyframes pulseGlow{
-    from{opacity:0.4; transform:scale(0.8);}
-    to{opacity:1; transform:scale(1.2);}
-  }
-  
-  .pipeline-nodes{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:relative;
-  }
-  .pipeline-step{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:6px;
-    z-index:2;
-  }
-  .node-box{
-    width:42px; height:42px;
-    border-radius:12px;
-    background:#070C18;
-    border:1px solid rgba(255, 255, 255, 0.15);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:var(--font-mono);
-    font-size:16px;
-    transition:all 0.3s ease;
-    animation:nodeSequence 8s infinite;
-  }
-  .pipeline-step:nth-child(1) .node-box { animation-delay: 0s; }
-  .pipeline-step:nth-child(3) .node-box { animation-delay: 2s; }
-  .pipeline-step:nth-child(5) .node-box { animation-delay: 4s; }
-  .pipeline-step:nth-child(7) .node-box { animation-delay: 6s; }
-
-  .node-label{
-    font-family:var(--font-mono);
-    font-size:11px;
-    font-weight:700;
-    color:var(--muted);
-    letter-spacing:0.08em;
-  }
-
-  .pipeline-line{
-    flex:1;
-    height:3px;
-    background:rgba(255, 255, 255, 0.1);
+    box-shadow:0 12px 35px rgba(0,0,0,0.6);
     position:relative;
     overflow:hidden;
-    margin:0 12px;
-    margin-bottom:18px;
-    border-radius:2px;
   }
-  .pipeline-line::after{
-    content:'';
-    position:absolute;
-    top:0; left:-100%;
-    width:100%; height:100%;
-    background:linear-gradient(90deg, transparent, var(--cyan), var(--mint), transparent);
-    animation:pipeFlow 2s linear infinite;
-  }
-  .pipeline-line:nth-of-type(1)::after{ animation-delay: 0s; }
-  .pipeline-line:nth-of-type(2)::after{ animation-delay: 0.5s; }
-  .pipeline-line:nth-of-type(3)::after{ animation-delay: 1s; }
-
-  @keyframes pipeFlow{
-    0%{ left:-100%; }
-    100%{ left:100%; }
+  
+  .infinity-svg{
+    width:100%;
+    height:auto;
+    max-height:220px;
+    display:block;
   }
 
-  @keyframes nodeSequence{
-    0%, 22%, 100%{
-      border-color: rgba(255, 255, 255, 0.15);
-      box-shadow: none;
-      background: #070C18;
-      color: var(--muted);
-    }
-    5%, 18%{
-      border-color: var(--cyan);
-      box-shadow: 0 0 16px rgba(0, 242, 254, 0.6);
-      background: rgba(0, 242, 254, 0.12);
-      color: var(--cyan);
-    }
+  .loop-path-base{
+    fill:none;
+    stroke:rgba(255, 255, 255, 0.08);
+    stroke-width:28;
+    stroke-linecap:round;
   }
 
+  .loop-path-ci{
+    fill:none;
+    stroke:url(#ci-grad);
+    stroke-width:14;
+    stroke-linecap:round;
+  }
+
+  .loop-path-cd{
+    fill:none;
+    stroke:url(#cd-grad);
+    stroke-width:14;
+    stroke-linecap:round;
+  }
+
+  /* Pulse Laser Motion */
+  .loop-laser{
+    fill:none;
+    stroke:#FFFFFF;
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-dasharray: 40 400;
+    animation: laserFlow 5s linear infinite;
+    filter: drop-shadow(0 0 8px var(--cyan));
+  }
+
+  @keyframes laserFlow {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -440; }
+  }
+
+  .center-label{
+    font-family:var(--font-display);
+    font-size:32px;
+    letter-spacing:1px;
+  }
+
+  .stage-text{
+    font-family:var(--font-mono);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+
+  /* SECTION LABELS & CONTENT */
   .sec-label{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.15em;
     color:var(--mint); margin-bottom:18px; display:block;
@@ -499,33 +453,56 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- JENKINS ANIMATED CI/CD PIPELINE STRIP -->
-      <div class="pipeline-strip">
-        <div class="pipeline-header">
-          <span class="pulse-dot"></span>
-          <span>JENKINS AUTOMATED CI/CD PIPELINE IN MOTION</span>
-        </div>
-        <div class="pipeline-nodes">
-          <div class="pipeline-step">
-            <div class="node-box">💻</div>
-            <span class="node-label">CODE</span>
-          </div>
-          <div class="pipeline-line"></div>
-          <div class="pipeline-step">
-            <div class="node-box">⚙️</div>
-            <span class="node-label">BUILD</span>
-          </div>
-          <div class="pipeline-line"></div>
-          <div class="pipeline-step">
-            <div class="node-box">🧪</div>
-            <span class="node-label">TEST</span>
-          </div>
-          <div class="pipeline-line"></div>
-          <div class="pipeline-step">
-            <div class="node-box">🚀</div>
-            <span class="node-label">DEPLOY</span>
-          </div>
-        </div>
+      <!-- ANIMATED DEVOPS INFINITY LOOP SECTION -->
+      <div class="infinity-container">
+        <svg class="infinity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- CI Loop Gradient (Cyan to Blue) -->
+            <linearGradient id="ci-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00F2FE" />
+              <stop offset="100%" stop-color="#0052D4" />
+            </linearGradient>
+
+            <!-- CD Loop Gradient (Lime Green to Cyan) -->
+            <linearGradient id="cd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00F5A0" />
+              <stop offset="100%" stop-color="#BFF000" />
+            </linearGradient>
+
+            <!-- Pulse Laser Glow Filter -->
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <!-- Infinity Loop Main Path -->
+          <!-- Path coordinates trace figure 8: center -> left loop -> center -> right loop -> back to center -->
+          <path id="infinity-path" class="loop-path-base" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100 Z" />
+
+          <!-- Colored CI & CD Segment Paths -->
+          <path class="loop-path-ci" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100" />
+          <path class="loop-path-cd" d="M 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100" />
+
+          <!-- Animated Laser Motion along Path -->
+          <path class="loop-laser" filter="url(#glow)" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100 Z" />
+
+          <!-- Center Labels (CI & CD) -->
+          <text x="155" y="112" class="center-label" fill="#00F2FE" text-anchor="middle">CI</text>
+          <text x="345" y="112" class="center-label" fill="#00F5A0" text-anchor="middle">CD</text>
+
+          <!-- Stage Labels along CI Loop -->
+          <text x="210" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">PLAN</text>
+          <text x="105" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">CODE</text>
+          <text x="80" y="162" class="stage-text" fill="#E2E8F0" text-anchor="middle">BUILD</text>
+          <text x="185" y="168" class="stage-text" fill="#00F2FE" text-anchor="middle">TEST</text>
+
+          <!-- Stage Labels along CD Loop -->
+          <text x="250" y="125" class="stage-text" fill="#00F5A0" text-anchor="middle">RELEASE</text>
+          <text x="315" y="48" class="stage-text" fill="#E2E8F0" text-anchor="middle">DEPLOY</text>
+          <text x="425" y="105" class="stage-text" fill="#E2E8F0" text-anchor="middle">OPERATE</text>
+          <text x="345" y="168" class="stage-text" fill="#00F5A0" text-anchor="middle">MEASURE</text>
+        </svg>
       </div>
 
     </div>
@@ -969,7 +946,7 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.kinetic, .skill-card, .exp-card, .proj-card').forEach((el) => {
+    document.querySelectorAll('.skill-card, .exp-card, .proj-card').forEach((el) => {
       observer.observe(el);
     });
   }
