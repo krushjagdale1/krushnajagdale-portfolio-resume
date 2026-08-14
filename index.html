@@ -767,149 +767,115 @@
 </footer>
 
 <script>
-  // 1. PRELOADER COUNTER
+  // 1. PRELOADER COUNTER & TIMING
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 5) + 1;
+    count += Math.floor(Math.random() * 8) + 2;
     if (count > 100) count = 100;
     
-    loaderNum.innerText = count + '%';
-    loaderFill.style.width = count + '%';
+    if(loaderNum) loaderNum.innerText = count + '%';
+    if(loaderFill) loaderFill.style.width = count + '%';
 
     if (count < 100) {
       setTimeout(updateLoader, 30);
     } else {
       setTimeout(() => {
-        preloader.classList.add('loaded');
+        if(preloader) preloader.classList.add('loaded');
         document.body.classList.remove('loading');
       }, 300);
     }
   };
-  updateLoader();
+  window.addEventListener('load', updateLoader);
 
-  // 2. AUTHENTIC AMBIENT SWIRL CANVAS ANIMATION (Codrops / AmbientCanvasBackgrounds Style)
-  const particleCount = 700;
-  const particlePropsLength = 9;
-  const particleProps = new Float32Array(particleCount * particlePropsLength);
+  // 2. SCROLL PROGRESS BAR & ACTIVE NAV HIGHLIGHT
+  const progressBar = document.getElementById('progressBar');
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav a[data-s]');
 
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  let simplex = typeof SimplexNoise !== 'undefined' ? new SimplexNoise() : null;
-
-  let center = [0, 0];
-  let tick = 0;
-
-  function initCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    center[0] = canvas.width * 0.5;
-    center[1] = canvas.height * 0.5;
-  }
-
-  function initParticles() {
-    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
-      initParticle(i);
-    }
-  }
-
-  function initParticle(i) {
-    let x = Math.random() * canvas.width;
-    let y = Math.random() * canvas.height;
-    let vx = 0;
-    let vy = 0;
-    let life = 0;
-    let maxLife = 100 + Math.random() * 150;
-    let speed = 0.8 + Math.random() * 1.5;
-    let radius = 1 + Math.random() * 2;
-    let hue = 180 + Math.random() * 100; // Cyan to Purple palette
-
-    particleProps.set([x, y, vx, vy, life, maxLife, speed, radius, hue], i);
-  }
-
-  function drawParticle(x, y, x2, y2, life, maxLife, radius, hue) {
-    ctx.save();
-    ctx.lineCap = 'round';
-    ctx.lineWidth = radius;
-    let alpha = Math.sin((life / maxLife) * Math.PI);
-    ctx.strokeStyle = `hsla(${hue}, 85%, 60%, ${alpha * 0.45})`;
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.restore();
-  }
-
-  function updateParticles() {
-    tick++;
-    for (let i = 0; i < particleCount * particlePropsLength; i += particlePropsLength) {
-      let x = particleProps[i];
-      let y = particleProps[i + 1];
-
-      // Simplex noise curl vector force
-      let n = simplex ? simplex.noise3D(x * 0.0015, y * 0.0015, tick * 0.0012) : Math.sin(x*0.002 + tick*0.01);
-      let angle = n * Math.PI * 4;
-
-      let vx = Math.cos(angle) * particleProps[i + 6];
-      let vy = Math.sin(angle) * particleProps[i + 6];
-
-      let x2 = x + vx;
-      let y2 = y + vy;
-
-      let life = particleProps[i + 4] + 1;
-      let maxLife = particleProps[i + 5];
-
-      drawParticle(x, y, x2, y2, life, maxLife, particleProps[i + 7], particleProps[i + 8]);
-
-      particleProps[i] = x2;
-      particleProps[i + 1] = y2;
-      particleProps[i + 4] = life;
-
-      if (life > maxLife || x2 < 0 || x2 > canvas.width || y2 < 0 || y2 > canvas.height) {
-        initParticle(i);
-      }
-    }
-  }
-
-  function renderSwirl() {
-    // Fade trail effect for silky swirl flow
-    ctx.fillStyle = 'rgba(7, 11, 20, 0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    updateParticles();
-    requestAnimationFrame(renderSwirl);
-  }
-
-  window.addEventListener('resize', () => {
-    initCanvas();
-  });
-
-  initCanvas();
-  initParticles();
-  renderSwirl();
-
-  // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
-    const winScroll = document.documentElement.scrollTop;
+    // Scroll progress bar width
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
-    document.getElementById('progressBar').style.width = scrolled + '%';
-  });
+    if(progressBar) progressBar.style.width = scrolled + '%';
 
-  // 4. INTERSECTION OBSERVER FOR CARDS ANIMATION
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+    // Highlight active menu link based on visible section
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 180;
+      if (window.pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
       }
     });
-  }, { threshold: 0.1 });
 
-  document.querySelectorAll('.skill-card, .exp-card, .proj-card').forEach(el => observer.observe(el));
+    navLinks.forEach(link => {
+      link.classList.remove('is-active');
+      if (link.getAttribute('data-s') === current) {
+        link.classList.add('is-active');
+      }
+    });
+  });
+
+  // 3. INTERSECTION OBSERVER FOR CARDS ANIMATION (FADE-IN UP)
+  const animatedElements = document.querySelectorAll('.skill-card, .exp-card, .proj-card');
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  animatedElements.forEach(el => observer.observe(el));
+
+  // 4. AMBIENT SWIRL CANVAS BACKGROUND (SIMPLEX NOISE)
+  const canvas = document.getElementById('bg-canvas');
+  if (canvas && typeof SimplexNoise !== 'undefined') {
+    const ctx = canvas.getContext('2d');
+    const simplex = new SimplexNoise();
+    let width, height, t = 0;
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function draw() {
+      ctx.fillStyle = 'rgba(7, 11, 20, 0.2)';
+      ctx.fillRect(0, 0, width, height);
+
+      const step = 45;
+      t += 0.0015;
+
+      for (let x = 0; x < width; x += step) {
+        for (let y = 0; y < height; y += step) {
+          const angle = simplex.noise3D(x * 0.001, y * 0.001, t) * Math.PI * 2;
+          const length = 12;
+
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + Math.cos(angle) * length, y + Math.sin(angle) * length);
+          ctx.strokeStyle = `rgba(0, 242, 254, ${Math.abs(Math.sin(angle)) * 0.12})`;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
 </script>
 </body>
 </html>
