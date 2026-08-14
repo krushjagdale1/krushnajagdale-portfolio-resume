@@ -44,7 +44,7 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- PRELOADER 0-100% ---------------- */
+  /* ---------------- PRELOADER ---------------- */
   #preloader{
     position:fixed; inset:0; z-index:9999;
     background:#050811;
@@ -80,7 +80,7 @@
     color:var(--muted); text-transform:uppercase;
   }
 
-  /* ---------------- DYNAMIC ANIMATED BACKGROUND ---------------- */
+  /* ---------------- DYNAMIC BACKGROUND ---------------- */
   .ambient-bg{
     position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden;
   }
@@ -238,7 +238,6 @@
   }
   .skill-name{font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink); line-height:1.2;}
 
-  /* LOGO HEADER FOR CARDS */
   .card-logo-wrap{
     width:52px; height:52px; border-radius:12px; background:#FFFFFF;
     display:flex; align-items:center; justify-content:center; padding:6px;
@@ -333,7 +332,7 @@
 </head>
 <body class="loading">
 
-<!-- PRELOADER 0-100% -->
+<!-- PRELOADER -->
 <div id="preloader">
   <div class="loader-box">
     <div class="loader-num" id="loaderNum">0%</div>
@@ -344,7 +343,7 @@
   </div>
 </div>
 
-<!-- DYNAMIC MOVING BACKGROUND -->
+<!-- DYNAMIC BACKGROUND -->
 <div class="ambient-bg">
   <div class="aurora-blob aurora-1"></div>
   <div class="aurora-blob aurora-2"></div>
@@ -378,7 +377,7 @@
     </div>
     <div class="hero-photo-panel">
       <!-- User Profile Photo: krush-image.jpeg -->
-      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATDA8TEBITDA8TEBMTEBITExMTExMTEBITExMTExMTExMTExMTExMTExMTExMTExMTExP/2wBDARAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAQ4BDEADAEFAAEAEURI/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJDFDEECWGhF2JxF1KBIkaUCNE2fAkJChYVExKDh8UXN1MN9D3w//EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAAFEiExQQCTU2F2BFEUU1GRoVFScYEYIjLRIC430WEC8AAECAwFBB4EFAAAAAAAAAAABAgMRBAAFEiExQVEGE2EicYEJMoGRoQCx0fA18VF14XJ24iA0C/9oADAMBA3452A2D3C/..." alt="Krushna Bharat Jagdale">
+      <img src="krush-image.jpeg" alt="Krushna Bharat Jagdale">
     </div>
   </div>
 </section>
@@ -448,9 +447,8 @@
     <!-- Scalezee Technologies -->
     <div class="exp-card">
       <div class="exp-header">
-        <!-- Embedded Company Logo: scalezee-logo.png -->
         <div class="card-logo-wrap">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAI4CAYAAABa1K0BAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUA..." alt="Scalezee Technologies Logo">
+          <img src="scalezee-logo.png" alt="Scalezee Technologies Logo">
         </div>
         <div class="exp-top">
           <div>
@@ -473,9 +471,8 @@
     <!-- Nimap Infotech -->
     <div class="exp-card">
       <div class="exp-header">
-        <!-- Embedded Company Logo: nimapinfotech_logo.jpg -->
         <div class="card-logo-wrap">
-          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAEAAQABREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAAGAEAAACAAAAA=" alt="Nimap Infotech Logo">
+          <img src="nimapinfotech_logo.jpg" alt="Nimap Infotech Logo">
         </div>
         <div class="exp-top">
           <div>
@@ -508,9 +505,8 @@
       <!-- Bank of Baroda CBDC -->
       <div class="proj-card">
         <div class="proj-header">
-          <!-- Embedded Project Logo: BOB.png -->
           <div class="card-logo-wrap">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAFzUkdCAK7OHOkAAAAE..." alt="Bank of Baroda Logo">
+            <img src="BOB.png" alt="Bank of Baroda Logo">
           </div>
           <div>
             <div class="proj-num">BANKING DOMAIN</div>
@@ -530,9 +526,8 @@
       <!-- Muthoot Finance -->
       <div class="proj-card">
         <div class="proj-header">
-          <!-- Embedded Project Logo: muthooth.jpg -->
           <div class="card-logo-wrap">
-            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDABALDA4MChAODQ4SERATDA8TEBITDA8TEBMTEBITExMTExMTEBITExMTExMTExMTExMTExMTExMTExMTExMTExP/2wBDARAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAEgASADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJDFDEECWGhF2JxF1KBIkaUCNE2fAkJChYVExKDh8UXN1MN9D3w//EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAAFEiExQQCTU2F2BFEUU1GRoVFScYEYIjLRIC430WEC8AAECDwFBB4EFAAAAAAAAAAABAgMRBAAFEiExQVEGE2EicYEJMoGRoQCx0fA18VF14XJ24iA0C/9oADAMBA3452A2D3C/..." alt="Muthoot Finance Logo">
+            <img src="muthooth.jpg" alt="Muthoot Finance Logo">
           </div>
           <div>
             <div class="proj-num">FINANCIAL CLOUD</div>
@@ -558,9 +553,8 @@
     <h2 class="sec-big kinetic">Education</h2>
 
     <div class="edu-card">
-      <!-- Embedded College Image: mitcollage.jpg -->
       <div class="edu-logo-wrap">
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAEAAQABREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAAGAEAAACAAAAA=" alt="Marathwada Institute of Technology">
+        <img src="mitcollage.jpg" alt="Marathwada Institute of Technology">
       </div>
       <div class="edu-info">
         <h3 class="edu-degree">B.Tech – Mechanical Engineering</h3>
@@ -602,14 +596,14 @@
 </footer>
 
 <script>
-  // ---------------- 1. PRELOADER 0-100% SCRIPT ----------------
+  // 1. PRELOADER SCRIPT
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 5) + 1; // Increment randomly for smooth natural feel
+    count += Math.floor(Math.random() * 5) + 1;
     if (count > 100) count = 100;
     
     loaderNum.innerText = count + '%';
@@ -628,7 +622,7 @@
 
   window.addEventListener('DOMContentLoaded', updateLoader);
 
-  // ---------------- 2. KINETIC TEXT SPLITTER ----------------
+  // 2. KINETIC TEXT SPLITTER
   document.querySelectorAll('.kinetic').forEach(el => {
     const words = el.innerText.trim().split(/\s+/);
     el.innerHTML = words.map((word, i) => 
@@ -636,7 +630,7 @@
     ).join(' ');
   });
 
-  // ---------------- 3. INTERSECTION OBSERVER ----------------
+  // 3. INTERSECTION OBSERVER
   function initScrollAnimations() {
     const observerOptions = { threshold: 0.12 };
     const observer = new IntersectionObserver((entries) => {
@@ -652,7 +646,7 @@
     });
   }
 
-  // ---------------- 4. SCROLL PROGRESS BAR & NAV HIGHLIGHTING ----------------
+  // 4. SCROLL PROGRESS & NAV HIGHLIGHTING
   window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
