@@ -89,7 +89,7 @@
     position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden;
   }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(140px); opacity:0.08;
+    position:absolute; border-radius:50%; filter:blur(120px); opacity:0.18;
     animation:floatAurora 22s ease-in-out infinite alternate;
   }
   .aurora-1{
@@ -495,46 +495,37 @@
       <div class="infinity-container">
         <svg class="infinity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- CI Loop Gradient (Cyan to Blue) -->
             <linearGradient id="ci-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#00F2FE" />
               <stop offset="100%" stop-color="#0052D4" />
             </linearGradient>
 
-            <!-- CD Loop Gradient (Lime Green to Cyan) -->
             <linearGradient id="cd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#00F5A0" />
               <stop offset="100%" stop-color="#BFF000" />
             </linearGradient>
 
-            <!-- Pulse Laser Glow Filter -->
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
 
-          <!-- Infinity Loop Main Path -->
           <path id="infinity-path" class="loop-path-base" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100 Z" />
 
-          <!-- Colored CI & CD Segment Paths -->
           <path class="loop-path-ci" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100" />
           <path class="loop-path-cd" d="M 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100" />
 
-          <!-- Animated Laser Motion along Path -->
           <path class="loop-laser" filter="url(#glow)" d="M 250 100 C 170 20 60 20 60 100 C 60 180 170 180 250 100 C 330 20 440 20 440 100 C 440 180 330 180 250 100 Z" />
 
-          <!-- Center Labels (CI & CD) -->
           <text x="155" y="112" class="center-label" fill="#00F2FE" text-anchor="middle">CI</text>
           <text x="345" y="112" class="center-label" fill="#00F5A0" text-anchor="middle">CD</text>
 
-          <!-- Stage Labels along CI Loop -->
           <text x="210" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">PLAN</text>
           <text x="105" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">CODE</text>
           <text x="80" y="162" class="stage-text" fill="#FFFFFF" text-anchor="middle">BUILD</text>
           <text x="185" y="168" class="stage-text" fill="#00F2FE" text-anchor="middle">TEST</text>
 
-          <!-- Stage Labels along CD Loop (RELEASE & MEASURE High Visibility Updated) -->
           <text x="250" y="125" class="stage-text" fill="#FFD700" text-anchor="middle">RELEASE</text>
           <text x="315" y="48" class="stage-text" fill="#FFFFFF" text-anchor="middle">DEPLOY</text>
           <text x="425" y="105" class="stage-text" fill="#FFFFFF" text-anchor="middle">OPERATE</text>
@@ -567,7 +558,6 @@
     <h2 class="sec-big kinetic">Technical Skills</h2>
     <div class="skills-groups">
       
-      <!-- Containers & Orchestration -->
       <div>
         <div class="skill-group-label">Containers & Orchestration</div>
         <div class="skill-grid">
@@ -594,7 +584,6 @@
         </div>
       </div>
 
-      <!-- CI/CD & Cloud -->
       <div>
         <div class="skill-group-label">CI/CD & Cloud</div>
         <div class="skill-grid">
@@ -621,7 +610,6 @@
         </div>
       </div>
 
-      <!-- Monitoring, Infrastructure & Scripting -->
       <div>
         <div class="skill-group-label">Monitoring, Infrastructure & Scripting</div>
         <div class="skill-grid">
@@ -658,7 +646,6 @@
     <span class="sec-label">03 // CAREER</span>
     <h2 class="sec-big kinetic">Professional Experience</h2>
 
-    <!-- Scalezee Technologies -->
     <div class="exp-card">
       <div class="exp-header">
         <div class="card-logo-wrap">
@@ -683,7 +670,6 @@
       </ul>
     </div>
 
-    <!-- Nimap Infotech -->
     <div class="exp-card">
       <div class="exp-header">
         <div class="card-logo-wrap">
@@ -717,7 +703,6 @@
     <h2 class="sec-big kinetic">Projects</h2>
 
     <div class="proj-grid">
-      <!-- Bank of Baroda CBDC -->
       <div class="proj-card">
         <div class="proj-header">
           <div class="card-logo-wrap">
@@ -739,7 +724,6 @@
         </ul>
       </div>
 
-      <!-- Muthoot Finance -->
       <div class="proj-card">
         <div class="proj-header">
           <div class="card-logo-wrap">
@@ -836,7 +820,61 @@
   };
   updateLoader();
 
-  // Scroll Progress Bar
+  // 2. DYNAMIC SWIRL CANVAS ANIMATION
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let particles = [];
+
+  function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.speedY = (Math.random() - 0.5) * 0.4;
+      this.opacity = Math.random() * 0.5 + 0.2;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+        this.reset();
+      }
+    }
+    draw() {
+      ctx.fillStyle = `rgba(0, 242, 254, ${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) {
+    particles.push(new Particle());
+  }
+
+  function animateBg() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animateBg);
+  }
+  animateBg();
+
+  // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
     const winScroll = document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -844,7 +882,7 @@
     document.getElementById('progressBar').style.width = scrolled + '%';
   });
 
-  // Intersection Observer for scroll animations
+  // 4. INTERSECTION OBSERVER FOR CARDS ANIMATION
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting) {
