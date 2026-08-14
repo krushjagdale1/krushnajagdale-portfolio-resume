@@ -205,13 +205,7 @@
     margin-bottom:8px;
   }
 
-  .about-quote{
-    font-family:var(--font-display);
-    font-size:clamp(20px, 3vw, 32px);
-    line-height:1.35; text-transform:none; letter-spacing:-0.005em;
-    max-width:880px; margin-top:26px; color:#E2E8F0;
-  }
-
+  /* ---------------- SKILLS SECTION ---------------- */
   .skills-section{width:100%;}
   .skills-groups{display:flex; flex-direction:column; gap:34px; margin-top:36px;}
   .skill-group-label{
@@ -219,23 +213,26 @@
     color:var(--cyan); margin-bottom:16px; text-transform:uppercase;
   }
   .skill-grid{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:14px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:14px;
   }
   .skill-card{
     display:flex; align-items:center; gap:12px;
-    border:1px solid var(--line); border-radius:14px; padding:14px 16px;
+    border:1px solid var(--line); border-radius:14px; padding:12px 16px;
     background:var(--bg-panel); backdrop-filter:blur(10px);
     opacity:0; transform:translateY(24px);
     transition:opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1), border-color .2s ease, background .2s ease;
   }
   .skill-card.in-view{opacity:1; transform:translateY(0);}
   .skill-card:hover{border-color:var(--cyan); background:rgba(0,242,254,0.06);}
-  .brand-badge{
-    width:34px; height:34px; border-radius:8px;
+  .skill-badge{
+    width:36px; height:36px; border-radius:10px;
+    background:rgba(255, 255, 255, 0.05);
+    border:1px solid rgba(255, 255, 255, 0.12);
     display:flex; align-items:center; justify-content:center;
-    font-family:var(--font-mono); font-weight:700; font-size:10.5px;
-    letter-spacing:0.02em; background:rgba(0,242,254,0.12); color:var(--cyan);
-    border:1px solid rgba(0,242,254,0.3); text-align:center;
+    padding:6px; flex-shrink:0;
+  }
+  .skill-badge img{
+    width:100%; height:100%; object-fit:contain;
   }
   .skill-name{font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink); line-height:1.2;}
 
@@ -243,7 +240,6 @@
     width:52px; height:52px; border-radius:12px; background:#FFFFFF;
     display:flex; align-items:center; justify-content:center; padding:6px;
     box-shadow:0 4px 12px rgba(0,0,0,0.3); flex-shrink:0; overflow:hidden;
-    font-family:var(--font-mono); font-size:10px; color:#333; text-align:center;
   }
   .card-logo-wrap img{
     max-width:100%; max-height:100%; object-fit:contain;
@@ -379,19 +375,16 @@
       </div>
     </div>
     <div class="hero-photo-panel">
-      <!-- Profile Photo path relative to current directory -->
       <img src="./krush-image.jpeg" alt="Krushna Bharat Jagdale" onerror="this.onerror=null; this.src='./krush-image.jpg';">
     </div>
   </div>
 </section>
 
-<!-- ABOUT SECTION -->
+<!-- ABOUT / SUMMARY SECTION -->
 <section id="about">
   <div class="wrap">
     <span class="sec-label">01 // SUMMARY</span>
-    <div class="about-quote kinetic">
-      DevOps Engineer with 1.8+ years of experience supporting banking-domain and cloud-native applications across Development, UAT, and Production environments. Skilled in Kubernetes, Docker, Linux, MySQL/MariaDB, Prometheus, Grafana, and Shell scripting, with hands-on experience in production support, deployment automation, monitoring, and incident troubleshooting.
-    </div>
+    <h2 class="sec-big kinetic">HIGH-AVAILABILITY CLOUD & INFRASTRUCTURE</h2>
   </div>
 </section>
 
@@ -402,37 +395,84 @@
     <h2 class="sec-big kinetic">Technical Skills</h2>
     <div class="skills-groups">
       
+      <!-- Containers & Orchestration -->
       <div>
         <div class="skill-group-label">Containers & Orchestration</div>
         <div class="skill-grid">
-          <div class="skill-card"><div class="brand-badge">K8S</div><span class="skill-name">Kubernetes</span></div>
-          <div class="skill-card"><div class="brand-badge">OSH</div><span class="skill-name">OpenShift</span></div>
-          <div class="skill-card"><div class="brand-badge">DCK</div><span class="skill-name">Docker</span></div>
-          <div class="skill-card"><div class="brand-badge">HLM</div><span class="skill-name">Helm</span></div>
-          <div class="skill-card"><div class="brand-badge">CMP</div><span class="skill-name">Docker Compose</span></div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" alt="Kubernetes"></div>
+            <span class="skill-name">Kubernetes</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/openshift/openshift-original.svg" alt="OpenShift"></div>
+            <span class="skill-name">OpenShift</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker"></div>
+            <span class="skill-name">Docker</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/helm/helm-original.svg" alt="Helm"></div>
+            <span class="skill-name">Helm</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker Compose"></div>
+            <span class="skill-name">Docker Compose</span>
+          </div>
         </div>
       </div>
 
+      <!-- CI/CD & Cloud -->
       <div>
         <div class="skill-group-label">CI/CD & Cloud</div>
         <div class="skill-grid">
-          <div class="skill-card"><div class="brand-badge">AWS</div><span class="skill-name">AWS (EC2, S3, IAM)</span></div>
-          <div class="skill-card"><div class="brand-badge">JNK</div><span class="skill-name">Jenkins</span></div>
-          <div class="skill-card"><div class="brand-badge">GHA</div><span class="skill-name">GitHub Actions</span></div>
-          <div class="skill-card"><div class="brand-badge">ARG</div><span class="skill-name">Argo CD</span></div>
-          <div class="skill-card"><div class="brand-badge">HRN</div><span class="skill-name">Harness CD</span></div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" alt="AWS"></div>
+            <span class="skill-name">AWS (EC2, S3, IAM)</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" alt="Jenkins"></div>
+            <span class="skill-name">Jenkins</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="GitHub Actions"></div>
+            <span class="skill-name">GitHub Actions</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/argocd/argocd-original.svg" alt="Argo CD"></div>
+            <span class="skill-name">Argo CD</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.simpleicons.org/harness/00ADEF" alt="Harness CD"></div>
+            <span class="skill-name">Harness CD</span>
+          </div>
         </div>
       </div>
 
+      <!-- Monitoring, Linux & Scripting -->
       <div>
-        <div class="skill-group-label">Monitoring, DBs & Scripting</div>
+        <div class="skill-group-label">Monitoring, Infrastructure & Scripting</div>
         <div class="skill-grid">
-          <div class="skill-card"><div class="brand-badge">PRM</div><span class="skill-name">Prometheus</span></div>
-          <div class="skill-card"><div class="brand-badge">GFN</div><span class="skill-name">Grafana</span></div>
-          <div class="skill-card"><div class="brand-badge">ELK</div><span class="skill-name">ELK Stack</span></div>
-          <div class="skill-card"><div class="brand-badge">LNX</div><span class="skill-name">Linux / Ubuntu</span></div>
-          <div class="skill-card"><div class="brand-badge">SQL</div><span class="skill-name">MySQL / MariaDB</span></div>
-          <div class="skill-card"><div class="brand-badge">SH</div><span class="skill-name">Bash / Shell Scripting</span></div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg" alt="Prometheus"></div>
+            <span class="skill-name">Prometheus</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg" alt="Grafana"></div>
+            <span class="skill-name">Grafana</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg" alt="ELK Stack"></div>
+            <span class="skill-name">ELK Stack</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux"></div>
+            <span class="skill-name">Linux / Ubuntu</span>
+          </div>
+          <div class="skill-card">
+            <div class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" alt="Shell Scripting"></div>
+            <span class="skill-name">Bash / Shell</span>
+          </div>
         </div>
       </div>
 
@@ -598,27 +638,27 @@
 </footer>
 
 <script>
-  // 1. PRELOADER SCRIPT
+  // 1. PRELOADER SCRIPT (SLOWED DOWN)
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 5) + 1;
+    count += Math.floor(Math.random() * 2) + 1;
     if (count > 100) count = 100;
     
     loaderNum.innerText = count + '%';
     loaderFill.style.width = count + '%';
 
     if (count < 100) {
-      setTimeout(updateLoader, 20);
+      setTimeout(updateLoader, 40);
     } else {
       setTimeout(() => {
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
         initScrollAnimations();
-      }, 300);
+      }, 400);
     }
   };
 
