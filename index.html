@@ -89,7 +89,7 @@
     position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden;
   }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(140px); opacity:0.08; /* Reduced for subtle background */
+    position:absolute; border-radius:50%; filter:blur(140px); opacity:0.08;
     animation:floatAurora 22s ease-in-out infinite alternate;
   }
   .aurora-1{
@@ -192,8 +192,122 @@
   .kinetic.in-view .word{opacity:1; transform:translateY(0) rotate(0deg);}
 
   .hero-meta{
-    margin-top:34px; display:flex; gap:22px; flex-wrap:wrap;
+    margin-top:28px; display:flex; gap:22px; flex-wrap:wrap;
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
+  }
+
+  /* ---------------- JENKINS CI/CD PIPELINE STRIP ---------------- */
+  .pipeline-strip{
+    margin-top:32px;
+    padding:18px 22px;
+    background:rgba(15, 23, 42, 0.75);
+    border:1px solid rgba(0, 242, 254, 0.25);
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  }
+  .pipeline-header{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--cyan);
+    letter-spacing:0.12em;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-transform:uppercase;
+  }
+  .pulse-dot{
+    width:8px; height:8px;
+    background:var(--mint);
+    border-radius:50%;
+    box-shadow:0 0 10px var(--mint);
+    animation:pulseGlow 1.2s infinite alternate;
+  }
+  @keyframes pulseGlow{
+    from{opacity:0.4; transform:scale(0.8);}
+    to{opacity:1; transform:scale(1.2);}
+  }
+  
+  .pipeline-nodes{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+  }
+  .pipeline-step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    z-index:2;
+  }
+  .node-box{
+    width:42px; height:42px;
+    border-radius:12px;
+    background:#070C18;
+    border:1px solid rgba(255, 255, 255, 0.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-mono);
+    font-size:16px;
+    transition:all 0.3s ease;
+    animation:nodeSequence 8s infinite;
+  }
+  .pipeline-step:nth-child(1) .node-box { animation-delay: 0s; }
+  .pipeline-step:nth-child(3) .node-box { animation-delay: 2s; }
+  .pipeline-step:nth-child(5) .node-box { animation-delay: 4s; }
+  .pipeline-step:nth-child(7) .node-box { animation-delay: 6s; }
+
+  .node-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    font-weight:700;
+    color:var(--muted);
+    letter-spacing:0.08em;
+  }
+
+  .pipeline-line{
+    flex:1;
+    height:3px;
+    background:rgba(255, 255, 255, 0.1);
+    position:relative;
+    overflow:hidden;
+    margin:0 12px;
+    margin-bottom:18px;
+    border-radius:2px;
+  }
+  .pipeline-line::after{
+    content:'';
+    position:absolute;
+    top:0; left:-100%;
+    width:100%; height:100%;
+    background:linear-gradient(90deg, transparent, var(--cyan), var(--mint), transparent);
+    animation:pipeFlow 2s linear infinite;
+  }
+  .pipeline-line:nth-of-type(1)::after{ animation-delay: 0s; }
+  .pipeline-line:nth-of-type(2)::after{ animation-delay: 0.5s; }
+  .pipeline-line:nth-of-type(3)::after{ animation-delay: 1s; }
+
+  @keyframes pipeFlow{
+    0%{ left:-100%; }
+    100%{ left:100%; }
+  }
+
+  @keyframes nodeSequence{
+    0%, 22%, 100%{
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: none;
+      background: #070C18;
+      color: var(--muted);
+    }
+    5%, 18%{
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 242, 254, 0.6);
+      background: rgba(0, 242, 254, 0.12);
+      color: var(--cyan);
+    }
   }
 
   .sec-label{
@@ -378,11 +492,42 @@
       <div class="hero-eyebrow">DEVOPS ENGINEER · MUMBAI, INDIA</div>
       <h1 class="hero-name kinetic">Krushna Bharat Jagdale</h1>
       <h2 class="hero-role kinetic">DevOps Engineer</h2>
+      
       <div class="hero-meta">
         <span>krushnaj635@gmail.com</span>
         <span>+91 9022507897</span>
         <span>Mumbai, India</span>
       </div>
+
+      <!-- JENKINS ANIMATED CI/CD PIPELINE STRIP -->
+      <div class="pipeline-strip">
+        <div class="pipeline-header">
+          <span class="pulse-dot"></span>
+          <span>JENKINS AUTOMATED CI/CD PIPELINE IN MOTION</span>
+        </div>
+        <div class="pipeline-nodes">
+          <div class="pipeline-step">
+            <div class="node-box">💻</div>
+            <span class="node-label">CODE</span>
+          </div>
+          <div class="pipeline-line"></div>
+          <div class="pipeline-step">
+            <div class="node-box">⚙️</div>
+            <span class="node-label">BUILD</span>
+          </div>
+          <div class="pipeline-line"></div>
+          <div class="pipeline-step">
+            <div class="node-box">🧪</div>
+            <span class="node-label">TEST</span>
+          </div>
+          <div class="pipeline-line"></div>
+          <div class="pipeline-step">
+            <div class="node-box">🚀</div>
+            <span class="node-label">DEPLOY</span>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="hero-photo-panel">
       <img src="./krush-image.jpeg" alt="Krushna Bharat Jagdale" onerror="this.onerror=null; this.src='./krush-image.jpg';">
@@ -615,7 +760,7 @@
       </div>
       <div class="edu-info">
         <h3 class="edu-degree">B.Tech – Mechanical Engineering</h3>
-        <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhajinagar</div>
+        <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhatanagar</div>
         <div class="edu-year">2019 – 2024</div>
       </div>
     </div>
@@ -680,7 +825,7 @@
 
   window.addEventListener('DOMContentLoaded', updateLoader);
 
-  // 2. INTERACTIVE SWIRL CANVAS ANIMATION (OPTIMIZED & SUBTLE)
+  // 2. INTERACTIVE SWIRL CANVAS ANIMATION
   function initSwirlCanvas() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
@@ -712,7 +857,6 @@
       height = canvas.height = window.innerHeight;
     });
 
-    // Reduced particle density for a subtle look
     const particleCount = Math.min(Math.floor((width * height) / 10000), 70);
     const particles = [];
 
@@ -735,7 +879,7 @@
         this.radialVelocity = Math.random() * 0.6 + 0.2;
         this.size = Math.random() * 1.8 + 0.8;
         this.colorPrefix = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-        this.alpha = Math.random() * 0.25 + 0.1; // Lower particle opacity
+        this.alpha = Math.random() * 0.25 + 0.1;
         this.prevX = 0;
         this.prevY = 0;
       }
@@ -785,7 +929,6 @@
     let currentCenterY = height / 2;
 
     function renderSwirl() {
-      // Faster fade out for cleaner background
       ctx.fillStyle = 'rgba(7, 11, 20, 0.35)';
       ctx.fillRect(0, 0, width, height);
 
