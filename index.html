@@ -229,11 +229,6 @@
     color:#070B14; box-shadow:0 4px 20px rgba(0, 242, 254, 0.3);
   }
   .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 25px rgba(0, 242, 254, 0.5); }
-  .btn-secondary{
-    background:rgba(255,255,255,0.05); color:var(--ink);
-    border:1px solid var(--line); backdrop-filter:blur(10px);
-  }
-  .btn-secondary:hover{ border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
 
   /* ---------------- DEVOPS INFINITY LOOP SECTION ---------------- */
   .infinity-container{
@@ -284,7 +279,7 @@
   .loop-info-title{ color:var(--cyan); font-weight:700; text-transform:uppercase; }
   .loop-info-tools{ color:var(--mint); font-weight:600; }
 
-  /* ---------------- INTERACTIVE TERMINAL WIDGET ---------------- */
+  /* ---------------- REAL-TIME TERMINAL WIDGET ---------------- */
   .terminal-box{
     background:#0B1120; border:1px solid rgba(255,255,255,0.15);
     border-radius:14px; overflow:hidden; font-family:var(--font-mono);
@@ -301,13 +296,13 @@
   .term-title{ color:var(--muted); font-size:11px; margin-left:auto; letter-spacing:0.05em; }
 
   .terminal-body{
-    padding:18px; min-height:180px; max-height:260px; overflow-y:auto;
+    padding:18px; min-height:200px; max-height:300px; overflow-y:auto;
     font-size:13px; line-height:1.6; color:#CBD5E1;
   }
-  .term-line{ margin-bottom:8px; word-break:break-word; }
+  .term-line{ margin-bottom:10px; word-break:break-word; }
   .term-prompt{ color:var(--mint); font-weight:700; }
   .term-cmd{ color:#FFFFFF; }
-  .term-out{ color:var(--muted); margin-left:8px; }
+  .term-out{ color:var(--muted); margin-top:3px; margin-left:4px; font-size:12.5px; }
   .term-input-line{ display:flex; align-items:center; gap:8px; margin-top:10px; }
   .term-input{
     background:transparent; border:none; outline:none; color:var(--cyan);
@@ -456,7 +451,7 @@
 </div>
 
 <!-- TOAST NOTIFICATION -->
-<div id="toast">📋 <span id="toastMsg">Email copied to clipboard!</span></div>
+<div id="toast">📋 <span id="toastMsg">Copied to clipboard!</span></div>
 
 <!-- SWIRL CANVAS BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
@@ -499,29 +494,25 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- HERO ACTION BUTTONS -->
+      <!-- HERO ACTION BUTTON -->
       <div class="hero-cta-btns">
         <a href="mailto:krushnaj635@gmail.com" class="btn btn-primary">✉️ Get In Touch</a>
-        <a href="#contact" onclick="triggerToast('Resume download link ready!')" class="btn btn-secondary">📄 Download Resume</a>
       </div>
 
-      <!-- ANIMATED DEVOPS INFINITY LOOP SECTION WITH INTERACTIVE HOVER -->
+      <!-- ANIMATED DEVOPS INFINITY LOOP SECTION -->
       <div class="infinity-container">
         <svg class="infinity-svg" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- CI Loop Gradient -->
             <linearGradient id="ci-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#00F2FE" />
               <stop offset="100%" stop-color="#0052D4" />
             </linearGradient>
 
-            <!-- CD Loop Gradient -->
             <linearGradient id="cd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#00F5A0" />
               <stop offset="100%" stop-color="#BFF000" />
             </linearGradient>
 
-            <!-- Glow Filter -->
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -574,10 +565,10 @@
     <span class="sec-label">01 // SUMMARY</span>
     <h2 class="sec-big kinetic">Professional Summary</h2>
     <p class="summary-text">
-      DevOps Engineer with 1.8+ years of experience supporting banking-domain and cloud-native applications across Development, UAT, and Production environments. Skilled in Kubernetes, Docker, Linux, MySQL/MariaDB, Prometheus, Grafana, Shell scripting, with hands-on experience in production support, deployment automation, monitoring, and incident troubleshooting. Strong team player focused on application reliability and operational stability.
+      DevOps Engineer with 1.8+ years of experience supporting banking-domain and cloud-native applications across Development, UAT, and Production environments. Skilled in Kubernetes, Docker, Linux, MySQL/MariaDB, Prometheus, Grafana, Shell scripting, with hands-on experience in production support, deployment automation, monitoring, and incident troubleshooting.
     </p>
 
-    <!-- INTERACTIVE DEVOPS TERMINAL WIDGET -->
+    <!-- REAL-TIME LINUX / DOCKER / K8S TERMINAL WIDGET -->
     <div class="terminal-box">
       <div class="terminal-header">
         <div class="term-dot term-red"></div>
@@ -586,13 +577,18 @@
         <span class="term-title">krushna@devops-cluster: ~</span>
       </div>
       <div class="terminal-body" id="termBody">
-        <div class="term-line"><span class="term-prompt">krushna@devops-node:~$</span> <span class="term-cmd">welcome</span></div>
-        <div class="term-out">Type <span style="color:var(--cyan)">'help'</span> to see available CLI commands (e.g., skills, projects, contact).</div>
+        <div class="term-line"><span class="term-prompt">krushna@devops-node:~$</span> <span class="term-cmd">help</span></div>
+        <div class="term-out">
+          Try typing commands like: <br>
+          • <b>Linux:</b> <span style="color:var(--cyan)">ls</span>, <span style="color:var(--cyan)">cat skills.txt</span>, <span style="color:var(--cyan)">whoami</span>, <span style="color:var(--cyan)">uptime</span>, <span style="color:var(--cyan)">uname -a</span><br>
+          • <b>Docker:</b> <span style="color:var(--cyan)">docker ps</span>, <span style="color:var(--cyan)">docker images</span>, <span style="color:var(--cyan)">docker logs app</span><br>
+          • <b>Kubernetes:</b> <span style="color:var(--cyan)">kubectl get pods</span>, <span style="color:var(--cyan)">kubectl get nodes</span>, <span style="color:var(--cyan)">kubectl get svc</span>
+        </div>
       </div>
       <div class="terminal-body" style="padding-top:0; min-height:auto;">
         <div class="term-input-line">
           <span class="term-prompt">krushna@devops-node:~$</span>
-          <input type="text" id="termInput" class="term-input" placeholder="type a command..." onkeydown="handleTerminal(event)">
+          <input type="text" id="termInput" class="term-input" placeholder="try 'kubectl get pods' or 'docker ps'..." onkeydown="handleTerminal(event)">
         </div>
       </div>
     </div>
@@ -910,44 +906,121 @@
     document.getElementById('loop-stage-tools').innerText = "Explore tools & technologies used in CI/CD pipeline";
   }
 
-  // 5. INTERACTIVE TERMINAL ENGINE
+  // Helper HTML escaper
+  function escapeHtml(text) {
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // 5. REAL-TIME LINUX / DOCKER / KUBERNETES CLI ENGINE
   function handleTerminal(e) {
     if (e.key === 'Enter') {
       const input = document.getElementById('termInput');
-      const cmd = input.value.trim().toLowerCase();
+      const rawCmd = input.value.trim();
+      const cmd = rawCmd.toLowerCase();
       const termBody = document.getElementById('termBody');
 
-      if (!cmd) return;
+      if (!rawCmd) return;
 
       let response = '';
 
-      switch (cmd) {
-        case 'help':
-          response = 'Available commands: <span style="color:var(--cyan)">skills</span>, <span style="color:var(--cyan)">projects</span>, <span style="color:var(--cyan)">experience</span>, <span style="color:var(--cyan)">contact</span>, <span style="color:var(--cyan)">clear</span>';
-          break;
-        case 'skills':
-          response = 'Kubernetes, OpenShift, Docker, Helm, AWS, Jenkins, GitHub Actions, Prometheus, Grafana, Linux, Bash Shell Scripting.';
-          break;
-        case 'projects':
-          response = '1. Bank of Baroda - CBDC Platform | 2. Muthoot Finance Platform';
-          break;
-        case 'experience':
-          response = 'DevOps Engineer @ Scalezee Technologies (Current) | Ex-Intern @ Nimap Infotech';
-          break;
-        case 'contact':
-          response = 'Email: krushnaj635@gmail.com | Phone: +91 9022507897 | Location: Mumbai, India';
-          break;
-        case 'clear':
-          termBody.innerHTML = '';
-          input.value = '';
-          return;
-        default:
-          response = `Command not found: '${cmd}'. Type <span style="color:var(--cyan)">'help'</span> for list of commands.`;
+      if (cmd === 'help') {
+        response = `
+<span style="color:var(--cyan)">AVAILABLE LINUX / DOCKER / KUBERNETES COMMANDS:</span><br>
+• <b>Linux:</b> ls, cat [file], whoami, uname -a, uptime, date, pwd, history, clear<br>
+• <b>Docker:</b> docker ps, docker images, docker version, docker logs [container]<br>
+• <b>Kubernetes:</b> kubectl get pods, kubectl get nodes, kubectl get svc, kubectl get ns, kubectl cluster-info`;
+      } else if (cmd === 'ls' || cmd === 'ls -l' || cmd === 'ls -la') {
+        response = `
+drwxr-xr-x 2 krushna devops 4096 Aug 14 2026 .<br>
+-rw-r--r-- 1 krushna devops 1024 Aug 14 2026 <span style="color:var(--mint)">skills.txt</span><br>
+-rw-r--r-- 1 krushna devops 2048 Aug 14 2026 <span style="color:var(--cyan)">projects.yaml</span><br>
+-rwxr-xr-x 1 krushna devops  512 Aug 14 2026 <span style="color:var(--pink)">contact.sh</span><br>
+-rw-r--r-- 1 krushna devops  890 Aug 14 2026 experience.log`;
+      } else if (cmd.startsWith('cat ')) {
+        const file = cmd.replace('cat ', '').trim();
+        if (file === 'skills.txt') {
+          response = 'Kubernetes, OpenShift, Docker, Helm, AWS (EC2, S3, IAM), Jenkins, GitHub Actions, Argo CD, Prometheus, Grafana, ELK, Linux, Bash Shell Scripting';
+        } else if (file === 'projects.yaml') {
+          response = 'name: Bank of Baroda CBDC Platform | domain: Banking<br>name: Muthoot Finance Platform | domain: FinTech Cloud';
+        } else if (file === 'contact.sh') {
+          response = '#!/bin/bash<br>echo "Email: krushnaj635@gmail.com"<br>echo "Phone: +91 9022507897"<br>echo "Location: Mumbai, India"';
+        } else if (file === 'experience.log') {
+          response = '[2025-02] Joined Nimap Infotech as DevOps Intern<br>[2025-07] Joined Scalezee Technologies as DevOps Engineer (Present)';
+        } else {
+          response = `cat: ${file}: No such file or directory`;
+        }
+      } else if (cmd === 'whoami') {
+        response = '<span style="color:var(--mint)">krushna</span> (DevOps Engineer | Production & Cloud Operations)';
+      } else if (cmd === 'pwd') {
+        response = '/home/krushna';
+      } else if (cmd === 'date') {
+        response = new Date().toUTCString();
+      } else if (cmd === 'uptime') {
+        response = '15:53:08 up 180 days, 4 hours, 22 mins, 3 users, load average: 0.04, 0.02, 0.00';
+      } else if (cmd === 'uname -a' || cmd === 'uname') {
+        response = 'Linux devops-cluster-node-1 5.15.0-1042-aws #47-Ubuntu SMP x86_64 GNU/Linux';
+      } else if (cmd === 'history') {
+        response = '1  kubectl get pods -n prod<br>2  docker ps<br>3  cat skills.txt<br>4  systemctl status kubelet';
+      } else if (cmd === 'docker ps' || cmd === 'docker ps -a') {
+        response = `
+CONTAINER ID   IMAGE                 COMMAND                  CREATED        STATUS        PORTS                  NAMES<br>
+<span style="color:var(--cyan)">a1b2c3d4e5f6</span>   bob-cbdc-api:v2.4     "node server.js"         2 days ago     Up 2 days     0.0.0.0:8080->8080/tcp  bob-cbdc-prod<br>
+<span style="color:var(--cyan)">f6e5d4c3b2a1</span>   prom/prometheus:latest  "/bin/prometheus --…"  10 days ago    Up 10 days    0.0.0.0:9090->9090/tcp  prometheus<br>
+<span style="color:var(--cyan)">c3d4e5f6a1b2</span>   grafana/grafana:latest  "/run.sh"                10 days ago    Up 10 days    0.0.0.0:3000->3000/tcp  grafana`;
+      } else if (cmd === 'docker images') {
+        response = `
+REPOSITORY           TAG       IMAGE ID       CREATED        SIZE<br>
+bob-cbdc-api         v2.4      9f8e7d6c5b4a   2 days ago     184MB<br>
+muthoot-fin-app      v1.8      1a2b3c4d5e6f   5 days ago     210MB<br>
+prom/prometheus      latest    d1e2f3a4b5c6   2 weeks ago    208MB<br>
+grafana/grafana      latest    7b8c9d0e1f2a   3 weeks ago    380MB`;
+      } else if (cmd.startsWith('docker logs')) {
+        const container = cmd.replace('docker logs', '').trim();
+        response = `[INFO] Container ${container || 'app'} initialized.<br>[INFO] Connection established with MariaDB cluster.<br>[INFO] Health check passed (200 OK).`;
+      } else if (cmd === 'docker version' || cmd === 'docker --version') {
+        response = 'Docker version 24.0.5, build ced64ef';
+      } else if (cmd.startsWith('kubectl get pods') || cmd.startsWith('kubectl get pod')) {
+        response = `
+NAME                                    READY   STATUS    RESTARTS   AGE<br>
+<span style="color:var(--mint)">bob-cbdc-backend-7f8d9c6b-x9z1a</span>        1/1     <span style="color:var(--mint)">Running</span>   0          5d<br>
+<span style="color:var(--mint)">muthoot-app-gateway-6b4c3d2a-b7c8d</span>     1/1     <span style="color:var(--mint)">Running</span>   0          12d<br>
+<span style="color:var(--mint)">prometheus-k8s-0</span>                        1/1     <span style="color:var(--mint)">Running</span>   0          30d<br>
+<span style="color:var(--mint)">ingress-nginx-controller-8a9b0c-12345</span>   1/1     <span style="color:var(--mint)">Running</span>   0          45d`;
+      } else if (cmd.startsWith('kubectl get nodes') || cmd.startsWith('kubectl get node')) {
+        response = `
+NAME                   STATUS   ROLES    AGE    VERSION<br>
+<span style="color:var(--cyan)">master-node-01</span>         Ready    control-plane   120d   v1.28.2<br>
+<span style="color:var(--cyan)">worker-node-01</span>         Ready    worker          120d   v1.28.2<br>
+<span style="color:var(--cyan)">worker-node-02</span>         Ready    worker          120d   v1.28.2`;
+      } else if (cmd.startsWith('kubectl get svc') || cmd.startsWith('kubectl get service')) {
+        response = `
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)        AGE<br>
+kubernetes        ClusterIP      10.96.0.1        &lt;none&gt;          443/TCP        120d<br>
+bob-cbdc-service  LoadBalancer   10.102.14.88     35.200.12.10    80:31080/TCP   5d<br>
+prometheus-svc    NodePort       10.108.200.12    &lt;none&gt;          9090:30090/TCP 30d`;
+      } else if (cmd.startsWith('kubectl get ns') || cmd.startsWith('kubectl get namespaces')) {
+        response = `
+NAME              STATUS   AGE<br>
+default           Active   120d<br>
+kube-system       Active   120d<br>
+prod-banking      Active   90d<br>
+monitoring        Active   60d`;
+      } else if (cmd.startsWith('kubectl cluster-info')) {
+        response = 'Kubernetes control plane is running at <span style="color:var(--cyan)">https://10.0.0.1:6443</span><br>CoreDNS is running at https://10.0.0.1:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy';
+      } else if (cmd.startsWith('kubectl logs')) {
+        const pod = cmd.replace('kubectl logs', '').trim();
+        response = `[POD LOGS: ${pod || 'pod'}] Starting Spring Boot application... Listening on port 8080. DB Connection pool active. 0 errors found.`;
+      } else if (cmd === 'clear') {
+        termBody.innerHTML = '';
+        input.value = '';
+        return;
+      } else {
+        response = `bash: ${escapeHtml(rawCmd)}: command not found. Type <span style="color:var(--cyan)">'help'</span> for supported commands.`;
       }
 
       const line = document.createElement('div');
       line.className = 'term-line';
-      line.innerHTML = `<span class="term-prompt">krushna@devops-node:~$</span> <span class="term-cmd">${cmd}</span><div class="term-out">${response}</div>`;
+      line.innerHTML = `<span class="term-prompt">krushna@devops-node:~$</span> <span class="term-cmd">${escapeHtml(rawCmd)}</span><div class="term-out">${response}</div>`;
       
       termBody.appendChild(line);
       input.value = '';
@@ -985,10 +1058,10 @@
     const particleCount = Math.min(Math.floor((width * height) / 10000), 70);
     const particles = [];
     const colorPalettes = [
-      'rgba(0, 242, 254, ',   // Cyan
-      'rgba(127, 0, 255, ',   // Violet
-      'rgba(0, 245, 160, ',   // Mint
-      'rgba(255, 0, 122, '    // Pink
+      'rgba(0, 242, 254, ',
+      'rgba(127, 0, 255, ',
+      'rgba(0, 245, 160, ',
+      'rgba(255, 0, 122, '
     ];
 
     class SwirlParticle {
