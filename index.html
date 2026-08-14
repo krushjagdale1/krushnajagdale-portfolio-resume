@@ -50,13 +50,14 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- VANTA 3D BACKGROUND ---------------- */
+  /* ---------------- SUBTLE VANTA 3D BACKGROUND ---------------- */
   #vanta-bg{
     position:fixed;
     top:0; left:0;
     width:100vw; height:100vh;
     z-index:-1;
     pointer-events:none;
+    opacity: 0.45; /* Toned down background opacity */
   }
 
   /* ---------------- CHALTA FIRTA (WALKING) CARTOON PRELOADER ---------------- */
@@ -179,16 +180,12 @@
   }
   .loader-bar-bg{
     width:100%; height:4px; background:rgba(255,255,255,0.1);
-    border-radius:10px; overflow:hidden; position:relative; margin-bottom:12px;
+    border-radius:10px; overflow:hidden; position:relative;
   }
   .loader-bar-fill{
     position:absolute; top:0; left:0; height:100%; width:0%;
     background:linear-gradient(90deg, var(--cyan), var(--violet), var(--mint));
     transition:width 0.1s linear;
-  }
-  .loader-sub{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em;
-    color:var(--muted); text-transform:uppercase;
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -527,13 +524,13 @@
         <!-- LEFT LEG (Back Leg Swing) -->
         <g class="leg-left">
           <rect x="42" y="90" width="8" height="20" rx="4" fill="#1E293B" />
-          <path d="M 40 108 L 49 108 L 49 113 L 38 113 Z" fill="#00F2FE" /> <!-- Shoe -->
+          <path d="M 40 108 L 49 108 L 49 113 L 38 113 Z" fill="#00F2FE" />
         </g>
         
         <!-- RIGHT LEG (Front Leg Swing) -->
         <g class="leg-right">
           <rect x="54" y="90" width="8" height="20" rx="4" fill="#334155" />
-          <path d="M 52 108 L 61 108 L 61 113 L 50 113 Z" fill="#00F5A0" /> <!-- Shoe -->
+          <path d="M 52 108 L 61 108 L 61 113 L 50 113 Z" fill="#00F5A0" />
         </g>
 
         <!-- MAIN BODY & HEAD GROUP (Bouncing while walking) -->
@@ -582,11 +579,10 @@
     <div class="loader-bar-bg">
       <div class="loader-bar-fill" id="loaderFill"></div>
     </div>
-    <div class="loader-sub">LOADING VANTA 3D MATRIX</div>
   </div>
 </div>
 
-<!-- VANTA 3D DOTS BACKGROUND -->
+<!-- SUBTLE VANTA 3D DOTS BACKGROUND -->
 <div id="vanta-bg"></div>
 
 <div class="progress" id="progressBar"></div>
@@ -953,7 +949,7 @@
   };
   updateLoader();
 
-  // 2. VANTA DOTS 3D BACKGROUND
+  // 2. SUBTLE VANTA DOTS 3D BACKGROUND (TONED DOWN)
   VANTA.DOTS({
     el: "#vanta-bg",
     mouseControls: true,
@@ -966,9 +962,9 @@
     color: 0x00f2fe,
     color2: 0x00f5a0,
     backgroundColor: 0x070b14,
-    size: 3.20,
-    spacing: 35.00,
-    showLines: true
+    size: 2.00,      /* Reduced dot size from 3.20 to 2.00 */
+    spacing: 50.00,  /* Increased spacing from 35 to 50 for a cleaner look */
+    showLines: false /* Lines turned off for subtle background */
   });
 
   // 3. SCROLL PROGRESS
