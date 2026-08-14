@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#070B14;
-    --bg-panel:rgba(15, 23, 42, 0.7);
+    --bg-panel:rgba(15, 23, 42, 0.72);
     --ink:#F8FAFC;
     --muted:#94A3B8;
     --cyan:#00F2FE;
@@ -81,42 +81,37 @@
     color:var(--muted); text-transform:uppercase;
   }
 
-  /* ---------------- DYNAMIC BACKGROUND ---------------- */
-  .ambient-bg{
-    position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden;
-  }
+  /* ---------------- DYNAMIC BACKGROUND & CANVASES ---------------- */
   #bg-canvas{
     position:fixed; inset:0; pointer-events:none; z-index:-1;
   }
+  .ambient-bg{
+    position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden;
+  }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(110px); opacity:0.3;
-    animation:floatAurora 20s ease-in-out infinite alternate;
+    position:absolute; border-radius:50%; filter:blur(120px); opacity:0.25;
+    animation:floatAurora 22s ease-in-out infinite alternate;
   }
   .aurora-1{
-    width:650px; height:650px;
+    width:700px; height:700px;
     background:radial-gradient(circle, var(--cyan) 0%, rgba(0,242,254,0) 70%);
-    top:-15%; left:-10%; animation-duration:22s;
+    top:-15%; left:-10%; animation-duration:24s;
   }
   .aurora-2{
-    width:750px; height:750px;
+    width:800px; height:800px;
     background:radial-gradient(circle, var(--violet) 0%, rgba(127,0,255,0) 70%);
-    bottom:-15%; right:-10%; animation-duration:26s; animation-delay:-5s;
+    bottom:-15%; right:-10%; animation-duration:28s; animation-delay:-5s;
   }
   .aurora-3{
-    width:550px; height:550px;
+    width:600px; height:600px;
     background:radial-gradient(circle, var(--pink) 0%, rgba(255,0,122,0) 70%);
-    top:35%; left:25%; animation-duration:18s; animation-delay:-10s;
-  }
-  .aurora-4{
-    width:500px; height:500px;
-    background:radial-gradient(circle, var(--mint) 0%, rgba(0,245,160,0) 70%);
-    bottom:15%; left:-5%; animation-duration:24s; animation-delay:-14s;
+    top:35%; left:25%; animation-duration:20s; animation-delay:-10s;
   }
 
   @keyframes floatAurora{
     0%{transform:translate(0px, 0px) scale(1) rotate(0deg);}
-    50%{transform:translate(100px, -80px) scale(1.2) rotate(180deg);}
-    100%{transform:translate(-80px, 100px) scale(0.9) rotate(360deg);}
+    50%{transform:translate(80px, -60px) scale(1.15) rotate(180deg);}
+    100%{transform:translate(-60px, 80px) scale(0.95) rotate(360deg);}
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -130,7 +125,7 @@
   .nav{
     position:fixed; top:0; right:0; z-index:90;
     padding:22px 28px; display:flex; gap:22px; align-items:center;
-    background:rgba(7, 11, 20, 0.75); backdrop-filter:blur(12px);
+    background:rgba(7, 11, 20, 0.8); backdrop-filter:blur(14px);
     border-bottom-left-radius:16px; border:1px solid var(--line); border-top:none; border-right:none;
   }
   .nav a{
@@ -238,7 +233,7 @@
     transition:opacity .5s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1), border-color .2s ease, background .2s ease;
   }
   .skill-card.in-view{opacity:1; transform:translateY(0);}
-  .skill-card:hover{border-color:var(--cyan); background:rgba(0,242,254,0.06);}
+  .skill-card:hover{border-color:var(--cyan); background:rgba(0,242,254,0.08);}
   .skill-badge{
     width:38px; height:38px; border-radius:10px;
     background:rgba(255, 255, 255, 0.08);
@@ -353,17 +348,16 @@
     <div class="loader-bar-bg">
       <div class="loader-bar-fill" id="loaderFill"></div>
     </div>
-    <div class="loader-sub">INITIALIZING SYSTEM</div>
+    <div class="loader-sub">INITIALIZING SWIRL MATRIX</div>
   </div>
 </div>
 
-<!-- DYNAMIC ANIMATED BACKGROUND -->
+<!-- SWIRL CANVAS BACKGROUND -->
 <canvas id="bg-canvas"></canvas>
 <div class="ambient-bg">
   <div class="aurora-blob aurora-1"></div>
   <div class="aurora-blob aurora-2"></div>
   <div class="aurora-blob aurora-3"></div>
-  <div class="aurora-blob aurora-4"></div>
 </div>
 
 <div class="progress" id="progressBar"></div>
@@ -659,184 +653,178 @@
 </footer>
 
 <script>
-  // 1. PRELOADER SCRIPT
+  // 1. PRELOADER COUNTER
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 2) + 1;
+    count += Math.floor(Math.random() * 3) + 1;
     if (count > 100) count = 100;
     
     loaderNum.innerText = count + '%';
     loaderFill.style.width = count + '%';
 
     if (count < 100) {
-      setTimeout(updateLoader, 40);
+      setTimeout(updateLoader, 35);
     } else {
       setTimeout(() => {
         preloader.classList.add('loaded');
         document.body.classList.remove('loading');
         initScrollAnimations();
-        initDevOpsCanvas();
-      }, 400);
+        initSwirlCanvas();
+      }, 350);
     }
   };
 
   window.addEventListener('DOMContentLoaded', updateLoader);
 
-  // 2. UNIQUE DEVOPS INFRASTRUCTURE & CODE PULSE CANVAS
-  function initDevOpsCanvas() {
+  // 2. INTERACTIVE SWIRL CANVAS ANIMATION
+  function initSwirlCanvas() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    let mouse = { x: null, y: null, maxDist: 180 };
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    let mouse = {
+      x: width / 2,
+      y: height / 2,
+      targetX: width / 2,
+      targetY: height / 2,
+      active: false
+    };
+
     window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      mouse.targetX = e.clientX;
+      mouse.targetY = e.clientY;
+      mouse.active = true;
     });
+
     window.addEventListener('mouseleave', () => {
-      mouse.x = null;
-      mouse.y = null;
+      mouse.active = false;
     });
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
 
-    // Floating DevOps Tech Keywords
-    const devopsTokens = [
-      'pod:running', '200 OK', 'kubectl', 'build:success', 
-      'helm', 'k8s', 'pipeline', 'aws:ec2', 'deploy', 
-      '01010', 'prometheus', 'docker:up'
+    const particleCount = Math.min(Math.floor((width * height) / 3800), 240);
+    const particles = [];
+
+    const colorPalettes = [
+      'rgba(0, 242, 254, ',   // Neon Cyan
+      'rgba(127, 0, 255, ',   // Cosmic Violet
+      'rgba(0, 245, 160, ',   // Cyber Mint
+      'rgba(255, 0, 122, '    // Neon Pink
     ];
 
-    class CodeParticle {
+    class SwirlParticle {
       constructor() {
-        this.reset();
+        this.reset(true);
       }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.text = devopsTokens[Math.floor(Math.random() * devopsTokens.length)];
-        this.vy = -(Math.random() * 0.4 + 0.15);
-        this.opacity = Math.random() * 0.35 + 0.1;
-        this.fontSize = Math.floor(Math.random() * 3) + 10;
-      }
-      update() {
-        this.y += this.vy;
-        if (this.y < -20) this.reset();
-      }
-      draw() {
-        ctx.font = `${this.fontSize}px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = `rgba(0, 242, 254, ${this.opacity})`;
-        ctx.fillText(this.text, this.x, this.y);
-      }
-    }
 
-    // Infrastructure Pulse Nodes
-    class InfraNode {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 2 + 1.5;
-        this.pulseRadius = this.radius;
-        this.pulseAlpha = 0.8;
+      reset(init = false) {
+        this.angle = Math.random() * Math.PI * 2;
+        this.radius = init ? Math.random() * Math.max(width, height) * 0.65 : Math.random() * 30 + 10;
+        this.angularVelocity = (Math.random() * 0.016 + 0.006) * (Math.random() < 0.5 ? 1 : -1);
+        this.radialVelocity = Math.random() * 0.85 + 0.35;
+        this.size = Math.random() * 2.2 + 1;
+        this.colorPrefix = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+        this.alpha = Math.random() * 0.6 + 0.3;
+        this.prevX = 0;
+        this.prevY = 0;
       }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-        // Health-check Pulse Ring
-        this.pulseRadius += 0.35;
-        this.pulseAlpha -= 0.008;
-        if (this.pulseAlpha <= 0) {
-          this.pulseRadius = this.radius;
-          this.pulseAlpha = 0.8;
+      update(centerX, centerY) {
+        this.angle += this.angularVelocity;
+        this.radius += this.radialVelocity;
+
+        const currentX = centerX + Math.cos(this.angle) * this.radius;
+        const currentY = centerY + Math.sin(this.angle) * this.radius;
+
+        if (this.prevX === 0) {
+          this.prevX = currentX;
+          this.prevY = currentY;
+        }
+
+        this.x = currentX;
+        this.y = currentY;
+
+        const maxDist = Math.max(width, height) * 0.75;
+        if (this.radius > maxDist || this.x < -100 || this.x > width + 100 || this.y < -100 || this.y > height + 100) {
+          this.reset(false);
+          this.prevX = centerX + Math.cos(this.angle) * this.radius;
+          this.prevY = centerY + Math.sin(this.angle) * this.radius;
         }
       }
+
       draw() {
-        // Pulse ring
+        // Draw swirl trail line
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.pulseRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 245, 160, ${this.pulseAlpha * 0.4})`;
-        ctx.lineWidth = 0.8;
+        ctx.moveTo(this.prevX, this.prevY);
+        ctx.lineTo(this.x, this.y);
+        ctx.strokeStyle = this.colorPrefix + this.alpha + ')';
+        ctx.lineWidth = this.size;
+        ctx.lineCap = 'round';
         ctx.stroke();
 
-        // Solid Node core
+        // Particle head glow
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#00F2FE';
+        ctx.arc(this.x, this.y, this.size * 0.75, 0, Math.PI * 2);
+        ctx.fillStyle = this.colorPrefix + (this.alpha + 0.25) + ')';
         ctx.fill();
+
+        this.prevX = this.x;
+        this.prevY = this.y;
       }
     }
 
-    const codeTokensCount = Math.min(Math.floor(window.innerWidth / 90), 16);
-    const nodesCount = Math.min(Math.floor(window.innerWidth / 35), 35);
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new SwirlParticle());
+    }
 
-    const tokens = Array.from({ length: codeTokensCount }, () => new CodeParticle());
-    const nodes = Array.from({ length: nodesCount }, () => new InfraNode());
+    let currentCenterX = width / 2;
+    let currentCenterY = height / 2;
 
-    function renderAnimation() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function renderSwirl() {
+      // Subtle background clear for motion blur effect
+      ctx.fillStyle = 'rgba(7, 11, 20, 0.22)';
+      ctx.fillRect(0, 0, width, height);
 
-      // 1. Draw DevOps floating words
-      tokens.forEach(t => {
-        t.update();
-        t.draw();
+      const targetX = mouse.active ? mouse.targetX : width / 2;
+      const targetY = mouse.active ? mouse.targetY : height / 2;
+
+      currentCenterX += (targetX - currentCenterX) * 0.045;
+      currentCenterY += (targetY - currentCenterY) * 0.045;
+
+      // Swirl Center Radial Aura
+      const auraGlow = ctx.createRadialGradient(
+        currentCenterX, currentCenterY, 0,
+        currentCenterX, currentCenterY, 220
+      );
+      auraGlow.addColorStop(0, 'rgba(0, 242, 254, 0.14)');
+      auraGlow.addColorStop(0.4, 'rgba(127, 0, 255, 0.06)');
+      auraGlow.addColorStop(1, 'rgba(7, 11, 20, 0)');
+      
+      ctx.fillStyle = auraGlow;
+      ctx.beginPath();
+      ctx.arc(currentCenterX, currentCenterY, 220, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Render swirl particles
+      particles.forEach(p => {
+        p.update(currentCenterX, currentCenterY);
+        p.draw();
       });
 
-      // 2. Draw Infrastructure Nodes & Connection Beams
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].update();
-        nodes[i].draw();
-
-        // Connect nodes to each other
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(127, 0, 255, ${0.15 * (1 - dist / 130)})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-
-        // 3. Mouse Laser Beam Connections
-        if (mouse.x !== null && mouse.y !== null) {
-          const mdx = nodes[i].x - mouse.x;
-          const mdy = nodes[i].y - mouse.y;
-          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-
-          if (mdist < mouse.maxDist) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${0.45 * (1 - mdist / mouse.maxDist)})`;
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(renderAnimation);
+      requestAnimationFrame(renderSwirl);
     }
 
-    renderAnimation();
+    renderSwirl();
   }
 
   // 3. KINETIC TEXT SPLITTER
@@ -847,7 +835,7 @@
     ).join(' ');
   });
 
-  // 4. INTERSECTION OBSERVER
+  // 4. SCROLL INTERSECTION OBSERVER
   function initScrollAnimations() {
     const observerOptions = { threshold: 0.12 };
     const observer = new IntersectionObserver((entries) => {
@@ -863,7 +851,7 @@
     });
   }
 
-  // 5. SCROLL PROGRESS & NAV HIGHLIGHTING
+  // 5. NAV HIGHLIGHT & SCROLL PROGRESS
   window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
