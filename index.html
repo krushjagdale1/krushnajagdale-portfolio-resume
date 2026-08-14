@@ -833,24 +833,11 @@
 
   animatedElements.forEach(el => observer.observe(el));
 
-  // 4. INTERACTIVE PLEXUS NETWORK CANVAS BACKGROUND
+  // 4. DEVOPS TERMINAL CODE RAIN CANVAS (MATRIX STYLE)
   const canvas = document.getElementById('bg-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
     let width, height;
-    let particles = [];
-    const particleCount = 70;
-    let mouse = { x: null, y: null, radius: 160 };
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = e.x;
-      mouse.y = e.y;
-    });
-
-    window.addEventListener('mouseleave', () => {
-      mouse.x = null;
-      mouse.y = null;
-    });
 
     function resize() {
       width = canvas.width = window.innerWidth;
@@ -859,72 +846,47 @@
     window.addEventListener('resize', resize);
     resize();
 
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 1.2;
-        this.vy = (Math.random() - 0.5) * 1.2;
-        this.radius = Math.random() * 2 + 1;
-        this.color = Math.random() > 0.5 ? '#00F2FE' : '#00F5A0';
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+    const words = [
+      'KUBERNETES', 'DOCKER', 'AWS', 'HELM', 'BUILD', 
+      'JENKINS', 'DEPLOY', '010101', 'PROMETHEUS', 
+      'GRAFANA', 'ARGOCD', 'PODS', 'TERRAFORM', 'BASH', 'OPENSHIFT'
+    ];
+    const fontSize = 13;
+    let columns = Math.floor(width / 35);
+    let drops = [];
+
+    function initDrops() {
+      columns = Math.floor(width / 35);
+      drops = [];
+      for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -50;
       }
     }
+    initDrops();
+    window.addEventListener('resize', initDrops);
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(7, 11, 20, 0.12)';
+      ctx.fillRect(0, 0, width, height);
 
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
+      ctx.font = fontSize + 'px "JetBrains Mono", monospace';
 
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+      for (let i = 0; i < drops.length; i++) {
+        const text = words[Math.floor(Math.random() * words.length)];
+        const x = i * 35;
+        const y = drops[i] * fontSize;
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        ctx.fillStyle = i % 2 === 0 ? 'rgba(0, 245, 160, 0.35)' : 'rgba(0, 242, 254, 0.3)';
+        ctx.fillText(text, x, y);
 
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${1 - dist / 130 * 0.4})`;
-            ctx.lineWidth = 0.7;
-            ctx.stroke();
-          }
+        if (y > height && Math.random() > 0.96) {
+          drops[i] = 0;
         }
-
-        if (mouse.x && mouse.y) {
-          const mdx = particles[i].x - mouse.x;
-          const mdy = particles[i].y - mouse.y;
-          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mdist < mouse.radius) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(127, 0, 255, ${1 - mdist / mouse.radius * 0.6})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
+        drops[i]++;
       }
-      requestAnimationFrame(animate);
+      requestAnimationFrame(drawMatrix);
     }
-    animate();
+    drawMatrix();
   }
 </script>
 </body>
