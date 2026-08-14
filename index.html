@@ -89,7 +89,7 @@
     position:fixed; inset:0; pointer-events:none; z-index:-2; overflow:hidden;
   }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(120px); opacity:0.18;
+    position:absolute; border-radius:50%; filter:blur(140px); opacity:0.12;
     animation:floatAurora 22s ease-in-out infinite alternate;
   }
   .aurora-1{
@@ -102,16 +102,11 @@
     background:radial-gradient(circle, var(--violet) 0%, rgba(127,0,255,0) 70%);
     bottom:-15%; right:-10%; animation-duration:28s; animation-delay:-5s;
   }
-  .aurora-3{
-    width:600px; height:600px;
-    background:radial-gradient(circle, var(--pink) 0%, rgba(255,0,122,0) 70%);
-    top:35%; left:25%; animation-duration:20s; animation-delay:-10s;
-  }
 
   @keyframes floatAurora{
     0%{transform:translate(0px, 0px) scale(1) rotate(0deg);}
-    50%{transform:translate(80px, -60px) scale(1.15) rotate(180deg);}
-    100%{transform:translate(-60px, 80px) scale(0.95) rotate(360deg);}
+    50%{transform:translate(60px, -40px) scale(1.1) rotate(180deg);}
+    100%{transform:translate(-40px, 60px) scale(0.95) rotate(360deg);}
   }
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px; width:100%;}
@@ -260,7 +255,6 @@
     stroke-linecap:round;
   }
 
-  /* Pulse Laser Motion */
   .loop-laser{
     fill:none;
     stroke:#FFFFFF;
@@ -454,7 +448,6 @@
 <div class="ambient-bg">
   <div class="aurora-blob aurora-1"></div>
   <div class="aurora-blob aurora-2"></div>
-  <div class="aurora-blob aurora-3"></div>
 </div>
 
 <div class="progress" id="progressBar"></div>
@@ -466,7 +459,8 @@
   <a href="#projects" data-s="projects">PROJECTS</a>
   <a href="#education" data-s="education">EDUCATION</a>
   <a href="#contact" data-s="contact">CONTACT</a>
-  <a href="resume.pdf" target="_blank" class="nav-resume-link">📄 RESUME</a>
+  <!-- NAV GOOGLE DRIVE RESUME LINK -->
+  <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="nav-resume-link">📄 RESUME</a>
 </nav>
 
 <!-- HERO SECTION -->
@@ -483,11 +477,11 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- RESUME BUTTON -->
+      <!-- RESUME BUTTON WITH GOOGLE DRIVE LINK -->
       <div class="resume-btn-wrap">
-        <a href="resume.pdf" download="Krushna_Jagdale_Resume.pdf" target="_blank" class="resume-btn">
+        <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="resume-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          DOWNLOAD RESUME
+          OPEN RESUME
         </a>
       </div>
 
@@ -820,11 +814,11 @@
   };
   updateLoader();
 
-  // 2. DYNAMIC SWIRL CANVAS ANIMATION
+  // 2. ELEGANT SUBTLE DYNAMIC SWIRL WAVE CANVAS ANIMATION
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
   let width, height;
-  let particles = [];
+  let step = 0;
 
   function resizeCanvas() {
     width = canvas.width = window.innerWidth;
@@ -833,46 +827,29 @@
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-    reset() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.4;
-      this.speedY = (Math.random() - 0.5) * 0.4;
-      this.opacity = Math.random() * 0.5 + 0.2;
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-        this.reset();
-      }
-    }
-    draw() {
-      ctx.fillStyle = `rgba(0, 242, 254, ${this.opacity})`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < 80; i++) {
-    particles.push(new Particle());
-  }
-
-  function animateBg() {
+  function drawSubtleSwirl() {
     ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-    requestAnimationFrame(animateBg);
+    ctx.lineWidth = 1.2;
+
+    const lines = 10; 
+    for (let i = 0; i < lines; i++) {
+      ctx.beginPath();
+      const opacity = 0.05 + (i % 3) * 0.03;
+      ctx.strokeStyle = i % 2 === 0 ? `rgba(0, 242, 254, ${opacity})` : `rgba(127, 0, 255, ${opacity})`;
+
+      for (let x = 0; x < width; x += 15) {
+        const y = height / 2 
+                  + Math.sin(x * 0.003 + step + i * 0.5) * 110 
+                  + Math.cos(x * 0.002 - step * 0.4) * 70;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    step += 0.006;
+    requestAnimationFrame(drawSubtleSwirl);
   }
-  animateBg();
+  drawSubtleSwirl();
 
   // 3. SCROLL PROGRESS BAR
   window.addEventListener('scroll', () => {
