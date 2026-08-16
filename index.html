@@ -8,6 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- LINKEDIN BADGE SDK SCRIPT -->
+<script src="https://platform.linkedin.com/badge/js/profile.js" async defer type="text/javascript"></script>
+
 <style>
   :root{
     --bg:#070B14;
@@ -163,11 +166,12 @@
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
   }
 
-  /* RESUME BUTTON STYLES */
+  /* RESUME & SOCIAL BUTTON STYLES */
   .resume-btn-wrap {
     margin-top: 18px;
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
   }
   @media (max-width:820px){.resume-btn-wrap{justify-content:center;}}
   .resume-btn {
@@ -405,6 +409,17 @@
   .cd-value{color:var(--ink); font-size:15px; text-decoration:none;}
   .cd-value:hover{color:var(--cyan);}
 
+  /* LINKEDIN BADGE CONTAINER STYLING */
+  .linkedin-badge-wrap {
+    margin-top: 36px;
+    padding: 20px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+  }
+
   footer{padding:34px 0; text-align:center; border-top:1px solid var(--line);}
   .footer-text{font-family:var(--font-mono); font-size:11.5px; color:var(--muted);}
 </style>
@@ -451,11 +466,15 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- RESUME BUTTON -->
+      <!-- RESUME & LINKEDIN BUTTONS -->
       <div class="resume-btn-wrap">
         <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="resume-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           OPEN RESUME
+        </a>
+        <a href="https://in.linkedin.com/in/krushnajagdale48" target="_blank" class="resume-btn" style="color:#0A66C2; border-color:rgba(10,102,194,0.4); background:rgba(10,102,194,0.08);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26Z"/></svg>
+          LINKEDIN PROFILE
         </a>
       </div>
 
@@ -754,6 +773,14 @@
         <span class="cd-value" style="color:var(--mint);">Available for DevOps Roles</span>
       </div>
     </div>
+
+    <!-- LINKEDIN BADGE CONTAINER -->
+    <div class="linkedin-badge-wrap">
+      <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="krushnajagdale48" data-version="v1">
+        <a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/krushnajagdale48?trk=profile-badge">Krushna Jagdale</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -786,139 +813,8 @@
       }, 300);
     }
   };
-  window.addEventListener('load', updateLoader);
 
-  // 2. SCROLL PROGRESS BAR & ACTIVE NAV HIGHLIGHT
-  const progressBar = document.getElementById('progressBar');
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav a[data-s]');
-
-  window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    if(progressBar) progressBar.style.width = scrolled + '%';
-
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 180;
-      if (window.pageYOffset >= sectionTop) {
-        current = section.getAttribute('id');
-      }
-    });
-
-    navLinks.forEach(link => {
-      link.classList.remove('is-active');
-      if (link.getAttribute('data-s') === current) {
-        link.classList.add('is-active');
-      }
-    });
-  });
-
-  // 3. INTERSECTION OBSERVER FOR CARDS ANIMATION
-  const animatedElements = document.querySelectorAll('.skill-card, .exp-card, .proj-card');
-  const observerOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
-  };
-
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  animatedElements.forEach(el => observer.observe(el));
-
-  // 4. ANIMATED FLOATING DOTS & CONSTELLATION NETWORK CANVAS
-  const canvas = document.getElementById('bg-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const particles = [];
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.radius = Math.random() * 2 + 1;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.color = Math.random() > 0.5 ? '0, 242, 254' : '0, 245, 160';
-        this.alpha = Math.random() * 0.6 + 0.3;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `rgba(${this.color}, 0.8)`;
-        ctx.fill();
-        ctx.shadowBlur = 0; // reset shadow for performance
-      }
-    }
-
-    function initParticles() {
-      particles.length = 0;
-      const count = Math.min(Math.floor((width * height) / 9000), 110);
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-      }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
-
-    function animateDots() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw connecting lines between nearby floating dots
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${0.18 * (1 - dist / 130)})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Update & Draw Dots
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-
-      requestAnimationFrame(animateDots);
-    }
-    animateDots();
-  }
+  window.addEventListener('DOMContentLoaded', updateLoader);
 </script>
 </body>
 </html>
