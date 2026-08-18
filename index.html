@@ -46,7 +46,7 @@
   ::selection{background:var(--cyan); color:#070B14;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
 
-  /* ---------------- PRELOADER ---------------- */
+  /* PRELOADER */
   #preloader{
     position:fixed; inset:0; z-index:9999;
     background:#050811;
@@ -82,7 +82,7 @@
     color:var(--muted); text-transform:uppercase;
   }
 
-  /* ---------------- BACKGROUND CANVAS ---------------- */
+  /* BACKGROUND CANVAS */
   #bg-canvas{
     position:fixed; top:0; left:0; width:100vw; height:100vh;
     pointer-events:none; z-index:-1;
@@ -96,6 +96,7 @@
     z-index:100; transition:width .1s linear;
   }
 
+  /* NAVIGATION */
   .nav{
     position:fixed; top:0; right:0; z-index:90;
     padding:22px 28px; display:flex; gap:22px; align-items:center;
@@ -109,7 +110,24 @@
   }
   .nav a:hover, .nav a.is-active{color:var(--cyan);}
   .nav-resume-link{color:var(--cyan) !important;}
-  @media (max-width:760px){.nav{display:none;}}
+
+  /* MOBILE FLOATING NAV BAR */
+  @media (max-width:760px){
+    .nav {
+      top: auto;
+      bottom: 16px;
+      right: 50%;
+      transform: translateX(50%);
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      padding: 10px 18px;
+      width: 92%;
+      max-width: 440px;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .nav a { font-size: 10px; }
+  }
 
   section{min-height:100vh; display:flex; align-items:center; position:relative; padding:100px 0;}
   section + section{border-top:1px solid var(--line);}
@@ -136,8 +154,24 @@
 
   .hero-eyebrow{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.15em;
-    color:var(--cyan); margin-bottom:22px; display:inline-block;
+    color:var(--cyan); margin-bottom:22px; display:inline-flex; align-items:center;
     padding:4px 12px; background:rgba(0,242,254,0.08); border-radius:20px; border:1px solid rgba(0,242,254,0.2);
+  }
+
+  /* LIVE PULSE DOT */
+  .pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 10px var(--mint);
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
   }
   
   .hero-name{
@@ -163,20 +197,21 @@
     font-family:var(--font-mono); font-size:13px; color:var(--muted);
   }
 
-  /* RESUME BUTTON STYLES */
+  /* BUTTON STYLES */
   .resume-btn-wrap {
-    margin-top: 18px;
+    margin-top: 20px;
     display: flex;
     gap: 12px;
+    flex-wrap: wrap;
   }
   @media (max-width:820px){.resume-btn-wrap{justify-content:center;}}
   .resume-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 10px 18px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--cyan);
@@ -356,7 +391,7 @@
     opacity:0; transform:translateY(50px);
     transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
     border:1px solid var(--line); border-top:3px solid var(--cyan);
-    display:flex; flex-direction:column; gap:12px;
+    display:flex; flex-direction:column; justify-content:space-between; gap:12px;
   }
   .proj-card:nth-child(2n){border-top-color:var(--violet);}
   .proj-card.in-view{opacity:1; transform:translateY(0);}
@@ -366,6 +401,25 @@
   .proj-list{list-style:none; display:flex; flex-direction:column; gap:8px;}
   .proj-list li{position:relative; padding-left:18px; font-size:14px; color:#CBD5E1;}
   .proj-list li::before{content:'—'; position:absolute; left:0; color:var(--mint);}
+
+  /* TECH STACK CHIPS */
+  .proj-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+  }
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(0, 242, 254, 0.08);
+    color: var(--cyan);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+  }
 
   .edu-card{
     background:var(--bg-panel); backdrop-filter:blur(10px);
@@ -441,7 +495,9 @@
 <section class="hero" id="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-eyebrow">DEVOPS ENGINEER · MUMBAI, INDIA</div>
+      <div class="hero-eyebrow">
+        <span class="pulse-dot"></span> DEVOPS ENGINEER · MUMBAI, INDIA
+      </div>
       <h1 class="hero-name kinetic">Krushna Bharat Jagdale</h1>
       <h2 class="hero-role kinetic">DevOps Engineer</h2>
       
@@ -451,11 +507,15 @@
         <span>Mumbai, India</span>
       </div>
 
-      <!-- RESUME BUTTON -->
+      <!-- RESUME & LINKEDIN BUTTONS -->
       <div class="resume-btn-wrap">
         <a href="https://drive.google.com/file/d/1YnQegwygCtMjrFs0zlsU26aGF_QkULyT/view?usp=drive_link" target="_blank" class="resume-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           OPEN RESUME
+        </a>
+        <a href="https://www.linkedin.com/in/krushnajagdale48/" target="_blank" class="resume-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.6a1.49 1.49 0 0 0-1.49 1.49 1.49 1.49 0 0 0 1.49 1.49 1.49 1.49 0 0 0 1.49-1.49A1.49 1.49 0 0 0 7.86 6.6z"/></svg>
+          LINKEDIN
         </a>
       </div>
 
@@ -672,43 +732,63 @@
 
     <div class="proj-grid">
       <div class="proj-card">
-        <div class="proj-header">
-          <div class="card-logo-wrap">
-            <img src="./BOB.png" alt="Bank of Baroda" onerror="this.onerror=null; this.src='./bob.png';">
+        <div>
+          <div class="proj-header">
+            <div class="card-logo-wrap">
+              <img src="./BOB.png" alt="Bank of Baroda" onerror="this.onerror=null; this.src='./bob.png';">
+            </div>
+            <div>
+              <div class="proj-num">BANKING DOMAIN</div>
+              <h3 class="proj-name">Bank of Baroda – CBDC Platform</h3>
+            </div>
           </div>
-          <div>
-            <div class="proj-num">BANKING DOMAIN</div>
-            <h3 class="proj-name">Bank of Baroda – CBDC Platform</h3>
-          </div>
+          <ul class="proj-list">
+            <li>Automated deployments with Jenkins and GitHub Actions.</li>
+            <li>Managed Kubernetes/OpenShift deployments using Helm and validated cluster health and application readiness.</li>
+            <li>Provided production support for banking applications, including deployment verification, incident troubleshooting, and service restoration.</li>
+            <li>Implemented centralized monitoring and alerting using Prometheus and Grafana.</li>
+            <li>Supported MySQL/MariaDB replication, backup, recovery, and database troubleshooting activities.</li>
+            <li>Performed Linux-based infrastructure troubleshooting, log analysis, and operational maintenance for critical banking workloads.</li>
+            <li>Automated operational tasks using Shell scripting.</li>
+          </ul>
         </div>
-        <ul class="proj-list">
-          <li>Automated deployments with Jenkins and GitHub Actions.</li>
-          <li>Managed Kubernetes/OpenShift deployments using Helm and validated cluster health and application readiness.</li>
-          <li>Provided production support for banking applications, including deployment verification, incident troubleshooting, and service restoration.</li>
-          <li>Implemented centralized monitoring and alerting using Prometheus and Grafana.</li>
-          <li>Supported MySQL/MariaDB replication, backup, recovery, and database troubleshooting activities.</li>
-          <li>Performed Linux-based infrastructure troubleshooting, log analysis, and operational maintenance for critical banking workloads.</li>
-          <li>Automated operational tasks using Shell scripting.</li>
-        </ul>
+        <div class="proj-tech-stack">
+          <span class="tech-chip">Kubernetes</span>
+          <span class="tech-chip">OpenShift</span>
+          <span class="tech-chip">Jenkins</span>
+          <span class="tech-chip">Helm</span>
+          <span class="tech-chip">Prometheus</span>
+          <span class="tech-chip">Grafana</span>
+          <span class="tech-chip">MySQL</span>
+        </div>
       </div>
 
       <div class="proj-card">
-        <div class="proj-header">
-          <div class="card-logo-wrap">
-            <img src="./muthooth.jpg" alt="Muthoot Finance" onerror="this.onerror=null; this.src='./muthoot.jpg';">
+        <div>
+          <div class="proj-header">
+            <div class="card-logo-wrap">
+              <img src="./muthooth.jpg" alt="Muthoot Finance" onerror="this.onerror=null; this.src='./muthoot.jpg';">
+            </div>
+            <div>
+              <div class="proj-num">FINANCIAL CLOUD</div>
+              <h3 class="proj-name">Muthoot Finance Platform</h3>
+            </div>
           </div>
-          <div>
-            <div class="proj-num">FINANCIAL CLOUD</div>
-            <h3 class="proj-name">Muthoot Finance Platform</h3>
-          </div>
+          <ul class="proj-list">
+            <li>Developed automated CI/CD pipelines using GitHub Actions and Harness CD.</li>
+            <li>Built multi-service Docker Compose applications and deployed Node.js applications in containerized environments.</li>
+            <li>Managed AWS cloud services including EC2, IAM, and S3.</li>
+            <li>Integrated SonarQube for automated code quality and security validation.</li>
+            <li>Supported cloud resource operations, deployment troubleshooting, and operational automation tasks.</li>
+          </ul>
         </div>
-        <ul class="proj-list">
-          <li>Developed automated CI/CD pipelines using GitHub Actions and Harness CD.</li>
-          <li>Built multi-service Docker Compose applications and deployed Node.js applications in containerized environments.</li>
-          <li>Managed AWS cloud services including EC2, IAM, and S3.</li>
-          <li>Integrated SonarQube for automated code quality and security validation.</li>
-          <li>Supported cloud resource operations, deployment troubleshooting, and operational automation tasks.</li>
-        </ul>
+        <div class="proj-tech-stack">
+          <span class="tech-chip">AWS EC2/S3</span>
+          <span class="tech-chip">Docker Compose</span>
+          <span class="tech-chip">GitHub Actions</span>
+          <span class="tech-chip">Harness CD</span>
+          <span class="tech-chip">SonarQube</span>
+        </div>
       </div>
     </div>
   </div>
@@ -726,7 +806,7 @@
       </div>
       <div class="edu-info">
         <h3 class="edu-degree">B.Tech – Mechanical Engineering</h3>
-        <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhatanagar</div>
+        <div class="edu-school">Marathwada Institute of Technology, Chhatrapati Sambhaji Nagar</div>
         <div class="edu-year">2019 – 2024</div>
       </div>
     </div>
@@ -744,6 +824,10 @@
       <div>
         <span class="cd-label">PHONE</span>
         <a href="tel:+919022507897" class="cd-value">+91 9022507897</a>
+      </div>
+      <div>
+        <span class="cd-label">LINKEDIN</span>
+        <a href="https://www.linkedin.com/in/krushnajagdale48/" target="_blank" class="cd-value">krushnajagdale48</a>
       </div>
       <div>
         <span class="cd-label">LOCATION</span>
@@ -764,21 +848,21 @@
 </footer>
 
 <script>
-  // 1. PRELOADER COUNTER & TIMING
+  // 1. PRELOADER LOGIC
   let count = 0;
   const loaderNum = document.getElementById('loaderNum');
   const loaderFill = document.getElementById('loaderFill');
   const preloader = document.getElementById('preloader');
 
   const updateLoader = () => {
-    count += Math.floor(Math.random() * 8) + 2;
+    count += Math.floor(Math.random() * 8) + 3;
     if (count > 100) count = 100;
     
     if(loaderNum) loaderNum.innerText = count + '%';
     if(loaderFill) loaderFill.style.width = count + '%';
 
     if (count < 100) {
-      setTimeout(updateLoader, 30);
+      setTimeout(updateLoader, 25);
     } else {
       setTimeout(() => {
         if(preloader) preloader.classList.add('loaded');
@@ -789,20 +873,20 @@
   window.addEventListener('load', updateLoader);
 
   // 2. SCROLL PROGRESS BAR & ACTIVE NAV HIGHLIGHT
-  const progressBar = document.getElementById('progressBar');
-  const sections = document.querySelectorAll('section');
-  const navLinks = document.querySelectorAll('.nav a[data-s]');
-
   window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const winScroll = document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
-    if(progressBar) progressBar.style.width = scrolled + '%';
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) progressBar.style.width = scrolled + '%';
 
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav a[data-s]');
     let current = '';
+
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 180;
-      if (window.pageYOffset >= sectionTop) {
+      const sectionTop = section.offsetTop - 200;
+      if (window.scrollY >= sectionTop) {
         current = section.getAttribute('id');
       }
     });
@@ -815,109 +899,77 @@
     });
   });
 
-  // 3. INTERSECTION OBSERVER FOR CARDS ANIMATION
-  const animatedElements = document.querySelectorAll('.skill-card, .exp-card, .proj-card');
-  const observerOptions = {
-    threshold: 0.15,
-    rootMargin: "0px 0px -50px 0px"
+  // 3. INTERSECTION OBSERVER FOR FADE-IN ANIMATIONS
+  const observeElements = () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.skill-card, .exp-card, .proj-card').forEach(el => observer.observe(el));
   };
+  document.addEventListener('DOMContentLoaded', observeElements);
 
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  animatedElements.forEach(el => observer.observe(el));
-
-  // 4. ANIMATED FLOATING DOTS & CONSTELLATION NETWORK CANVAS
+  // 4. ANIMATED BACKGROUND CANVAS (DEVOPS PARTICLE GRID)
   const canvas = document.getElementById('bg-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
-    let width, height;
+    let width, height, particles;
 
-    function resize() {
+    function initCanvas() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const particles = [];
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.radius = Math.random() * 2 + 1;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.color = Math.random() > 0.5 ? '0, 242, 254' : '0, 245, 160';
-        this.alpha = Math.random() * 0.6 + 0.3;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `rgba(${this.color}, 0.8)`;
-        ctx.fill();
-        ctx.shadowBlur = 0; // reset shadow for performance
+      particles = [];
+      const particleCount = Math.floor(width / 25);
+      
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 1.5 + 1
+        });
       }
     }
 
-    function initParticles() {
-      particles.length = 0;
-      const count = Math.min(Math.floor((width * height) / 9000), 110);
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-      }
-    }
-    initParticles();
-    window.addEventListener('resize', initParticles);
-
-    function animateDots() {
+    function drawCanvas() {
       ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'rgba(0, 242, 254, 0.4)';
+      ctx.strokeStyle = 'rgba(0, 242, 254, 0.05)';
 
-      // Draw connecting lines between nearby floating dots
       for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
 
-          if (dist < 130) {
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          let p2 = particles[j];
+          let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 120) {
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 242, 254, ${0.18 * (1 - dist / 130)})`;
-            ctx.lineWidth = 0.8;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
         }
       }
-
-      // Update & Draw Dots
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-
-      requestAnimationFrame(animateDots);
+      requestAnimationFrame(drawCanvas);
     }
-    animateDots();
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    drawCanvas();
   }
 </script>
 </body>
